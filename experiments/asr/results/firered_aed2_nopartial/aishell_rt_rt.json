@@ -1,0 +1,543 @@
+{
+ "config": "configs/exp/asr/firered_aed2.toml",
+ "overrides": [
+  "asr.itn=false",
+  "asr.partial_ms=0"
+ ],
+ "data": "bench_data/asr/aishell_rt.jsonl",
+ "impl": "sherpa_offline",
+ "asr": {
+  "impl": "sherpa_offline",
+  "model": "firered-aed2",
+  "endpoint_ms": 300,
+  "partial_ms": 0,
+  "num_threads": 2,
+  "itn": false
+ },
+ "n": 50,
+ "realtime": true,
+ "cer": 0.0095,
+ "mer": 0.0095,
+ "finals_per_utt": 1.3,
+ "empty_hyp": 0,
+ "load_s": 4.39,
+ "cpu_cores": 0.598,
+ "peak_rss_mb": 1705.6,
+ "first_partial_after_onset_s": {
+  "mean": 5.0226,
+  "p50": 5.0012,
+  "p90": 7.8762
+ },
+ "final_after_speech_end_s": {
+  "mean": 1.9796,
+  "p50": 1.9111,
+  "p90": 3.0488
+ },
+ "final_after_wav_end_s": {
+  "mean": 1.6588,
+  "p50": 1.5911,
+  "p90": 2.45
+ },
+ "rows": [
+  {
+   "id": "BAC009S0764W0125",
+   "ref": "标杆房企必然调整市场战略",
+   "hyp": "标杆房企必然调整市场战略",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.417,
+   "final_after_speech_end_s": 2.177
+  },
+  {
+   "id": "BAC009S0764W0179",
+   "ref": "国务院发展研究中心市场经济研究所副所长邓郁松认为",
+   "hyp": "国务院发展研究中心市场经济研究所副所长邓郁松认为",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.947,
+   "final_after_speech_end_s": 1.973
+  },
+  {
+   "id": "BAC009S0764W0260",
+   "ref": "除了普通计算机以外",
+   "hyp": "除了普通计算机以外",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.926,
+   "final_after_speech_end_s": 1.486
+  },
+  {
+   "id": "BAC009S0764W0308",
+   "ref": "所以今年上半年公司在全国各地的员工人数大幅增加",
+   "hyp": "所以今年上半年公司在全国各地的员工人数大幅增加",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 8.433,
+   "final_after_speech_end_s": 3.053
+  },
+  {
+   "id": "BAC009S0764W0344",
+   "ref": "脚踝和小腿的能力变弱",
+   "hyp": "脚踝和小腿的能力变弱",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.622,
+   "final_after_speech_end_s": 1.562
+  },
+  {
+   "id": "BAC009S0764W0431",
+   "ref": "快报讯记者赵丹丹快递实名制时代终于到来了",
+   "hyp": "快报讯记者赵丹丹快递实名制时代终于到来了",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.469,
+   "final_after_speech_end_s": 3.149
+  },
+  {
+   "id": "BAC009S0764W0454",
+   "ref": "现代快报记者胡玉梅",
+   "hyp": "现代快报记者胡玉梅",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.775,
+   "final_after_speech_end_s": 1.735
+  },
+  {
+   "id": "BAC009S0764W0483",
+   "ref": "新京报记者从首都国际机场公安分局相关人员处获悉",
+   "hyp": "新京报记者从首都国际机场公安分局相关人员处获悉",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 9.477,
+   "final_after_speech_end_s": 3.697
+  },
+  {
+   "id": "BAC009S0765W0154",
+   "ref": "委托人以其持有的资金设立一个单一资金信托",
+   "hyp": "委托人以其持有的资金设立一个单一资金信托",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.095,
+   "final_after_speech_end_s": 2.635
+  },
+  {
+   "id": "BAC009S0765W0210",
+   "ref": "防范我国政府债务风险",
+   "hyp": "防范我国政府债务风险",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.995,
+   "final_after_speech_end_s": 1.735
+  },
+  {
+   "id": "BAC009S0765W0323",
+   "ref": "增持后持股比例为六十二点百分之二十三",
+   "hyp": "增持后持股比例为六十二点百分之二十三",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.869,
+   "final_after_speech_end_s": 1.777
+  },
+  {
+   "id": "BAC009S0765W0384",
+   "ref": "中国冰雪健儿终于站到了冬奥会的最高领奖台",
+   "hyp": "中国冰雪健儿终于站到了冬奥会的最高领奖台",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.018,
+   "final_after_speech_end_s": 3.078
+  },
+  {
+   "id": "BAC009S0765W0450",
+   "ref": "并于二零一五年一月将其抓获",
+   "hyp": "并于二零一五年一月将其抓获",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 4.847,
+   "final_after_speech_end_s": 1.967
+  },
+  {
+   "id": "BAC009S0766W0138",
+   "ref": "依托蓝色光标强大的技术和资源优势",
+   "hyp": "依托蓝色光标强大的技术和资源优势",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.664,
+   "final_after_speech_end_s": 2.184
+  },
+  {
+   "id": "BAC009S0766W0184",
+   "ref": "依托蓝色光标的强大平台",
+   "hyp": "依托蓝色光标的强大平台",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 4.099,
+   "final_after_speech_end_s": 1.739
+  },
+  {
+   "id": "BAC009S0766W0221",
+   "ref": "是如何更好地防范城投债券可能出现的风险的",
+   "hyp": "是如何更好的防范城投债券可能出现的风险的",
+   "cer": 0.05,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.192,
+   "final_after_speech_end_s": 1.603
+  },
+  {
+   "id": "BAC009S0766W0309",
+   "ref": "成飞集成相关人士告诉每日经济新闻记者",
+   "hyp": "成飞集成相关人士告诉每日经济新闻记者",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 6.181,
+   "final_after_speech_end_s": 2.441
+  },
+  {
+   "id": "BAC009S0766W0365",
+   "ref": "两人的联手十分不顺利",
+   "hyp": "两人的联手十分不顺利",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.54,
+   "final_after_speech_end_s": 1.62
+  },
+  {
+   "id": "BAC009S0766W0395",
+   "ref": "我们或许就将看到他们征战各类大型赛事的身影",
+   "hyp": "我们或许就将看到他们征战各类大型赛事的身影",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 6.682,
+   "final_after_speech_end_s": 2.542
+  },
+  {
+   "id": "BAC009S0766W0431",
+   "ref": "李嘉诚回应撤资不爱国指控完全不成立",
+   "hyp": "李嘉诚回应撤资不爱国指控完全不成立",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.242,
+   "final_after_speech_end_s": 1.533
+  },
+  {
+   "id": "BAC009S0766W0473",
+   "ref": "如果放弃学习没有追求",
+   "hyp": "如果放弃学习没有追求",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.83,
+   "final_after_speech_end_s": 1.65
+  },
+  {
+   "id": "BAC009S0766W0488",
+   "ref": "如果这个事情反过来",
+   "hyp": "如果这个事情反过来",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.119,
+   "final_after_speech_end_s": 1.399
+  },
+  {
+   "id": "BAC009S0767W0161",
+   "ref": "同比上涨五成",
+   "hyp": "同比上涨五成",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 2.89,
+   "final_after_speech_end_s": 1.19
+  },
+  {
+   "id": "BAC009S0767W0219",
+   "ref": "仍然会存在并具有发展空间",
+   "hyp": "仍然会存在并具有发展空间",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.053,
+   "final_after_speech_end_s": 1.853
+  },
+  {
+   "id": "BAC009S0767W0273",
+   "ref": "当年泡沫破裂前也是这样的情景",
+   "hyp": "当年泡沫破裂前也是这样的情景",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.234,
+   "final_after_speech_end_s": 2.014
+  },
+  {
+   "id": "BAC009S0767W0315",
+   "ref": "今年初也在原来厂里新增了生产线",
+   "hyp": "今年初也在原来厂里新增了生产线",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 1.795,
+   "final_after_speech_end_s": 1.87
+  },
+  {
+   "id": "BAC009S0767W0366",
+   "ref": "每支报名队伍以企业为单位每队十名成员",
+   "hyp": "每支报名队伍以企业为单位每队十名成员",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 6.749,
+   "final_after_speech_end_s": 2.509
+  },
+  {
+   "id": "BAC009S0767W0441",
+   "ref": "同时李也俘获了无数中国大妈的芳心",
+   "hyp": "同时李也俘获了无数中国大妈的芳心",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 6.445,
+   "final_after_speech_end_s": 2.265
+  },
+  {
+   "id": "BAC009S0767W0478",
+   "ref": "努力处理好灌溉与发电之间的关系",
+   "hyp": "努力处理好灌溉与发电之间的关系",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 4.792,
+   "final_after_speech_end_s": 1.732
+  },
+  {
+   "id": "BAC009S0768W0153",
+   "ref": "这宗零售商业用地位于南三环外",
+   "hyp": "这宗零售商业用地位于南三环外",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.179,
+   "final_after_speech_end_s": 1.637
+  },
+  {
+   "id": "BAC009S0768W0192",
+   "ref": "考试过程需要消耗相关材料或需聘请专业面试考官的",
+   "hyp": "考试过程需要消耗相关材料或需聘请专业面试考官的",
+   "cer": 0.0,
+   "finals": 3,
+   "partials": 0,
+   "first_partial_after_onset_s": 1.433,
+   "final_after_speech_end_s": 1.931
+  },
+  {
+   "id": "BAC009S0768W0264",
+   "ref": "在战区上空形成有效韧的信息网络",
+   "hyp": "在战区上恐形成有效任的信息网络",
+   "cer": 0.1333,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 2.134,
+   "final_after_speech_end_s": 1.279
+  },
+  {
+   "id": "BAC009S0768W0323",
+   "ref": "将其列为恶意软件用户称其为流氓软件",
+   "hyp": "将其列为恶意软件用户称其为流氓软件",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.876,
+   "final_after_speech_end_s": 2.696
+  },
+  {
+   "id": "BAC009S0768W0379",
+   "ref": "一百米塞文基尼菲尔斯",
+   "hyp": "一百米赛文基尼菲尔斯",
+   "cer": 0.1,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 2.91,
+   "final_after_speech_end_s": 0.821
+  },
+  {
+   "id": "BAC009S0768W0422",
+   "ref": "好多传闻我都不会特别问他",
+   "hyp": "好多传闻我都不会特别问他",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.171,
+   "final_after_speech_end_s": 1.911
+  },
+  {
+   "id": "BAC009S0768W0460",
+   "ref": "暗地里却发布小广告揽客",
+   "hyp": "暗地里缺乏补小广告揽客",
+   "cer": 0.2727,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.462,
+   "final_after_speech_end_s": 1.462
+  },
+  {
+   "id": "BAC009S0769W0140",
+   "ref": "北京要筹集建设各类保障性住房一百万套",
+   "hyp": "北京要筹集建设各类保障性住房一百万套",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 6.929,
+   "final_after_speech_end_s": 2.509
+  },
+  {
+   "id": "BAC009S0769W0171",
+   "ref": "如今房地产市场已经供需相对平衡",
+   "hyp": "如今房地产市场已经供需相对平衡",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 6.384,
+   "final_after_speech_end_s": 2.384
+  },
+  {
+   "id": "BAC009S0769W0218",
+   "ref": "都起到了积极的作用",
+   "hyp": "都起到了积极的作用",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.309,
+   "final_after_speech_end_s": 1.389
+  },
+  {
+   "id": "BAC009S0769W0244",
+   "ref": "为了控制地方政府本届发债下届还钱的道德风险",
+   "hyp": "为了控制地方政府本届发债下届还钱的道德风险",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 8.309,
+   "final_after_speech_end_s": 3.049
+  },
+  {
+   "id": "BAC009S0769W0286",
+   "ref": "印度斯坦时报二十四日援引消息人士的话报道",
+   "hyp": "印度斯坦时报二十四日援引消息人士的话报道",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.382,
+   "final_after_speech_end_s": 2.682
+  },
+  {
+   "id": "BAC009S0769W0334",
+   "ref": "国内厂商在高端核心技术上普遍存有差距",
+   "hyp": "国内厂商在高端核心技术上普遍存有差距",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.59,
+   "final_after_speech_end_s": 2.79
+  },
+  {
+   "id": "BAC009S0769W0369",
+   "ref": "心肌同位素扫描显示局部灌注差",
+   "hyp": "心肌同位素扫描显示局部灌注差",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.535,
+   "final_after_speech_end_s": 2.055
+  },
+  {
+   "id": "BAC009S0769W0388",
+   "ref": "他们几乎都是九零后",
+   "hyp": "他们几乎都是九零后",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.705,
+   "final_after_speech_end_s": 1.385
+  },
+  {
+   "id": "BAC009S0769W0459",
+   "ref": "还把地面砸了个大坑",
+   "hyp": "还把地面砸了个大坑",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 3.522,
+   "final_after_speech_end_s": 1.322
+  },
+  {
+   "id": "BAC009S0770W0146",
+   "ref": "相比千亿房企的借贷利率",
+   "hyp": "相比千亿房企的借贷利率",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 5.001,
+   "final_after_speech_end_s": 1.261
+  },
+  {
+   "id": "BAC009S0770W0183",
+   "ref": "销售额则将维持不变",
+   "hyp": "销售额则将维持不变",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 4.536,
+   "final_after_speech_end_s": 1.436
+  },
+  {
+   "id": "BAC009S0770W0234",
+   "ref": "设定政府性债务风险控制指标和标准",
+   "hyp": "设定政府性债务风险控制指标和标准",
+   "cer": 0.0,
+   "finals": 5,
+   "partials": 0,
+   "first_partial_after_onset_s": 2.019,
+   "final_after_speech_end_s": 0.459
+  },
+  {
+   "id": "BAC009S0770W0334",
+   "ref": "虽然面对赔钱赚吆喝的质疑",
+   "hyp": "虽然面对赔钱赚吆喝的质疑",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 0,
+   "first_partial_after_onset_s": 2.107,
+   "final_after_speech_end_s": 1.912
+  },
+  {
+   "id": "BAC009S0770W0357",
+   "ref": "常年的专业训练给身体带来了各种伤病",
+   "hyp": "常年的专业训练给身体带来了各种伤病",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0,
+   "first_partial_after_onset_s": 7.237,
+   "final_after_speech_end_s": 2.437
+  }
+ ]
+}

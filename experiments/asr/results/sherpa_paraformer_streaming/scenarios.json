@@ -1,0 +1,132 @@
+{
+  "config": "configs/exp/asr/sherpa_paraformer_streaming.toml",
+  "overrides": [],
+  "results": [
+    {
+      "scenario": "asr_backchannel",
+      "latency_p50": 0.736,
+      "latency_p90": 0.736,
+      "latency_mean": 0.734,
+      "turns_expected": 1,
+      "turns_detected": 2,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 1,
+      "false_barge_in": 1,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "嗯，你说的是「ther嗯，你说的是「女」，我明白了。",
+      "checks": {
+        "false_barge_in": false,
+        "turns_detected": false,
+        "said_contains:我明白了": true,
+        "no_errors": true
+      },
+      "passed": false
+    },
+    {
+      "scenario": "asr_barge_in",
+      "latency_p50": 0.731,
+      "latency_p90": 0.731,
+      "latency_mean": 0.731,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 1,
+      "barge_in_detected": 1,
+      "barge_in_stop_latency": 0.571,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "嗯，你说的是「给我嗯，你说的是「田一下我换个问题」，我明白了。",
+      "checks": {
+        "barge_in_detected": true,
+        "max_barge_in_stop_latency": true,
+        "turns_detected": true,
+        "no_errors": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "asr_basic",
+      "latency_p50": 0.792,
+      "latency_p90": 0.792,
+      "latency_mean": 0.772,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "你好呀，有什么可以帮你？嗯，你说的是「也是谁」，我明白了。",
+      "checks": {
+        "turns_detected": true,
+        "said_contains:有什么可以帮你": true,
+        "said_contains:语音助手": false,
+        "max_latency_p50": true,
+        "no_errors": true
+      },
+      "passed": false
+    },
+    {
+      "scenario": "asr_cancel",
+      "latency_p50": 0.771,
+      "latency_p90": 0.771,
+      "latency_mean": 0.762,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 1,
+      "barge_in_detected": 1,
+      "barge_in_stop_latency": 0.771,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 1,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "好的，我让后台去处好的，已经取消了。",
+      "checks": {
+        "tasks_spawned": true,
+        "tasks_delivered": true,
+        "said_contains:已经取消": true,
+        "no_errors": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "asr_delegate",
+      "latency_p50": 0.791,
+      "latency_p90": 0.791,
+      "latency_mean": 0.781,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 1,
+      "tasks_delivered": 1,
+      "fusion_wait_p50": 5.895,
+      "errors": 0,
+      "agent_said": "好的，我让后台去处理，你可以先聊点别的。嗯，你说的是「一一」，我明白了。关于你刚才问的「帮我计算一下23乘以47」，结果是：23*47 等于 1081。",
+      "checks": {
+        "min_tasks_spawned": true,
+        "min_tasks_delivered": true,
+        "said_contains:1081": true,
+        "no_errors": true
+      },
+      "passed": true
+    }
+  ]
+}

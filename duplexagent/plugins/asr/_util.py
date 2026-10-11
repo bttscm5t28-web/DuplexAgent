@@ -69,11 +69,14 @@ class Worker:
 # ---- text post-processing -------------------------------------------------------------
 
 _TAG = re.compile(r"<\|[^|]*\|>")
+# Kana / Hangul: multilingual models (SenseVoice) sometimes mis-ID short fillers as ja/ko ("嗯嗯う", "嗯응").
+# This engine targets zh/en, so drop those scripts; it turns "嗯嗯う" back into a recognizable backchannel.
+_JA_KO = re.compile(r"[\u3040-\u30ff\u31f0-\u31ff\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]")
 
 
 def clean(text: str) -> str:
     """Strip model tags (<|zh|> ...), collapse whitespace between CJK chars, keep spaces between Latin words."""
-    text = _TAG.sub("", text).strip()
+    text = _JA_KO.sub("", _TAG.sub("", text)).strip()
     text = re.sub(r"\s+", " ", text)
     text = re.sub(r"(?<=[一-鿿])\s+|\s+(?=[一-鿿])", "", text)
     return text

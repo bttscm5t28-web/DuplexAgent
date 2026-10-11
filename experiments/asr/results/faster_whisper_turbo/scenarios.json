@@ -1,0 +1,132 @@
+{
+  "config": "configs/exp/asr/faster_whisper_turbo.toml",
+  "overrides": [],
+  "results": [
+    {
+      "scenario": "asr_backchannel",
+      "latency_p50": null,
+      "latency_p90": null,
+      "latency_mean": null,
+      "turns_expected": 1,
+      "turns_detected": 0,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 1,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "",
+      "checks": {
+        "false_barge_in": true,
+        "turns_detected": false,
+        "said_contains:我明白了": false,
+        "no_errors": true
+      },
+      "passed": false
+    },
+    {
+      "scenario": "asr_barge_in",
+      "latency_p50": null,
+      "latency_p90": null,
+      "latency_mean": null,
+      "turns_expected": 2,
+      "turns_detected": 0,
+      "barge_in_expected": 1,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "",
+      "checks": {
+        "barge_in_detected": false,
+        "max_barge_in_stop_latency": false,
+        "turns_detected": false,
+        "no_errors": true
+      },
+      "passed": false
+    },
+    {
+      "scenario": "asr_basic",
+      "latency_p50": null,
+      "latency_p90": null,
+      "latency_mean": null,
+      "turns_expected": 2,
+      "turns_detected": 0,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "",
+      "checks": {
+        "turns_detected": false,
+        "said_contains:有什么可以帮你": false,
+        "said_contains:语音助手": false,
+        "max_latency_p50": false,
+        "no_errors": true
+      },
+      "passed": false
+    },
+    {
+      "scenario": "asr_cancel",
+      "latency_p50": null,
+      "latency_p90": null,
+      "latency_mean": null,
+      "turns_expected": 2,
+      "turns_detected": 0,
+      "barge_in_expected": 1,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "",
+      "checks": {
+        "tasks_spawned": false,
+        "tasks_delivered": true,
+        "said_contains:已经取消": false,
+        "no_errors": true
+      },
+      "passed": false
+    },
+    {
+      "scenario": "asr_delegate",
+      "latency_p50": null,
+      "latency_p90": null,
+      "latency_mean": null,
+      "turns_expected": 2,
+      "turns_detected": 0,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "",
+      "checks": {
+        "min_tasks_spawned": false,
+        "min_tasks_delivered": false,
+        "said_contains:1081": false,
+        "no_errors": true
+      },
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,828 @@
+{
+ "config": "configs/exp/asr/sherpa_zipformer_zh_xlarge.toml",
+ "overrides": [
+  "asr.itn=false"
+ ],
+ "data": "bench_data/asr/ascend.jsonl",
+ "impl": "sherpa_online",
+ "asr": {
+  "impl": "sherpa_online",
+  "model": "zipformer-zh-xlarge-2025",
+  "endpoint": "vad",
+  "endpoint_ms": 300,
+  "num_threads": 2,
+  "itn": false
+ },
+ "n": 100,
+ "realtime": false,
+ "cer": 0.4291,
+ "mer": 0.2551,
+ "finals_per_utt": 1.35,
+ "empty_hyp": 0,
+ "load_s": 7.45,
+ "cpu_cores": 2.439,
+ "peak_rss_mb": 1020.5,
+ "rtf": 0.3142,
+ "rows": [
+  {
+   "id": "ses1_spk17_L4048_269.6200_3.0000",
+   "ref": "um运动啊男生一般不都喜欢运动",
+   "hyp": "嗯运动啊男生一般不都喜欢运动是吧",
+   "cer": 0.2667,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses1_spk17_L4095_324.5700_1.5900",
+   "ref": "哦这么technical",
+   "hyp": "哦这么抬肯定扣的",
+   "cer": 0.75,
+   "finals": 1,
+   "partials": 4
+  },
+  {
+   "id": "ses1_spk17_L4360_654.4100_4.8600",
+   "ref": "但那个办那个 i n g i a n g是不是只有之后打算留香港的人才能",
+   "hyp": "那但那个安钧ing是不是只有之后打算留香港的人才能",
+   "cer": 0.2414,
+   "finals": 1,
+   "partials": 14
+  },
+  {
+   "id": "ses1_spk17_L4421_726.3200_2.0000",
+   "ref": "呃i live in [UNK]",
+   "hyp": "呃爱丽婷韩喉",
+   "cer": 0.9231,
+   "finals": 1,
+   "partials": 5
+  },
+  {
+   "id": "ses1_spk17_L4580_882.1000_3.3400",
+   "ref": "[UNK] very spicy food也不辣",
+   "hyp": "烦",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 1
+  },
+  {
+   "id": "ses1_spk3_L6523_58.180_3.380",
+   "ref": "然后呃我也喜欢play basketball",
+   "hyp": "然后呃我也喜欢",
+   "cer": 0.6667,
+   "finals": 1,
+   "partials": 3
+  },
+  {
+   "id": "ses1_spk3_L6537_85.980_4.560",
+   "ref": "在念呃computer engineering对那u g的时候我是在台湾",
+   "hyp": "在念呃caplageni对豫剧的时候我是在台湾",
+   "cer": 0.5,
+   "finals": 2,
+   "partials": 10
+  },
+  {
+   "id": "ses1_spk3_L6553_105.380_4.800",
+   "ref": "就是你们你们的department大不大",
+   "hyp": "就是你们你们的decarman大不大",
+   "cer": 0.2,
+   "finals": 1,
+   "partials": 11
+  },
+  {
+   "id": "ses1_spk3_L6563_117.192_3.730",
+   "ref": "然后总共的professor大概有呃一百多位",
+   "hyp": "然后走过了布斯大概有一百多位",
+   "cer": 0.5909,
+   "finals": 2,
+   "partials": 9
+  },
+  {
+   "id": "ses1_spk3_L6573_135.380_3.900",
+   "ref": "感觉跟我们跟我们department size差不多",
+   "hyp": "感觉跟我们跟我们diparmasice差不多",
+   "cer": 0.24,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses1_spk3_L6585_157.660_2.440",
+   "ref": "就是就是我们的senior",
+   "hyp": "就是这是我们的心里",
+   "cer": 0.5385,
+   "finals": 1,
+   "partials": 5
+  },
+  {
+   "id": "ses1_spk3_L6605_193.660_3.940",
+   "ref": "所以你还蛮喜欢也蛮习惯Hong Kong life嘛就是",
+   "hyp": "所以你还蛮喜欢也蛮习惯彭康来什么就是",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 12
+  },
+  {
+   "id": "ses1_spk3_L6611_202.640_2.320",
+   "ref": "啊lifestyle啊之类的",
+   "hyp": "呃liftyle啊之类的",
+   "cer": 0.2143,
+   "finals": 1,
+   "partials": 5
+  },
+  {
+   "id": "ses1_spk3_L6615_208.560_5.780",
+   "ref": "就是像那些就是没有deadline的时候也不会那么stress",
+   "hyp": "就是像那些就是没有dellides的也不会那么shins",
+   "cer": 0.3226,
+   "finals": 2,
+   "partials": 13
+  },
+  {
+   "id": "ses1_spk3_L6631_233.160_4.800",
+   "ref": "我我自己是之前的这边exchange就是我在这边当exchange students",
+   "hyp": "我我自己是之前在这边选就是我在这边当",
+   "cer": 0.6098,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses1_spk3_L6673_289.420_4.000",
+   "ref": "tell一些你现在做什么research方向",
+   "hyp": "挑一些你现在做什么resire方向",
+   "cer": 0.3636,
+   "finals": 1,
+   "partials": 9
+  },
+  {
+   "id": "ses1_spk3_L6693_325.190_1.890",
+   "ref": "这chitchat就像是说",
+   "hyp": "就妻妾就像是说",
+   "cer": 0.6923,
+   "finals": 1,
+   "partials": 5
+  },
+  {
+   "id": "ses1_spk3_L6707_345.500_8.280",
+   "ref": "呃怎么之类的就是我们希望透过多轮就是monitor的方式然后最后让这个system可以帮助我们完成某一项任务",
+   "hyp": "啊什么之类的就是我们希望透过多轮就是莫里特人的方式然后最后让这个西斯特可以帮助我们完成某一项任务",
+   "cer": 0.2778,
+   "finals": 2,
+   "partials": 23
+  },
+  {
+   "id": "ses1_spk3_L6717_360.820_3.640",
+   "ref": "来hong kong的时候是做那个",
+   "hyp": "来轰控的时候是做那个",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses1_spk3_L6747_421.580_5.300",
+   "ref": "这个是我觉得比较interesting part的的那个topic",
+   "hyp": "这个是我觉得比较nturstea的的那个topic",
+   "cer": 0.2812,
+   "finals": 1,
+   "partials": 12
+  },
+  {
+   "id": "ses1_spk3_L6772_468.520_3.740",
+   "ref": "大陆继续念啊不去呃US",
+   "hyp": "大陆继续念啊不去呃us",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 9
+  },
+  {
+   "id": "ses1_spk3_L6774_472.720_3.260",
+   "ref": "去念研究所那为什么选择来Hong Kong",
+   "hyp": "剧院也就是那为什么选择来烘烤",
+   "cer": 0.65,
+   "finals": 2,
+   "partials": 7
+  },
+  {
+   "id": "ses1_spk3_L6786_492.720_6.880",
+   "ref": "比较就是对我来说比较new但是又就是说比比较容易习惯",
+   "hyp": "比较就是对我来说比较niew但是又就是说比比较容易习惯",
+   "cer": 0.0385,
+   "finals": 2,
+   "partials": 15
+  },
+  {
+   "id": "ses1_spk3_L6798_511.360_2.580",
+   "ref": "听起来蛮make sense我当初来",
+   "hyp": "听起来也mamexuns我当初来",
+   "cer": 0.2941,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses1_spk3_L6842_617.660_3.680",
+   "ref": "就professor就第一个是这个学校的rank也不要",
+   "hyp": "这普就第一个是这个学校的rak也不要",
+   "cer": 0.4074,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses1_spk3_L6848_624.960_7.200",
+   "ref": "也也是英语方向为主然后整个亚洲这样看起来不是Hong Kong就是Singapore",
+   "hyp": "也也英语方向为主然后整个亚洲这样看起来不是轰就是新加坡",
+   "cer": 0.439,
+   "finals": 2,
+   "partials": 17
+  },
+  {
+   "id": "ses1_spk3_L6866_668.440_3.680",
+   "ref": "就是你已经想好你要念哪个major了吗",
+   "hyp": "就是你已经想好你要念哪个媒者了吗",
+   "cer": 0.2632,
+   "finals": 1,
+   "partials": 9
+  },
+  {
+   "id": "ses1_spk3_L6886_705.020_8.120",
+   "ref": "所以但是跟那这跟major没关系的你说的major可能是哦我接下来要apply到graduate school的时候我要往computer science和往electric engineering",
+   "hyp": "所以那这个呢跟没准没关系的你说的没准可能是哦我接下来的拍到的时候我要往台湾",
+   "cer": 0.7292,
+   "finals": 1,
+   "partials": 17
+  },
+  {
+   "id": "ses1_spk3_L6888_713.160_3.840",
+   "ref": "还是company engineering去做这个这个地方是是要决定的",
+   "hyp": "还是看不进去做这个这个地方是是要决定的",
+   "cer": 0.5294,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses1_spk3_L6890_717.280_3.900",
+   "ref": "对那我当初其实是我本科是e background",
+   "hyp": "对那我当初其实是我本科是一贝拉",
+   "cer": 0.4783,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses1_spk3_L6894_725.860_3.160",
+   "ref": "我们的department其实hardware跟software其实是各半",
+   "hyp": "那么我们的地方跟索菲尔铁就是各班",
+   "cer": 0.8919,
+   "finals": 1,
+   "partials": 6
+  },
+  {
+   "id": "ses1_spk3_L6904_741.110_3.670",
+   "ref": "我并不是要做N L P的对我并不是要做natural language processing",
+   "hyp": "我并不知道说我并不是要做那些人gipasysing",
+   "cer": 0.6429,
+   "finals": 1,
+   "partials": 9
+  },
+  {
+   "id": "ses1_spk3_L6932_796.100_1.800",
+   "ref": "也是那个hardware",
+   "hyp": "也是那个哈维尔",
+   "cer": 0.6667,
+   "finals": 1,
+   "partials": 4
+  },
+  {
+   "id": "ses1_spk3_L6942_813.580_3.340",
+   "ref": "或者就是往往那个software方向走",
+   "hyp": "或者就是放往那个搜菲尔方向走",
+   "cer": 0.4737,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses1_spk3_L6958_854.120_4.380",
+   "ref": "that's the reason我来就是最后决定做那个",
+   "hyp": "lisarison我来就是最后决定做那个",
+   "cer": 0.36,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses2_spk17_L10722_133.8000_2.3200",
+   "ref": "我只参加最后final的体测",
+   "hyp": "我是参加最后烦恼的题材",
+   "cer": 0.5714,
+   "finals": 1,
+   "partials": 6
+  },
+  {
+   "id": "ses2_spk17_L10807_239.6900_2.6400",
+   "ref": "我记得学校那个gym那边",
+   "hyp": "我记得学校那个居民那边",
+   "cer": 0.25,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses2_spk17_L11073_564.0600_5.2700",
+   "ref": "嗯所以你平时会看Olympic games吗过去的几届",
+   "hyp": "嗯所以你平时会看高林天gams过去的季节",
+   "cer": 0.4231,
+   "finals": 2,
+   "partials": 11
+  },
+  {
+   "id": "ses2_spk17_L11307_893.8900_2.3600",
+   "ref": "嗯yeah因为体积比较小",
+   "hyp": "嗯呀因为体力比我小",
+   "cer": 0.5,
+   "finals": 2,
+   "partials": 5
+  },
+  {
+   "id": "ses2_spk3_L12975_10.860_4.950",
+   "ref": "呃你是说呃你有一些就你最喜欢的sport是什么",
+   "hyp": "呃你是说你有一些你最喜欢的spor是什么",
+   "cer": 0.1304,
+   "finals": 2,
+   "partials": 10
+  },
+  {
+   "id": "ses2_spk3_L12993_39.340_3.140",
+   "ref": "首先为什么basketball呢因为就是",
+   "hyp": "首先为什么buskyborn因为就是",
+   "cer": 0.35,
+   "finals": 1,
+   "partials": 9
+  },
+  {
+   "id": "ses2_spk3_L13103_195.900_7.000",
+   "ref": "对吧但是通常就是说badminton是一个很好的途径去帮助你",
+   "hyp": "对吧但是通常就是说班民是一个很好的途径去帮助你",
+   "cer": 0.3,
+   "finals": 2,
+   "partials": 17
+  },
+  {
+   "id": "ses2_spk3_L13187_308.000_5.460",
+   "ref": "另外一个因素呢是就是the the court for tennis",
+   "hyp": "另外一个因素呢是就是的lcaltfortinice",
+   "cer": 0.4333,
+   "finals": 1,
+   "partials": 14
+  },
+  {
+   "id": "ses2_spk3_L13311_539.960_4.200",
+   "ref": "就是说as a beginner you can play well at the first time",
+   "hyp": "就是说sabyginner又看playwairalfreste",
+   "cer": 0.4762,
+   "finals": 2,
+   "partials": 11
+  },
+  {
+   "id": "ses2_spk3_L13459_815.280_6.440",
+   "ref": "就是he's faster stronger and more scared for than the other players",
+   "hyp": "是efastershrongermosgarfordalpras",
+   "cer": 0.5,
+   "finals": 3,
+   "partials": 10
+  },
+  {
+   "id": "ses2_spk3_L13467_834.420_2.840",
+   "ref": "另一个呢比较欣赏的就是Corey",
+   "hyp": "另一个呢比较欣赏的就是克瑞",
+   "cer": 0.3125,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses2_spk3_L13563_1071.120_6.460",
+   "ref": "他当时也在那个Houston Rockets跟team up with McGrady",
+   "hyp": "他当时也在那个heyousterky跟因而不为斯macrady",
+   "cer": 0.5385,
+   "finals": 3,
+   "partials": 14
+  },
+  {
+   "id": "ses3_spk17_L16417_95.5400_5.5300",
+   "ref": "但是我觉得homework还蛮重要的就是我觉得对我来说是一个quantity的问题",
+   "hyp": "但是我觉得红果还��就是我觉得对我来说是一个桶挺的问题",
+   "cer": 0.4878,
+   "finals": 2,
+   "partials": 14
+  },
+  {
+   "id": "ses3_spk17_L16519_250.2500_8.0400",
+   "ref": "那我呃嗯Why you choose Hong Kong instead of other other foreign countries like US or Australia",
+   "hyp": "那嗯网友去唱空instelforrycontresmaceosoothrea",
+   "cer": 0.6974,
+   "finals": 2,
+   "partials": 19
+  },
+  {
+   "id": "ses3_spk17_L16618_387.7600_1.8400",
+   "ref": "招人的时候会觉得one year",
+   "hyp": "超人的时候会觉得玩一日",
+   "cer": 0.5333,
+   "finals": 1,
+   "partials": 4
+  },
+  {
+   "id": "ses3_spk17_L16708_504.2600_2.8930",
+   "ref": "你不是本来就深圳人吗不会说cantonese吗",
+   "hyp": "你不是本来就深圳人吗不会说看洁斯吗",
+   "cer": 0.3913,
+   "finals": 1,
+   "partials": 9
+  },
+  {
+   "id": "ses3_spk17_L16728_536.8800_2.3600",
+   "ref": "那你平时怎么跟local交流啊",
+   "hyp": "那一瓶是怎么跟loco交流啊",
+   "cer": 0.3333,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses3_spk17_L16897_761.3800_3.8400",
+   "ref": "学生没有那种就是self awareness",
+   "hyp": "雪森没有那种就是selfes",
+   "cer": 0.4286,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses3_spk17_L16959_836.6200_5.5400",
+   "ref": "不能去decide呃你喜今天想要穿什么衣服明天想要每天都穿一样的",
+   "hyp": "不能去迪斯尼呃尼西今天想要穿什么衣服明天想要穿什么衣服每天都穿一样",
+   "cer": 0.4375,
+   "finals": 1,
+   "partials": 14
+  },
+  {
+   "id": "ses3_spk17_L16965_846.3800_2.6600",
+   "ref": "个人的personalities还有那个",
+   "hyp": "个人的posnatis还有那个",
+   "cer": 0.3,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses3_spk17_L17073_959.4600_2.0000",
+   "ref": "因为G P A不是一个硬性条件吗",
+   "hyp": "因为巨皮不是一个硬性条件嘛",
+   "cer": 0.2857,
+   "finals": 1,
+   "partials": 6
+  },
+  {
+   "id": "ses3_spk17_L17077_962.2000_3.3400",
+   "ref": "那我们每天就每每次期末都先刷G P A",
+   "hyp": "那我们每天就每每次题目都先刷曲片",
+   "cer": 0.2941,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses3_spk17_L17079_965.6600_3.8400",
+   "ref": "其实我那时候非常的urgent就是我到了",
+   "hyp": "其实我那时候非常的artint就是我到了",
+   "cer": 0.15,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses3_spk17_L17193_1170.8200_8.4400",
+   "ref": "sandwiches或者是其他东西分给我们吃然后我们就边吃边听他分享share他的一些他们公司的一些东西",
+   "hyp": "三位去说的是其他东西分给我们吃然后我们就边吃边听他分享需要他的一些他们公司的一些东西",
+   "cer": 0.3269,
+   "finals": 1,
+   "partials": 23
+  },
+  {
+   "id": "ses3_spk17_L17232_1234.7200_2.8900",
+   "ref": "呃work shop学校应该也有统一的的work shop",
+   "hyp": "呃waksof学校应该也有统一的wobso",
+   "cer": 0.3333,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses3_spk3_L18611_60.700_2.660",
+   "ref": "我们还是不能够trust AI",
+   "hyp": "我们还是不能够chaci",
+   "cer": 0.4286,
+   "finals": 1,
+   "partials": 6
+  },
+  {
+   "id": "ses3_spk3_L18615_67.400_2.200",
+   "ref": "is too risky我们不能",
+   "hyp": "我们不能",
+   "cer": 0.7143,
+   "finals": 1,
+   "partials": 3
+  },
+  {
+   "id": "ses3_spk3_L18621_73.700_4.840",
+   "ref": "去全部赌在A去全部押在AI身上",
+   "hyp": "去全部堵在a区全部压在ai身上",
+   "cer": 0.2,
+   "finals": 1,
+   "partials": 11
+  },
+  {
+   "id": "ses3_spk3_L18769_325.540_3.930",
+   "ref": "对我觉得首先呢我觉得AI呢是",
+   "hyp": "对我觉得首先呢我觉得ai呢是",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses3_spk3_L18771_330.180_3.370",
+   "ref": "很大程度上是属于那种data driver",
+   "hyp": "很大程度上是属于那种",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 6
+  },
+  {
+   "id": "ses3_spk3_L18775_336.620_6.660",
+   "ref": "取决于他当时build这个AI system的时候他有没有考虑过这种情况",
+   "hyp": "取决于他当时bug这个aic斯坦的时候他还有没有考虑过这种情况",
+   "cer": 0.2857,
+   "finals": 2,
+   "partials": 16
+  },
+  {
+   "id": "ses3_spk3_L18795_395.040_5.140",
+   "ref": "因为mistake是even human make mistake",
+   "hyp": "因为是一万q门stake",
+   "cer": 0.7333,
+   "finals": 2,
+   "partials": 7
+  },
+  {
+   "id": "ses3_spk3_L18797_400.980_9.900",
+   "ref": "然后对比如说一些就是car accident啊之类的所以说很难免就是机器也会遇到但我们在遇到这个问题的时候谁应该负这个责任",
+   "hyp": "然后对比如说一些就是卡斯等啊之类的所以说很难免就是机器也会遇到但是我们真遇到这个问题的时候谁该负这个责任",
+   "cer": 0.2333,
+   "finals": 2,
+   "partials": 27
+  },
+  {
+   "id": "ses3_spk3_L18809_450.360_7.860",
+   "ref": "但是在零点零点一percent的几率就是就是需要这个降落伞公司来承担",
+   "hyp": "但是这零点零点一prson的几率就是就是需要这个降落伞公司来承担",
+   "cer": 0.1471,
+   "finals": 3,
+   "partials": 19
+  },
+  {
+   "id": "ses3_spk3_L18875_602.880_3.460",
+   "ref": "其实我觉得呢要分不同的situation",
+   "hyp": "就是我觉得呢要分不同的ctrac",
+   "cer": 0.45,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses3_spk3_L18883_618.600_5.670",
+   "ref": "我这个我这个self driving car它的安全性能只有百分之九十五",
+   "hyp": "我这个我这个saftrevivincar它的安全性能是有百分之九十五",
+   "cer": 0.2059,
+   "finals": 2,
+   "partials": 15
+  },
+  {
+   "id": "ses3_spk3_L18885_624.810_3.830",
+   "ref": "就是说你有五percent的概率会会有accident happen",
+   "hyp": "就是说你有五破三的概率会会有x等害",
+   "cer": 0.6364,
+   "finals": 1,
+   "partials": 9
+  },
+  {
+   "id": "ses3_spk3_L18971_836.040_6.720",
+   "ref": "对我同意就是self driving car它是一个非常high standard的那个technique",
+   "hyp": "对我同意就是formica它是一个非常has丹德的那个tackmik",
+   "cer": 0.5,
+   "finals": 2,
+   "partials": 17
+  },
+  {
+   "id": "ses3_spk3_L18973_843.020_6.000",
+   "ref": "就是说首先呢它要考虑的scenario比较复杂就是当你在城市里",
+   "hyp": "其实说首先呢他要考虑的比较复杂就是当你在城市里",
+   "cer": 0.3548,
+   "finals": 1,
+   "partials": 16
+  },
+  {
+   "id": "ses3_spk3_L18977_851.360_7.900",
+   "ref": "第二个呢它的测试也很很复杂就是说你在测试的时候你只能simulate这个scenario",
+   "hyp": "第二个呢它的测试也很很复杂就是说你在测试的时候你只能cmuri这个新的",
+   "cer": 0.3182,
+   "finals": 2,
+   "partials": 22
+  },
+  {
+   "id": "ses3_spk3_L18979_859.490_6.510",
+   "ref": "你不能去把它放在真的环境下去测试它因为这个万一那个accident happen怎么办",
+   "hyp": "你不能去把它放在真的环境下去测试它因为这个万一那个斯特还本怎么办",
+   "cer": 0.3333,
+   "finals": 2,
+   "partials": 19
+  },
+  {
+   "id": "ses3_spk3_L18983_875.340_6.600",
+   "ref": "是不会不会有这样意外发生的但是你换到了真实的 scenario又是另一回事",
+   "hyp": "是不会不会有这种意外发生的但是但是你办到真实的sneve又是另一回事",
+   "cer": 0.3056,
+   "finals": 2,
+   "partials": 16
+  },
+  {
+   "id": "ses3_spk3_L18987_892.260_9.040",
+   "ref": "ai可以就是很大很大程度上改善我们的生活比如说什么一些translation啊还有一些就是",
+   "hyp": "ai可以就是很大很大程度上改善我们的生活比如说什么一些雷神啊还有一些就是呃",
+   "cer": 0.2667,
+   "finals": 2,
+   "partials": 22
+  },
+  {
+   "id": "ses3_spk3_L19091_1156.360_6.800",
+   "ref": "我觉得呢就是有smart phone没smart phone就是是一个类似于双刃剑",
+   "hyp": "我觉得呢就是由斯马斯马凤就是是一个类似于双刃剑",
+   "cer": 0.5641,
+   "finals": 1,
+   "partials": 17
+  },
+  {
+   "id": "ses3_spk3_L19095_1170.780_8.320",
+   "ref": "对因为就是有有的甚至就是老师布置作业就是他可以创建一个group",
+   "hyp": "对因为就是有有的甚至就是老师布置昨夜就是他会创建一个groop",
+   "cer": 0.1562,
+   "finals": 3,
+   "partials": 17
+  },
+  {
+   "id": "ses3_spk3_L19099_1186.680_2.200",
+   "ref": "我就在那个group这样info你们",
+   "hyp": "我就在那个咙迎风里面",
+   "cer": 0.7222,
+   "finals": 1,
+   "partials": 5
+  },
+  {
+   "id": "ses3_spk3_L19107_1215.080_2.200",
+   "ref": "去guide those kids",
+   "hyp": "取该楼",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 2
+  },
+  {
+   "id": "ses3_spk3_L19141_1283.880_6.860",
+   "ref": "你要就是教导就是自己的孩子如何使用smartphone是一个非常关键的",
+   "hyp": "你要就是教导就是自己的孩子如何使用smarfee是一个非常关键的",
+   "cer": 0.1429,
+   "finals": 2,
+   "partials": 17
+  },
+  {
+   "id": "ses4_spk17_L22490_46.2800_3.6200",
+   "ref": "but for iphone you will be more呃",
+   "hyp": "呃否iphonewelbem呃",
+   "cer": 0.5385,
+   "finals": 1,
+   "partials": 9
+  },
+  {
+   "id": "ses4_spk17_L22528_89.6600_2.1200",
+   "ref": "你觉得Mac和Windows比哪个",
+   "hyp": "你觉得麦克跟德斯比哪个",
+   "cer": 0.6471,
+   "finals": 1,
+   "partials": 7
+  },
+  {
+   "id": "ses4_spk17_L22614_187.9400_5.2000",
+   "ref": "我们也学big big data [UNK] 然后我们主要是拿它来做一些",
+   "hyp": "我们也学被被逮他上学期然后我们主要是拿来做一些",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 15
+  },
+  {
+   "id": "ses4_spk17_L22616_193.6000_4.3600",
+   "ref": "呃对它analyzed或者是哦对就你刚你说的那些东西",
+   "hyp": "呃对他或者是啊对就刚刚你刚刚说的那些东西",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 11
+  },
+  {
+   "id": "ses4_spk17_L22622_205.1800_3.4900",
+   "ref": "然后再建一个model去optimization这样",
+   "hyp": "然后再建一个model去okimizen这样",
+   "cer": 0.2308,
+   "finals": 1,
+   "partials": 10
+  },
+  {
+   "id": "ses4_spk17_L22624_209.4200_4.8000",
+   "ref": "做optimization然后再去做预测主要还是做预测",
+   "hyp": "祖母奥特曼zion然后再去做预测主要还是做预测",
+   "cer": 0.3333,
+   "finals": 1,
+   "partials": 13
+  },
+  {
+   "id": "ses4_spk17_L22654_260.1800_2.0000",
+   "ref": "哦stock吗对有",
+   "hyp": "奥斯洛克队友",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 4
+  },
+  {
+   "id": "ses4_spk17_L22664_273.3800_8.4800",
+   "ref": "大陆的那个OFO它的一个过去在不同的年份不同的时间点的用量然后去",
+   "hyp": "大陆的那个ofo它的一个过去在不同的年份不同的时间点的用量然后去",
+   "cer": 0.0,
+   "finals": 3,
+   "partials": 18
+  },
+  {
+   "id": "ses4_spk17_L22672_293.4800_4.4500",
+   "ref": "问题就是B基本上都是一些business related的project",
+   "hyp": "本题就是比基本上都是一些毕竟sreatit的proje",
+   "cer": 0.4,
+   "finals": 1,
+   "partials": 12
+  },
+  {
+   "id": "ses4_spk17_L22690_317.0500_2.9400",
+   "ref": "哦那个是那个是wind好像是做",
+   "hyp": "哦那个是那个是wind好像是做",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses4_spk17_L22805_428.5300_3.5100",
+   "ref": "对反正我们就只能做一些这种比较entry level的东西",
+   "hyp": "对反正我们就只能做一些这种比较严垂带过的东西",
+   "cer": 0.3571,
+   "finals": 1,
+   "partials": 11
+  },
+  {
+   "id": "ses4_spk17_L22860_485.1100_3.2800",
+   "ref": "我当时学privacy的时候也是觉得",
+   "hyp": "我当时学的时候也是觉得",
+   "cer": 0.3889,
+   "finals": 1,
+   "partials": 8
+  },
+  {
+   "id": "ses4_spk17_L23044_724.7000_5.2600",
+   "ref": "他们之所以不用Alipay的原因就是因为啊他们觉得Alipay很轻易的就能",
+   "hyp": "他们之所以不用阿里配的原因就是因为啊他们觉得阿里配很轻易的就能",
+   "cer": 0.3243,
+   "finals": 1,
+   "partials": 14
+  },
+  {
+   "id": "ses4_spk17_L23063_746.4400_5.5600",
+   "ref": "去使用这个app就直接捅一捅一下就下去所以不会很仔细地看这些东西",
+   "hyp": "去使用这个软件就自己的同一统一下一步下一步所以就不会去很仔细地看这些东西",
+   "cer": 0.4375,
+   "finals": 1,
+   "partials": 15
+  },
+  {
+   "id": "ses4_spk17_L23113_801.8700_1.8100",
+   "ref": "是不能用这些mobile payment",
+   "hyp": "是不能用这些朴巴培们",
+   "cer": 0.6842,
+   "finals": 1,
+   "partials": 6
+  },
+  {
+   "id": "ses4_spk17_L23121_814.4200_2.6600",
+   "ref": "sign in的话只需要你的一个",
+   "hyp": "相应的话只需要你的一个",
+   "cer": 0.4,
+   "finals": 1,
+   "partials": 6
+  },
+  {
+   "id": "ses4_spk17_L23161_861.4800_2.1400",
+   "ref": "其实也是之前做了一个project的",
+   "hyp": "其实也是之前做的一个普姆这个",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 6
+  }
+ ]
+}
