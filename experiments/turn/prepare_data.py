@@ -247,6 +247,28 @@ def _toml_val(v) -> str:
     return str(v)
 
 
+BABBLE_TEXT = ["今天的新闻主要有以下几条内容", "下面请看天气预报明天全国大部分地区晴转多云", "这家餐厅的菜味道还不错就是有点贵",
+               "我们下午三点在会议室开会别忘了带材料", "周末一起去爬山吧听说山上的风景特别好", "这个问题我们需要再讨论一下"]
+
+
+def make_background(out_dir: str, tts: TTS, noises: Noises) -> None:
+    """babble.wav: four overlapping TTS talkers (TV / cafe-like); vacuum.wav and washer.wav: ESC-50."""
+    rng = np.random.default_rng(0)
+    n = 20 * SR
+    bab = np.zeros(n)
+    for k in range(4):
+        track = np.concatenate([np.concatenate([tts(t, k + j), np.zeros(int(0.2 * SR))]) for j, t in enumerate(BABBLE_TEXT)])
+        track = np.tile(track, n // len(track) + 2)
+        off = int(rng.integers(0, len(track) - n))
+        bab += set_rms(track[off : off + n], 0.05)
+    write_wav(os.path.join(out_dir, "babble.wav"), set_rms(bab, 0.08))
+    SOUND_LABELS.setdefault("vacuum", ("domestic", "vacuum cleaner"))
+    SOUND_LABELS.setdefault("washer", ("domestic", "washing machine"))
+    for lab in ("vacuum", "washer"):
+        clips = [set_rms(c, 0.08) for c in noises.clips(lab)[:6]]
+        write_wav(os.path.join(out_dir, f"{lab}.wav"), np.concatenate(clips))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--scenarios", nargs="*", default=["scenarios/turn/*.toml", "scenarios/*.toml"])
@@ -254,10 +276,12 @@ def main() -> None:
     ap.add_argument("--wav-dir", default="experiments/turn/data/wav")
     ap.add_argument("--models-dir", default="models")
     ap.add_argument("--length-scale", type=float, default=0.9, help="Piper speaking rate (<1 = faster)")
+    ap.add_argument("--bg-dir", default="experiments/turn/data/bg", help="background noise for noisy_sim")
     a = ap.parse_args()
 
     tts = TTS(a.models_dir, a.length_scale)
     noises = Noises(a.models_dir)
+    make_background(a.bg_dir, tts, noises)
     paths = sorted({p for s in a.scenarios for p in glob.glob(s)})
     for k, p in enumerate(paths):
         base = os.path.splitext(os.path.basename(p))[0]

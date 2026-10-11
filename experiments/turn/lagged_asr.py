@@ -50,7 +50,8 @@ class LaggedMockASR(ASR):
         last_partial = -1e9
         pending: list[tuple[float, int, str, bool]] = []  # (due, utterance, text, is_final)
         async for f in frames:
-            voiced = rms(f.pcm) >= self.vad_threshold
+            # noisy_sim attaches the clean signal: the mock plays a noise-robust ASR
+            voiced = rms(getattr(f, "clean_pcm", f.pcm)) >= self.vad_threshold
             if f.truth:
                 held += f.truth
             if voiced and held:

@@ -181,7 +181,10 @@ def aggregate(per_scenario: list[dict]) -> dict:
 
 async def run_scenario(cfg: dict, path: str) -> dict:
     cfg = json.loads(json.dumps(cfg))
-    cfg.setdefault("input", {}).update(impl="sim", scenario=path)
+    inp = cfg.setdefault("input", {})
+    if inp.get("impl") not in ("sim", "noisy_sim"):
+        inp["impl"] = "sim"
+    inp["scenario"] = path
     tl = Timeline()
     engine = build_engine(cfg, tl)
     await engine.run()
@@ -201,6 +204,13 @@ async def run_config(cfg: dict, paths: list[str], concurrency: int) -> list[dict
             return await run_scenario(cfg, p)
 
     return await asyncio.gather(*(one(p) for p in paths))
+
+
+def add_experiment_modules(cfg: dict) -> None:
+    mods = cfg.setdefault("plugins", {}).setdefault("modules", [])
+    for kind, impl, mod in [("asr", "lagged_mock", "experiments.turn.lagged_asr"), ("input", "noisy_sim", "experiments.turn.noisy_sim")]:
+        if cfg.get(kind, {}).get("impl") == impl and mod not in mods:
+            mods.append(mod)
 
 
 def print_table(rows: list[tuple[str, dict]]) -> None:
@@ -234,10 +244,7 @@ def main(argv=None) -> None:
     table, full = [], {}
     for name, cpath in zip(names, a.config):
         cfg = load_config(cpath, a.set)
-        if any(s.startswith("asr.impl=lagged_mock") for s in a.set) or cfg.get("asr", {}).get("impl") == "lagged_mock":
-            mods = cfg.setdefault("plugins", {}).setdefault("modules", [])
-            if "experiments.turn.lagged_asr" not in mods:
-                mods.append("experiments.turn.lagged_asr")
+        add_experiment_modules(cfg)
         t0 = time.time()
         res = asyncio.run(run_config(cfg, paths, a.concurrency))
         agg = aggregate(res)

@@ -148,7 +148,9 @@ class LMEOT:
         punct_tokens: tuple[str, ...] = ("。", "？", "！", "?", "!", "."),
         temperature: float = 1.0,
         system: str | None = "",
-        calib: tuple[float, float] = (0.0, 1.0),
+        calib: str = "log",
+        log_center: float = -1.7,  # log10 P(end) mapped to 0.5 (raw P is tiny for unpunctuated statements)
+        log_slope: float = 2.5,
     ):
         import numpy as np
         from tokenizers import Tokenizer
@@ -176,7 +178,7 @@ class LMEOT:
         self.max_ctx_tokens = max_ctx_tokens
         self.temperature = temperature
         self.system = system
-        self.calib = calib
+        self.calib, self.log_center, self.log_slope = calib, log_center, log_slope
 
     def _single_id(self, s: str):
         ids = self.tok.encode(s, add_special_tokens=False).ids
@@ -211,8 +213,10 @@ class LMEOT:
         probs = np.exp(logits)
         probs /= probs.sum()
         p = float(probs[self.end_ids].sum() + probs[self.punct_ids].sum())
-        lo, hi = self.calib  # map the model's raw range onto [0, 1]
-        return min(1.0, max(0.0, (p - lo) / (hi - lo))) if hi > lo else p
+        if self.calib != "log":
+            return p
+        z = self.log_slope * (math.log10(max(p, 1e-9)) - self.log_center)
+        return 1.0 / (1.0 + math.exp(-z))
 
 
 def _has_external(repo: str, filename: str) -> bool:
@@ -274,20 +278,31 @@ class TenTurnEOT:
         return Llama(model_path=hf_file(repo, filename), n_ctx=512, n_threads=threads, verbose=False, logits_all=False)
 
     def classify(self, text: str) -> dict[str, float]:
-        msgs = [{"role": "system", "content": self.system}, {"role": "user", "content": text}]
+        """Probabilities of the three labels as the first generated token."""
         if self.backend == "llama_cpp":
-            out = self.llm.create_chat_completion(msgs, max_tokens=1, temperature=0.0, logprobs=True, top_logprobs=10)
-            choice = out["choices"][0]
-            label = choice["message"]["content"].strip().lower()
-            tops = {}
-            lp = (choice.get("logprobs") or {}).get("content") or []
-            if lp:
-                for t in lp[0].get("top_logprobs", []):
-                    tops[t["token"].strip().lower()] = math.exp(t["logprob"])
-            return tops or {label: 1.0}
+            import numpy as np
+
+            llm = self.llm
+            prompt = (f"<|im_start|>system\n{self.system}<|im_end|>\n<|im_start|>user\n{text}<|im_end|>\n"
+                      "<|im_start|>assistant\n")
+            with _lock:  # one llama context: calls must not interleave
+                toks = llm.tokenize(prompt.encode(), add_bos=False, special=True)
+                llm.reset()
+                llm.eval(toks)
+                # llama-cpp-python only mirrors logits into .scores with logits_all; read the last row directly
+                n_vocab = llm.n_vocab()
+                logits = np.ctypeslib.as_array(llm._ctx.get_logits(), shape=(n_vocab,)).astype(np.float64)
+            if not hasattr(self, "_label_ids"):
+                self._label_ids = {lab: llm.tokenize(lab.encode(), add_bos=False, special=False)[0]
+                                   for lab in ("finished", "unfinished", "wait")}
+            logits -= logits.max()
+            p = np.exp(logits)
+            p /= p.sum()
+            return {lab: float(p[i]) for lab, i in self._label_ids.items()}
         import json
         import urllib.request
 
+        msgs = [{"role": "system", "content": self.system}, {"role": "user", "content": text}]
         body = json.dumps({"model": self.model, "messages": msgs, "max_tokens": 1, "temperature": 0,
                            "logprobs": True, "top_logprobs": 10}).encode()
         req = urllib.request.Request(self.base_url.rstrip("/") + "/chat/completions", body, {"Content-Type": "application/json"})
@@ -303,8 +318,8 @@ class TenTurnEOT:
             return 0.5
         tops = self.classify(text.strip())
         # "finished" and "wait" (= "shut up") both end the user's turn; tokens may be split ("fin", "un")
-        fin = sum(v for k, v in tops.items() if k.startswith(("fin", "wait", "wa")))
-        unf = sum(v for k, v in tops.items() if k.startswith(("unf", "un")))
+        fin = sum(v for k, v in tops.items() if k.startswith(("fin", "wa")))
+        unf = sum(v for k, v in tops.items() if k.startswith("un"))
         return fin / (fin + unf) if fin + unf > 0 else 0.5
 
 
