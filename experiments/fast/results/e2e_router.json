@@ -1,0 +1,132 @@
+{
+  "config": "configs/exp/fast/router.toml",
+  "overrides": [],
+  "results": [
+    {
+      "scenario": "backchannel",
+      "latency_p50": 0.583,
+      "latency_p90": 0.583,
+      "latency_mean": 0.583,
+      "turns_expected": 1,
+      "turns_detected": 1,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 1,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "嗯，我明白了，你接着说。",
+      "checks": {
+        "false_barge_in": true,
+        "turns_detected": true,
+        "said_contains:我明白了": true,
+        "no_errors": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "barge_in",
+      "latency_p50": 0.581,
+      "latency_p90": 0.581,
+      "latency_mean": 0.581,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 1,
+      "barge_in_detected": 1,
+      "barge_in_stop_latency": 0.32,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "嗯，我明白了，你嗯，我明白了，你接着说。",
+      "checks": {
+        "barge_in_detected": true,
+        "max_barge_in_stop_latency": true,
+        "turns_detected": true,
+        "no_errors": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "basic",
+      "latency_p50": 0.582,
+      "latency_p90": 0.582,
+      "latency_mean": 0.581,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 0,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "你好呀，有什么可以帮你？我是你的语音助手，可以陪你聊天，复杂的事我会交给后台去办。",
+      "checks": {
+        "turns_detected": true,
+        "said_contains:有什么可以帮你": true,
+        "said_contains:语音助手": true,
+        "max_latency_p50": true,
+        "no_errors": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "cancel",
+      "latency_p50": 0.582,
+      "latency_p90": 0.582,
+      "latency_mean": 0.582,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 1,
+      "barge_in_detected": 1,
+      "barge_in_stop_latency": 0.321,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 1,
+      "tasks_delivered": 0,
+      "fusion_wait_p50": null,
+      "errors": 0,
+      "agent_said": "好，我让后台查好的，「查一下明天北京的天气」已经取消了。",
+      "checks": {
+        "tasks_spawned": true,
+        "tasks_delivered": true,
+        "said_contains:已经取消": true,
+        "no_errors": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "delegate",
+      "latency_p50": 0.582,
+      "latency_p90": 0.582,
+      "latency_mean": 0.581,
+      "turns_expected": 2,
+      "turns_detected": 2,
+      "barge_in_expected": 0,
+      "barge_in_detected": 0,
+      "barge_in_stop_latency": null,
+      "backchannels": 0,
+      "false_barge_in": 0,
+      "tasks_spawned": 1,
+      "tasks_delivered": 1,
+      "fusion_wait_p50": 4.606,
+      "errors": 0,
+      "agent_said": "好，我让后台精确算一下，马上告诉你。你好呀，有什么可以帮你？你刚才问的「计算一下 23 乘以 47」有结果了：23  47 等于 1081",
+      "checks": {
+        "min_tasks_spawned": true,
+        "min_tasks_delivered": true,
+        "said_contains:1081": true,
+        "no_errors": true
+      },
+      "passed": true
+    }
+  ]
+}
