@@ -1,0 +1,48 @@
+# 候选：adaptive —— 能量 VAD + 中文文本规则 EOT（自适应静音阈值）+ 命令词/附和词/回声感知的打断判别。纯标准库。
+# 基于 configs/default.toml，只改 [turn]。
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 15.0
+cancel_on_resume = true
+
+[plugins]
+modules = []
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+endpoint_ms = 160
+
+[turn]
+impl = "adaptive"
+eot = ["text"]
+min_silence_ms = 250
+p_low = 0.15
+p_high = 0.75
+max_silence_ms = 2000
+base_silence_ms = 500
+barge_in_ms = 300
+barge_in_max_ms = 1300  # 能量 VAD 分不清噪声：没有文字时要更久才打断
+
+[fast]
+impl = "rule"
+think_ms = 150
+
+[slow]
+impl = "mock"
+delay_s = 3.0
+
+[tts]
+impl = "mock"
+chars_per_sec = 6.0
+first_chunk_ms = 80
+
+[fusion]
+impl = "idle"
+idle_ms = 800
