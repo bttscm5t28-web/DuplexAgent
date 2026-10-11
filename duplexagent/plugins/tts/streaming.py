@@ -214,7 +214,7 @@ def _silent_runs(mask, min_frames: int) -> list[tuple[int, int]]:
     return runs
 
 
-def align_units(units: list[Unit], x, sr: int, min_pause_ms: int = 60, anchor: bool = True) -> list[tuple[int, int]]:
+def align_units(units: list[Unit], x, sr: int, min_pause_ms: int = 80, anchor: bool = True) -> list[tuple[int, int]]:
     """Split a segment's audio among its units. Returns [(start, end)] sample spans covering x.
 
     Speech region = first..last voiced frame. Punctuation units are matched (in order) to the
@@ -245,20 +245,48 @@ def align_units(units: list[Unit], x, sr: int, min_pause_ms: int = 60, anchor: b
     anchors: dict[int, tuple[int, int]] = {}
     if anchor and len(voiced):
         runs = [(a * hop, b * hop) for a, b in _silent_runs(mask, max(1, min_pause_ms // 10)) if a * hop > s0 and b * hop < s1]
-        tol = max(0.25 * (s1 - s0), 0.35 * sr)
+        tol = min(max(0.2 * (s1 - s0), 0.3 * sr), 0.8 * sr)
         j0 = 0
         for i, u in enumerate(units[: last_speech + 1]):
             if not u.pause or u.weight <= 0:
                 continue
             centre = (pred[i] + pred[i + 1]) / 2
-            best, bestd = None, tol
+            best, bestc = None, None
             for j in range(j0, len(runs)):
-                d = abs((runs[j][0] + runs[j][1]) / 2 - centre)
-                if d < bestd:
-                    best, bestd = j, d
+                a, b = runs[j]
+                d = abs((a + b) / 2 - centre)
+                if d > tol:
+                    continue
+                cost = d - 2.0 * (b - a)  # prefer long pauses: short gaps are often stop closures
+                if bestc is None or cost < bestc:
+                    best, bestc = j, cost
             if best is not None:
                 anchors[i] = runs[best]
                 j0 = best + 1
+        # Drop anchors that imply an implausible speaking rate in the pieces they delimit
+        # (a model that does not pause at a comma would otherwise drag text onto a wrong gap).
+        while anchors:
+            keys = sorted(anchors)
+            edges = [(0, float(s0))] + [(k, float(anchors[k][0])) for k in keys] + [(last_speech + 1, float(s1))]
+            ends = [(0, float(s0))] + [(k + 1, float(anchors[k][1])) for k in keys] + [(last_speech + 1, float(s1))]
+            rate = (s1 - s0) / W
+            worst, worst_dev = None, 0.0
+            for q in range(len(keys) + 1):
+                i0, t0 = ends[q]
+                i1, t1 = edges[q + 1]
+                w = sum(inner_w[i0:i1])
+                if w < 1.0:
+                    continue
+                r = (t1 - t0) / w / rate
+                dev = max(r, 1 / max(r, 1e-6))
+                if dev > 1.6 and dev > worst_dev:
+                    worst_dev = dev
+                    worst = keys[q] if q < len(keys) else keys[q - 1]
+                    if q > 0 and q < len(keys):  # piece between two anchors: drop the later one
+                        worst = keys[q]
+            if worst is None:
+                break
+            del anchors[worst]
 
     # piecewise proportional split between anchors
     bounds = [0.0] * (n_units + 1)
@@ -563,6 +591,9 @@ class StreamingTTS(TTS):
             x, sr = res[0], res[1]
             marks = res[2] if len(res) > 2 else None
             x = resample(np.asarray(x, dtype=np.float32), sr, SAMPLE_RATE)
+            peak = float(np.abs(x).max()) if len(x) else 0.0
+            if peak > 0.95:  # simple limiter: some models (zero-shot ones) overshoot and would clip
+                x = x * (0.95 / peak)
         else:
             x = np.zeros(0, dtype=np.float32)
         dt = time.monotonic() - t0

@@ -41,3 +41,5 @@ impl = "sherpa"
 preset = "zipvoice"
 model_root = "models/tts"
 num_threads = 4
+prompt_wav = "models/third_party/CosyVoice/asset/zero_shot_prompt.wav"  # Apache-2.0 asset from the CosyVoice repo (clean studio prompt)
+prompt_text = "希望你以后能够做的比我还好呦。"

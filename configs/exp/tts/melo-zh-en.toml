@@ -40,4 +40,4 @@ idle_ms = 800
 impl = "sherpa"
 preset = "melo-zh-en"
 model_root = "models/tts"
-num_threads = 2
+num_threads = 4
