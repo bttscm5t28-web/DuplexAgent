@@ -35,6 +35,7 @@ impl = "agent"
 base_url = "http://localhost:8081/v1"
 model = "qwen1.5b"
 tool_mode = "prompt"
+prewarm = true
 temperature = 0.2
 max_tokens = 512
 max_steps = 4

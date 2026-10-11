@@ -1,0 +1,325 @@
+{
+ "name": "agent_mock",
+ "config": "configs/exp/slow/agent_mock.toml",
+ "overrides": [
+  "slow.base_url=http://127.0.0.1:8091/v1",
+  "slow.stream=true"
+ ],
+ "slow_cfg": {
+  "impl": "agent",
+  "base_url": "http://127.0.0.1:8091/v1",
+  "model": "scripted",
+  "stream": true,
+  "fixed_now": "2026-10-11T10:00"
+ },
+ "hardware": {
+  "cpus": 4,
+  "machine": "x86_64",
+  "python": "3.13.16"
+ },
+ "amend": {
+  "n": 4,
+  "amend_while_running": 4,
+  "adopted_rate_all": 0.25,
+  "adopted_rate_running": 0.25,
+  "stale_rate_running": 0.0,
+  "acknowledged_rate_running": 1.0,
+  "rows": [
+   {
+    "id": "amend-01",
+    "cat": null,
+    "query": "3 个人平分 360 元，每人多少钱",
+    "amend_while_running": true,
+    "amend_at": 0.501,
+    "result": "（模拟）关于「4 个人平分 360 元，每人多少钱」我没有工具可用。",
+    "status": "result",
+    "latency_s": 1.513,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：3 个人平分 360 元，每人多少钱",
+     "收到补充「把 3 个人改成 4 个人」，按新条件重新考虑"
+    ],
+    "n_progress": 2,
+    "n_informative": 1,
+    "max_silence_s": 1.007,
+    "spoken_chars": 34,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": [],
+    "adopted": false,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-02",
+    "cat": null,
+    "query": "计算 25 乘以 16",
+    "amend_while_running": true,
+    "amend_at": 0.501,
+    "result": "结果是 425。",
+    "status": "result",
+    "latency_s": 2.516,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：计算 25 乘以 16",
+     "收到补充「把 16 改成 17」，按新条件重新考虑",
+     "思路：先算一下。",
+     "正在用计算器算 25 * 17",
+     "用计算器算 25 * 17，得到 25 * 17 = 425"
+    ],
+    "n_progress": 5,
+    "n_informative": 4,
+    "max_silence_s": 1.005,
+    "spoken_chars": 8,
+    "has_detail": true,
+    "detail": "根据工具输出「25 * 17 = 425」。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "trace": [
+     {
+      "tool": "calculator",
+      "args": {
+       "expression": "25 * 17"
+      },
+      "ok": true,
+      "out": "25 * 17 = 425"
+     }
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-03",
+    "cat": null,
+    "query": "5 公里等于多少米",
+    "amend_while_running": true,
+    "amend_at": 0.501,
+    "result": "（模拟）关于「8 公里等于多少米」我没有工具可用。",
+    "status": "result",
+    "latency_s": 1.509,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：5 公里等于多少米",
+     "收到补充「把 5 公里改成 8 公里」，按新条件重新考虑"
+    ],
+    "n_progress": 2,
+    "n_informative": 1,
+    "max_silence_s": 1.004,
+    "spoken_chars": 25,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": [],
+    "adopted": false,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-05",
+    "cat": null,
+    "query": "2026年10月1日之后30天是几月几号",
+    "amend_while_running": true,
+    "amend_at": 0.501,
+    "result": "（模拟）关于「2026年10月1日之后30天是几月几号，把 30 天改成 60 天」我没有工具可用。",
+    "status": "result",
+    "latency_s": 1.51,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2026年10月1日之后30天是几月几号",
+     "收到补充「把 30 天改成 60 天」，按新条件重新考虑"
+    ],
+    "n_progress": 2,
+    "n_informative": 1,
+    "max_silence_s": 1.004,
+    "spoken_chars": 50,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": [],
+    "adopted": false,
+    "stale": false,
+    "acknowledged": true
+   }
+  ]
+ },
+ "cancel": {
+  "n": 6,
+  "cancelled_while_running": 4,
+  "cancel_latency_p50_s": 0.001,
+  "cancel_latency_max_s": 0.0008,
+  "leftover_procs": 0,
+  "rows": [
+   {
+    "id": "cancel-01",
+    "cat": null,
+    "query": "写个程序：从 1 到 10 的 9 次方逐个累加求和",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0004,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 1.503,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：写个程序：从 1 到 10 的 9 次方逐个累加求和",
+     "思路：先算一下。",
+     "正在用计算器算 10 **9",
+     "用计算器算 10 **9，得到 10 **9 = 1000000000"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 1.004,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "trace": [
+     {
+      "tool": "calculator",
+      "args": {
+       "expression": "10 **9"
+      },
+      "ok": true,
+      "out": "10 **9 = 1000000000"
+     }
+    ]
+   },
+   {
+    "id": "cancel-02",
+    "cat": null,
+    "query": "帮我详细规划一个十天的欧洲旅行",
+    "finished_before_cancel": true,
+    "result": "（模拟）关于「帮我详细规划一个十天的欧洲旅行」我没有工具可用。",
+    "status": "result",
+    "latency_s": 1.007,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：帮我详细规划一个十天的欧洲旅行"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 1.007,
+    "spoken_chars": 31,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": []
+   },
+   {
+    "id": "cancel-03",
+    "cat": null,
+    "query": "1 到 1000 之间有多少个质数",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0008,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.505,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1 到 1000 之间有多少个质数"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.505,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": []
+   },
+   {
+    "id": "cancel-04",
+    "cat": null,
+    "query": "计算 23 * 47",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0007,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.206,
+    "first_progress_s": 0.0003,
+    "progress": [
+     "开始处理：计算 23 * 47"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.205,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": []
+   },
+   {
+    "id": "cancel-05",
+    "cat": null,
+    "query": "今天是星期几",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0007,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.205,
+    "first_progress_s": 0.0003,
+    "progress": [
+     "开始处理：今天是星期几"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.204,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": []
+   },
+   {
+    "id": "cancel-06",
+    "cat": null,
+    "query": "100 的阶乘末尾有多少个 0",
+    "finished_before_cancel": true,
+    "result": "（模拟）关于「100 的阶乘末尾有多少个 0」我没有工具可用。",
+    "status": "result",
+    "latency_s": 1.006,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：100 的阶乘末尾有多少个 0"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 1.005,
+    "spoken_chars": 31,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "trace": []
+   }
+  ]
+ }
+}

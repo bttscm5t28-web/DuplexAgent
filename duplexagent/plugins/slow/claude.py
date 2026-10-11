@@ -150,7 +150,7 @@ class ClaudeAgentSDKSlowBrain(AgentSlowBrain):
     follow-up user messages after interrupting the current turn; cancellation disconnects."""
 
     def __init__(self, model: str = "claude-opus-5-5", effort: str | None = "medium", max_turns: int = 12,
-                 builtin_web: bool = False, cli_path: str | None = None, **kw):
+                 builtin_web: bool = False, cli_path: str | None = None, prewarm: bool = True, **kw):
         unknown = set(kw) - _AGENT_KEYS
         if unknown:
             raise TypeError(f"unknown option(s) for slow/claude_agent: {sorted(unknown)}")
@@ -161,24 +161,75 @@ class ClaudeAgentSDKSlowBrain(AgentSlowBrain):
         self.builtin_web = builtin_web
         self.cli_path = cli_path
         self.cost_usd = 0.0
+        self._teardown: set[asyncio.Future] = set()
+        # prewarm: keep one spare connected session so a task does not pay the CLI start-up
+        # (~1–3 s) and a cancel never lands in the middle of connect().
+        self.prewarm = prewarm
+        self._spare: asyncio.Future | None = None
 
-    def _mcp_server(self, task_id: str):
+    async def start(self) -> None:
+        await super().start()
+        if self.prewarm:
+            self._spare = asyncio.ensure_future(self._new_session())
+
+    async def close(self) -> None:
+        spare, self._spare = self._spare, None
+        if spare is not None:
+            self._dispose(spare)
+        if self._teardown:
+            await asyncio.gather(*self._teardown, return_exceptions=True)
+        await super().close()
+
+    def _dispose(self, session: asyncio.Future) -> None:
+        """Disconnect a (possibly still connecting) session in the background."""
+
+        async def go():
+            try:
+                client, _ = await session
+            except BaseException:
+                return
+            await client.disconnect()
+
+        t = asyncio.ensure_future(go())
+        self._teardown.add(t)
+        t.add_done_callback(self._teardown.discard)
+
+    async def _new_session(self):
+        from claude_agent_sdk import ClaudeSDKClient
+
+        ctx = {"trace": []}  # the tool handlers log into whichever task currently owns the session
+        client = ClaudeSDKClient(options=self._options(ctx))
+        await client.connect()
+        return client, ctx
+
+    async def _take_session(self):
+        spare, self._spare = self._spare, None
+        if self.prewarm:
+            self._spare = asyncio.ensure_future(self._new_session())
+        if spare is None:
+            spare = asyncio.ensure_future(self._new_session())
+        try:
+            return await asyncio.shield(spare)
+        except asyncio.CancelledError:
+            self._dispose(spare)  # cancelled while connecting: don't leak the CLI process
+            raise
+
+    def _mcp_server(self, ctx: dict):
         from claude_agent_sdk import create_sdk_mcp_server, tool
 
-        trace = self.traces.setdefault(task_id, [])
         sdk_tools = []
         for t in self.toolbox.tools.values():
             def make(t=t):
                 @tool(t.name, t.description, t.parameters)
                 async def handler(args: dict) -> dict:
                     res = await self.toolbox.call(t.name, args)
-                    trace.append({"tool": t.name, "args": args, "ok": res.ok, "out": res.text[:200]})
+                    ctx["trace"].append({"tool": t.name, "args": args, "ok": res.ok, "out": res.text[:200]})
                     return {"content": [{"type": "text", "text": res.text}], **({} if res.ok else {"is_error": True})}
                 return handler
             sdk_tools.append(make())
         return create_sdk_mcp_server("slowtools", tools=sdk_tools)
 
-    def _options(self, task_id: str):
+    def _options(self, ctx: dict):
         from claude_agent_sdk import ClaudeAgentOptions
 
         names = [f"mcp__slowtools__{n}" for n in self.toolbox.tools]
@@ -186,7 +237,7 @@ class ClaudeAgentSDKSlowBrain(AgentSlowBrain):
         opts = dict(
             model=self.model,
             system_prompt=self.system_prompt,
-            mcp_servers={"slowtools": self._mcp_server(task_id)},
+            mcp_servers={"slowtools": self._mcp_server(ctx)},
             tools=builtin,  # no Bash/Read/Write/Edit: only sandboxed tools
             allowed_tools=names + builtin,
             max_turns=self.max_turns,
@@ -203,17 +254,29 @@ class ClaudeAgentSDKSlowBrain(AgentSlowBrain):
                 opts.pop(k, None)
             return ClaudeAgentOptions(**opts)
 
-    async def run(self, task: TaskRecord) -> AsyncIterator[TaskUpdate]:
-        from claude_agent_sdk import AssistantMessage, ClaudeSDKClient, ResultMessage, TextBlock, ToolUseBlock
+    @staticmethod
+    async def _drain(client, timeout: float = 10.0) -> None:
+        async def go():
+            async for _ in client.receive_response():
+                pass
 
-        yield TaskUpdate("progress", f"开始处理：{clip(task.query, 30)}")
+        try:
+            await asyncio.wait_for(go(), timeout)
+        except asyncio.TimeoutError:
+            pass
+
+    async def run(self, task: TaskRecord) -> AsyncIterator[TaskUpdate]:
+        from claude_agent_sdk import AssistantMessage, ResultMessage, TextBlock, ToolUseBlock
+
+        yield TaskUpdate("progress", "已开始处理，正在分析问题")
         t0 = time.monotonic()
         seen = len(task.amendments)
         prompt = self.task_prompt(task)
         if task.amendments:
             prompt += "\n用户补充：" + "；".join(task.amendments)
-        client = ClaudeSDKClient(options=self._options(task.id))
-        await client.connect()
+        client, ctx = await self._take_session()
+        ctx["trace"] = self.traces.setdefault(task.id, [])
+        nxt: asyncio.Future | None = None
         try:
             await client.query(prompt)
             while True:
@@ -232,6 +295,7 @@ class ClaudeAgentSDKSlowBrain(AgentSlowBrain):
                         nxt.cancel()
                         await asyncio.gather(nxt, return_exceptions=True)
                         await client.interrupt()
+                        await self._drain(client)  # consume the interrupted turn's ResultMessage
                         break
                     try:
                         msg = nxt.result()
@@ -267,4 +331,9 @@ class ClaudeAgentSDKSlowBrain(AgentSlowBrain):
                 yield TaskUpdate("result", spoken)
                 return
         finally:
-            await client.disconnect()
+            if nxt is not None:  # retrieve whatever the pending read ends with, so nothing is left unobserved
+                nxt.cancel()
+                nxt.add_done_callback(lambda f: f.cancelled() or f.exception())
+            # Tear the CLI down in the background so cancellation returns immediately;
+            # close() waits for any teardown still in flight.
+            self._dispose(asyncio.ensure_future(asyncio.sleep(0, (client, ctx))))

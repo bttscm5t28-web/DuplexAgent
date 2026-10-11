@@ -236,7 +236,7 @@ class AgentSlowBrain(SlowBrain):
     async def run(self, task: TaskRecord) -> AsyncIterator[TaskUpdate]:
         t0 = time.monotonic()
         trace = self.traces.setdefault(task.id, [])
-        yield TaskUpdate("progress", f"开始处理：{clip(task.query, 30)}")
+        yield TaskUpdate("progress", "已开始处理，正在分析问题")
         messages = self._init_messages(self.task_prompt(task))
         seen, steps, empty = 0, 0, 0
         while True:
@@ -327,7 +327,7 @@ class OpenAICompatAgent(AgentSlowBrain):
     """
 
     def __init__(self, base_url: str, model: str, api_key_env: str = "OPENAI_API_KEY", tool_mode: str = "native",
-                 timeout: float = 120.0, params: dict | None = None, stream: bool = False, **kw):
+                 timeout: float = 120.0, params: dict | None = None, stream: bool = False, prewarm: bool = False, **kw):
         agent_keys = {"tools", "web", "max_steps", "time_budget_s", "system_prompt", "preempt_on_amend", "timezone", "fixed_now", "mcp_servers", "amend_poll_s"}
         super().__init__(**{k: v for k, v in kw.items() if k in agent_keys})
         self.params = dict(params or {}, **{k: v for k, v in kw.items() if k not in agent_keys})
@@ -338,14 +338,31 @@ class OpenAICompatAgent(AgentSlowBrain):
         # stream=True: when a call is cancelled/pre-empted, closing the stream makes the server stop
         # generating (non-streamed requests keep a local server busy until they finish).
         self.stream = stream
+        # prewarm: at start, send the system prompt once (1 output token) so a local server
+        # (llama.cpp / vLLM prefix cache) already holds it; the first real task then skips that prefill.
+        self.prewarm = prewarm
+        self._prewarm_task: asyncio.Task | None = None
 
     async def start(self) -> None:
         from duplexagent.core.llm import ChatClient
 
         await super().start()
         self.client = ChatClient(**self.cfg, **self.params)
+        if self.prewarm:
+            async def warm():
+                try:
+                    msgs = self._init_messages("任务：（预热，请忽略）")
+                    tools = self.toolbox.specs("openai") if self.tool_mode == "native" else None
+                    body_tools = {"tools": tools} if tools else {}
+                    await self.client._http.post("/chat/completions", json={"model": self.client.model, "messages": msgs, "max_tokens": 1, **body_tools})
+                except Exception:
+                    pass
+            self._prewarm_task = asyncio.ensure_future(warm())
 
     async def close(self) -> None:
+        if self._prewarm_task is not None and not self._prewarm_task.done():
+            self._prewarm_task.cancel()
+            await asyncio.gather(self._prewarm_task, return_exceptions=True)
         await super().close()
         await self.client.close()
 

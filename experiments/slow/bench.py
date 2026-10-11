@@ -33,7 +33,7 @@ from duplexagent.core.registry import create, load_modules  # noqa: E402
 from duplexagent.core.types import TaskRecord  # noqa: E402
 
 FIXED_NOW = "2026-10-11T10:00"  # date tasks are written relative to this "today"
-GENERIC = re.compile(r"^(开始处理|处理中|完成了第 ?\d+/\d+ ?步|开始推理|正在思考)$")
+GENERIC = re.compile(r"^(开始处理|已开始处理，正在分析问题|处理中|完成了第 ?\d+/\d+ ?步|开始推理|正在思考)$")
 
 
 _CN_BIG = re.compile(r"(\d+(?:\.\d+)?)亿(?:(\d{1,4})万)?(\d{1,4})?|(\d+(?:\.\d+)?)万(\d{1,4})?")

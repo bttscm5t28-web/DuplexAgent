@@ -218,3 +218,15 @@ def test_claude_degrades_without_betas():
         assert "120" in ups[-1].text and not b.progress_notes and not b.fallbacks
     finally:
         srv.shutdown()
+
+
+def test_claude_agent_sdk_against_mock(mock_url, monkeypatch):
+    """Drives the real Claude Agent SDK (bundled Claude Code CLI) against the scripted mock."""
+    pytest.importorskip("claude_agent_sdk")
+    monkeypatch.setenv("ANTHROPIC_BASE_URL", mock_url)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "dummy")
+    cfg = {"impl": "claude_agent", "model": "claude-opus-5-5"}
+    ups, _ = run(_drive(cfg, "计算 360/3", amend=(1.5, "把 3 改成 4")))
+    assert ups[-1].kind == "result" and "90" in ups[-1].text
+    ups, lat = run(_drive(cfg, "计算 360/3", cancel_at=1.0))
+    assert lat is not None and lat < 5 and not any(u.kind == "result" for u in ups)
