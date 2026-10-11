@@ -86,7 +86,8 @@ class HybridTurnDetector(TurnDetector):
             "extra_commands": [],
             "adapt": True,  # learn from cut-ins: user resumed right after our TURN_END -> wait longer
             "adapt_window_ms": 1500,
-            "context_turns": 2,  # last agent/user messages handed to context-aware scorers
+            "context_turns": 2,
+            "lexicon_override": True,  # bare stop command / backchannel = done, whatever the models say  # last agent/user messages handed to context-aware scorers
         }
         o.update(self.DEFAULTS)
         unknown = set(kw) - set(o)
@@ -188,6 +189,9 @@ class HybridTurnDetector(TurnDetector):
 
     def p_done(self) -> tuple[float | None, bool]:
         """Fused P(done) over finished scorers, and whether any scorer is still running."""
+        t = lexicon.norm(self.utt_text)
+        if self.o["lexicon_override"] and t and (t in lexicon.STOP_SET or self.is_backchannel(t)):
+            return 0.95, False  # "停" / "嗯嗯": interaction tokens chat LMs and prosody models don't cover
         total = wsum = 0.0
         waiting = False
         for s in self.scorers:

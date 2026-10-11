@@ -32,6 +32,8 @@ STOP_COMMANDS = [
     "wait", "stop", "hold on", "no no",
 ]
 
+STOP_SET = {re.sub(r"[\s,.!?]+", "", c.lower()) for c in STOP_COMMANDS}
+
 # A turn ending in these is almost surely unfinished.
 _INCOMPLETE_TAIL = [
     # fillers
@@ -111,7 +113,7 @@ def text_eot_prob(text: str) -> float:
         base_punct = 0.85
     else:
         base_punct = None
-    if t in {norm(c) for c in STOP_COMMANDS}:
+    if t in STOP_SET:
         return 0.9  # a bare "等一下" / "停" is a complete turn
     if is_backchannel(t) or t in ("你好", "谢谢", "再见", "拜拜"):
         return 0.9
