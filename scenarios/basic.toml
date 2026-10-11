@@ -1,0 +1,16 @@
+# Plain turn-taking: two short user turns, agent answers each.
+name = "basic"
+duration = 9.0
+
+[[turns]]
+at = 0.5
+text = "你好"
+
+[[turns]]
+at = 5.0
+text = "你是谁"
+
+[expect]
+turns_detected = 2
+said_contains = ["有什么可以帮你", "语音助手"]
+max_latency_p50 = 1.2

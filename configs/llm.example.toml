@@ -1,0 +1,36 @@
+# Example: real LLMs for both brains over OpenAI-compatible endpoints (pip install -e .[llm]).
+# Copy to configs/llm.toml and edit; set the API key env vars first.
+[engine]
+drain_timeout = 60.0
+
+[input]
+impl = "sim"
+scenario = "scenarios/delegate.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+
+[turn]
+impl = "rule"
+
+[fast]
+impl = "openai_compat"
+base_url = "https://api.openai.com/v1"      # or http://localhost:8000/v1 (vLLM), http://localhost:11434/v1 (Ollama)
+model = "gpt-4o-mini"
+api_key_env = "OPENAI_API_KEY"
+temperature = 0.3
+
+[slow]
+impl = "openai_compat"
+base_url = "https://api.openai.com/v1"
+model = "gpt-4o"
+api_key_env = "OPENAI_API_KEY"
+
+[tts]
+impl = "mock"
+
+[fusion]
+impl = "idle"

@@ -1,0 +1,18 @@
+{"text": "你好", "delegate": false}
+{"text": "你是谁", "delegate": false}
+{"text": "谢谢你", "delegate": false}
+{"text": "今天心情不太好", "delegate": false}
+{"text": "你喜欢什么颜色", "delegate": false}
+{"text": "讲个笑话吧", "delegate": false}
+{"text": "嗯嗯好的", "delegate": false}
+{"text": "再见", "delegate": false}
+{"text": "帮我查一下明天北京的天气", "delegate": true}
+{"text": "帮我计算一下 23 乘以 47", "delegate": true}
+{"text": "帮我规划一个三天的杭州旅行路线", "delegate": true}
+{"text": "比较一下 iPhone 和 Pixel 的拍照", "delegate": true}
+{"text": "帮我总结一下这周的会议纪要", "delegate": true}
+{"text": "把这段话翻译成英文：我们下周见", "delegate": true}
+{"text": "最近有什么关于固态电池的新闻", "delegate": true}
+{"text": "我的航班几点起飞", "delegate": true}
+{"text": "一百二十八的平方根是多少", "delegate": true}
+{"text": "写一封请假邮件给我老板", "delegate": true}

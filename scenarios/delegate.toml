@@ -1,0 +1,16 @@
+# Fast/slow: a task goes to the slow brain, the user keeps chatting, the result is fused back later.
+name = "delegate"
+duration = 24.0
+
+[[turns]]
+at = 0.5
+text = "帮我计算一下 23 乘以 47"
+
+[[turns]]
+at = 7.8
+text = "你好"
+
+[expect]
+min_tasks_spawned = 1
+min_tasks_delivered = 1
+said_contains = ["1081"]

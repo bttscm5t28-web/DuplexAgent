@@ -1,0 +1,17 @@
+# The user delegates a task, then cancels it before the result arrives.
+name = "cancel"
+duration = 14.0
+
+[[turns]]
+at = 0.5
+text = "帮我查一下明天北京的天气"
+
+[[turns]]
+at = 4.4
+text = "算了不用查了"
+kind = "barge_in"
+
+[expect]
+tasks_spawned = 1
+tasks_delivered = 0
+said_contains = ["已经取消"]

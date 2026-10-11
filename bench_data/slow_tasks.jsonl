@@ -1,0 +1,4 @@
+{"query": "计算 23 * 47", "answer_contains": ["1081"]}
+{"query": "计算 (12 + 8) * 3", "answer_contains": ["60"]}
+{"query": "一年有多少个月", "answer_contains": ["12"]}
+{"query": "水的化学式是什么", "answer_contains": ["H2O"]}
