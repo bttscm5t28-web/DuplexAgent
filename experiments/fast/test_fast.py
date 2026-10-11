@@ -96,3 +96,63 @@ def test_router_fusion_corrects():
             Message("task", t.result, {"task_id": "t1", "query": t.query})]
     said = "".join(a.text for a in _run(fast, BrainContext("task_result", hist, tasks=[t], deliver=[t])) if isinstance(a, Say))
     assert "更正" in said and "1138712" in said
+
+
+class FakeBackend:
+    """Replays a scripted completion token by token (no model)."""
+
+    def __init__(self, text):
+        self.text = text
+        self.prompts = []
+
+    async def start(self):
+        pass
+
+    async def stream(self, msgs, prefill, max_tokens, temperature):
+        self.prompts.append((msgs, prefill))
+        out = self.text[len(prefill.split("</think>")[-1].strip()):] if self.text.startswith(prefill.strip()) else self.text
+        for i in range(0, len(out), 2):
+            yield out[i : i + 2]
+
+
+def _llm(text, mode="llm", **kw):
+    from duplexagent.plugins.fast.llamacpp import LlamaCppFastBrain
+
+    fast = LlamaCppFastBrain(mode=mode, warmup=False, **kw)
+    fast.backend = FakeBackend(text)
+    return fast
+
+
+def test_llm_protocol_delegate():
+    acts = _run(_llm("[委派] 好，我让后台查一下。[任务] 查询深圳明天的天气"), ctx("深圳明天下雨吗"))
+    said = "".join(a.text for a in acts if isinstance(a, Say))
+    d = [a for a in acts if isinstance(a, Delegate)]
+    assert said == "好，我让后台查一下。" and d and d[0].query == "查询深圳明天的天气"
+
+
+def test_llm_protocol_cancel_and_amend():
+    t = running("订一张周五去上海的高铁票")
+    acts = _run(_llm("[取消 t1] 好的，已经取消了。"), ctx("票不订了", [t]))
+    assert isinstance(acts[0], CancelTask) and acts[0].task_id == "t1"
+    acts = _run(_llm("[补充 t9] 好的。[信息] 要二等座"), ctx("要二等座", [t]))  # unknown id -> best match
+    am = [a for a in acts if isinstance(a, AmendTask)]
+    assert am and am[0].task_id == "t1" and am[0].info == "要二等座"
+
+
+def test_llm_protocol_say_and_no_protocol():
+    acts = _run(_llm("[说] 你好呀，**今天**怎么样？"), ctx("你好"))
+    assert "".join(a.text for a in acts) == "你好呀，今天怎么样？"
+    acts = _run(_llm("你好呀"), ctx("你好"))  # model ignored the protocol
+    assert "".join(a.text for a in acts) == "你好呀"
+
+
+def test_hybrid_router_shortcut_and_fusion_lead():
+    fast = _llm("[说] 不该被调用", mode="hybrid")
+    acts = _run(fast, ctx("帮我查一下明天北京的天气"))
+    assert isinstance(acts[0], Delegate) and not fast.backend.prompts
+    t = TaskRecord(query="计算 3847 乘以 296", id="t1", status=TaskStatus.DONE, result="3847 * 296 等于 1138712")
+    hist = [Message("user", "帮我算一下 3847 乘以 296"), Message("assistant", "大概一百万左右吧。"),
+            Message("task", t.result, {"task_id": "t1", "query": t.query})]
+    fast = _llm("[说] 更正一下我刚才说的，关于3847 乘以 296，结果是 1138712。", mode="hybrid")
+    said = "".join(a.text for a in _run(fast, BrainContext("task_result", hist, tasks=[t], deliver=[t])) if isinstance(a, Say))
+    assert said.startswith("更正一下") and "1138712" in said

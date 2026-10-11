@@ -1,0 +1,16 @@
+# 慢任务进行中用户闲聊，快脑正常聊天、不瞎猜；结果回来后融合并给出精确数字。
+name = "fast_chat_during_task"
+duration = 22.0
+
+[[turns]]
+at = 0.5
+text = "帮我算一下 123 乘以 45"
+
+[[turns]]
+at = 7.6
+text = "你好"
+
+[expect]
+tasks_spawned = 1
+min_tasks_delivered = 1
+said_contains = ["5535"]

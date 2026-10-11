@@ -50,7 +50,12 @@ def _history(rows: list[dict]) -> list[Message]:
     return [Message(m["role"], m["content"], {"interrupted": True} if m.get("interrupted") else {}) for m in rows]
 
 
+WARM = False  # --warm: let the plugin cache the previous turns first, as a live session would
+
+
 async def _run(fast, ctx: BrainContext, timeout: float) -> dict:
+    if WARM and hasattr(fast, "prime"):
+        await fast.prime(ctx)
     t0 = time.perf_counter()
     first = decision = None
     said, actions = "", []
@@ -200,13 +205,16 @@ def main() -> None:
     ap.add_argument("--out")
     ap.add_argument("--limit", type=int)
     ap.add_argument("--rows", action="store_true", help="print failing rows")
+    ap.add_argument("--warm", action="store_true", help="prime the plugin's prompt cache with the previous turns")
     a = ap.parse_args()
+    global WARM
+    WARM = a.warm
     cfg = load_config(a.config, a.set)
     which = ["delegation", "heldout", "fusion", "fusion_heldout"] if a.which == "all" else [a.which]
 
     async def go():
         fast = await _make("fast", cfg)
-        out = {"impl": cfg["fast"]["impl"], "config": a.config, "overrides": a.set}
+        out = {"impl": cfg["fast"]["impl"], "config": a.config, "overrides": a.set, "warm": a.warm}
         try:
             for w in which:
                 data = load_jsonl(a.data if a.data and len(which) == 1 else DEFAULT_DATA[w])[: a.limit]

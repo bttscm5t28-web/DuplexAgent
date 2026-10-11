@@ -1,0 +1,16 @@
+# 两个任务并发，都要融合回来。
+name = "fast_two_tasks"
+duration = 26.0
+
+[[turns]]
+at = 0.5
+text = "帮我计算一下 23 乘以 47"
+
+[[turns]]
+at = 4.5
+text = "再帮我算一下 12 乘以 34"
+
+[expect]
+tasks_spawned = 2
+tasks_delivered = 2
+said_contains = ["1081", "408"]

@@ -1,0 +1,17 @@
+# 委派后补充条件：应当 AmendTask 而不是新建任务。
+name = "fast_amend"
+duration = 16.0
+
+[[turns]]
+at = 0.5
+text = "帮我订一张周五去上海的高铁票"
+
+[[turns]]
+at = 4.3
+text = "要二等座"
+kind = "barge_in"
+
+[expect]
+tasks_spawned = 1
+min_tasks_delivered = 1
+said_contains = ["告诉后台"]

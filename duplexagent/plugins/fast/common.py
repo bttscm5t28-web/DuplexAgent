@@ -322,9 +322,23 @@ def parse_head(buf: str) -> tuple[str, str | None, str] | None:
     if m:
         return m.group(1), m.group(2), buf[m.end() :]
     if len(buf) > 12 or (buf.strip() and not buf.lstrip().startswith("[")):
-        return "说", None, buf  # model ignored the protocol: treat as speech
+        return "说", None, buf.lstrip("[ ")  # model ignored the protocol: treat as speech
     return None
 
 
 def strip_markdown(s: str) -> str:
     return re.sub(r"[*#`>]+", "", s)
+
+
+_SYMBOLS = {"→": "到", "->": "到", "~": "到", "～": "到", "★": "评分", "☆": "评分", "&": "和", "|": "，", "=": "等于"}
+
+
+def speakable(phrase: str) -> str:
+    """Normalize one streamed phrase for TTS: no newlines, list markers, markdown or symbols."""
+    s = re.sub(r"^\s*(\d{1,2}[.、)](?!\d)|[-•*]|#+)\s*", "", phrase)
+    s = re.sub(r"[*#`>]+", "", s)
+    for k, v in _SYMBOLS.items():
+        s = s.replace(k, v)
+    s = re.sub(r"\s*\n+\s*", "，", s)
+    s = re.sub(r"([，。；：！？,;:])[，,]+", r"\1", s)
+    return s
