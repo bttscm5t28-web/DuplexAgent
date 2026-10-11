@@ -1,0 +1,22 @@
+# Optional dependencies of the turn-detection experiments (core stays stdlib-only).
+# Model-based detectors (duplexagent/plugins/turn/{vad,eot_models}.py)
+numpy>=1.26
+onnxruntime>=1.17
+huggingface_hub>=0.23
+tokenizers>=0.19            # lm_eot
+# Silero VAD (MIT): only the ONNX file inside the wheel is used. Install WITHOUT deps, otherwise it pulls torch:
+#   pip install --no-deps silero-vad
+# TEN VAD (Apache-2.0 + extra conditions); on Linux it needs the system package libc++1 (apt-get install libc++1)
+ten-vad>=1.0.6
+# TEN Turn Detection via GGUF (optional, slow on CPU); builds from source if no wheel matches:
+# llama-cpp-python>=0.3
+
+# Data preparation (experiments/turn/prepare_data.py), not needed at runtime
+piper-tts>=1.8              # GPL-3.0, used offline only to synthesize test speech
+unicode-rbnf>=2.4           # piper zh voices (pinyin phonemizer)
+sentence-stream>=1.2
+transformers>=4,<6
+# g2pW lookup tables for the pinyin voices; install WITHOUT deps (it pulls torch):
+#   pip install --no-deps g2pW
+pyarrow>=15                 # ESC-50 noise clips (parquet)
+pytest>=8

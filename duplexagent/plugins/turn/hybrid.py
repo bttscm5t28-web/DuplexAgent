@@ -289,10 +289,12 @@ class HybridTurnDetector(TurnDetector):
         return out
 
     def on_transcript(self, t: Transcript, ctx: TurnContext) -> list[TurnEvent]:
-        if not self.utt_active and self._run_ms == 0:
-            # words for an utterance we already closed (late ASR final) or for sound our VAD
-            # rejected as non-speech; either way they must not open a turn of their own.
-            # (While voice is starting, _run_ms > 0: keep the words, e.g. a one-character "停".)
+        if not self.utt_active:
+            # A final for an utterance we already closed (late ASR) must not open a new turn.
+            # A partial may legitimately run ahead of the VAD: keep its words for when voice starts
+            # (e.g. a one-character "停"), but don't act on them yet.
+            if not t.is_final:
+                self.utt_text = t.text
             return []
         if t.is_final:
             self._committed += t.text

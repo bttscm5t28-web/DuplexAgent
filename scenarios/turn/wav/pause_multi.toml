@@ -1,0 +1,25 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/pause_multi.toml 生成（真实语音版，wav 不入库）。
+# 两次停顿各 0.8 s：“我想问一下……就是那个……上次买的东西到哪了”。期望：不抢话。
+# 类别: pause
+name = "pause_multi"
+duration = 11.0
+
+[[turns]]
+at = 0.5
+text = "我想问一下"
+wav = "experiments/turn/data/wav/pause_multi_0.wav"
+
+[[turns]]
+at = 2.32
+text = "就是那个"
+kind = "cont"
+wav = "experiments/turn/data/wav/pause_multi_1.wav"
+
+[[turns]]
+at = 3.66
+text = "上次买的东西到哪了"
+kind = "cont"
+wav = "experiments/turn/data/wav/pause_multi_2.wav"
+
+[expect]
+turns_detected = 1

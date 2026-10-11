@@ -1,0 +1,25 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/noise_idle.toml 生成（真实语音版，wav 不入库）。
+# 助手空闲时出现咳嗽 0.5 s、敲门 1.0 s，之后用户正常说“你好”。期望：噪声不触发轮次，只响应“你好”。
+# 类别: noise
+name = "noise_idle"
+duration = 10.47
+
+[[turns]]
+at = 1.0
+text = ""
+kind = "noise"
+wav = "experiments/turn/data/wav/noise_idle_0.wav"
+
+[[turns]]
+at = 3.0
+text = ""
+kind = "noise"
+wav = "experiments/turn/data/wav/noise_idle_1.wav"
+
+[[turns]]
+at = 6.0
+text = "你好"
+wav = "experiments/turn/data/wav/noise_idle_2.wav"
+
+[expect]
+turns_detected = 1

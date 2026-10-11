@@ -1,0 +1,38 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/bc_basic.toml 生成（真实语音版，wav 不入库）。
+# 助手长回复时用户附和“嗯/对/嗯嗯/好的”。期望：不打断、不产生新轮次。
+# 类别: backchannel
+name = "bc_basic"
+duration = 14.0
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+wav = "experiments/turn/data/wav/bc_basic_0.wav"
+
+[[turns]]
+at = 5.97
+text = "嗯"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_basic_1.wav"
+
+[[turns]]
+at = 7.08
+text = "对"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_basic_2.wav"
+
+[[turns]]
+at = 8.18
+text = "嗯嗯"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_basic_3.wav"
+
+[[turns]]
+at = 9.31
+text = "好的"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_basic_4.wav"
+
+[expect]
+turns_detected = 1
+false_barge_in = 0

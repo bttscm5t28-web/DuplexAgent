@@ -1,0 +1,19 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/pause_list.toml 生成（真实语音版，wav 不入库）。
+# 列举中停顿 1.0 s：“我要买苹果香蕉还有……一盒牛奶”。期望：不抢话。
+# 类别: pause
+name = "pause_list"
+duration = 10.0
+
+[[turns]]
+at = 0.5
+text = "我要买苹果香蕉还有"
+wav = "experiments/turn/data/wav/pause_list_0.wav"
+
+[[turns]]
+at = 3.42
+text = "一盒牛奶"
+kind = "cont"
+wav = "experiments/turn/data/wav/pause_list_1.wav"
+
+[expect]
+turns_detected = 1

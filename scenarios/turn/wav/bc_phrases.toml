@@ -1,0 +1,38 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/bc_phrases.toml 生成（真实语音版，wav 不入库）。
+# 附和短语“对对对/是的/没错/明白”。期望：不打断。
+# 类别: backchannel
+name = "bc_phrases"
+duration = 14.4
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+wav = "experiments/turn/data/wav/bc_phrases_0.wav"
+
+[[turns]]
+at = 6.19
+text = "对对对"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_phrases_1.wav"
+
+[[turns]]
+at = 7.42
+text = "是的"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_phrases_2.wav"
+
+[[turns]]
+at = 8.5
+text = "没错"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_phrases_3.wav"
+
+[[turns]]
+at = 9.63
+text = "明白"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_phrases_4.wav"
+
+[expect]
+turns_detected = 1
+false_barge_in = 0

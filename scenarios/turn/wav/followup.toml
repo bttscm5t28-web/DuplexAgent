@@ -1,0 +1,23 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/followup.toml 生成（真实语音版，wav 不入库）。
+# 连续追问：回答结束后约 1 s 用户接着问“那后天呢”“上海呢”。期望：三轮都正常响应。
+# 类别: latency
+name = "followup"
+duration = 18.0
+
+[[turns]]
+at = 0.5
+text = "明天北京天气怎么样"
+wav = "experiments/turn/data/wav/followup_0.wav"
+
+[[turns]]
+at = 7.72
+text = "那后天呢"
+wav = "experiments/turn/data/wav/followup_1.wav"
+
+[[turns]]
+at = 13.14
+text = "上海呢"
+wav = "experiments/turn/data/wav/followup_2.wav"
+
+[expect]
+turns_detected = 3
