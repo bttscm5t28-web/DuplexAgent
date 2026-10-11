@@ -1,0 +1,3522 @@
+{
+ "rule": {
+  "config": "configs/default.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 5,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.451,
+   "eot_p90": 0.461,
+   "resp_p50": 0.682,
+   "resp_p90": 0.693,
+   "stop_p50": 0.65,
+   "stop_p90": 0.65,
+   "score": 0.251,
+   "wall_s": 24.1
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.731,
+     "latency_p90": 0.731,
+     "latency_mean": 0.731,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.451,
+       "missed_eot": false,
+       "resp_latency": 0.682
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.732,
+     "latency_p90": 0.732,
+     "latency_mean": 0.732,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.451,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.431,
+       "missed_eot": false,
+       "resp_latency": 0.663
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.451,
+       "missed_eot": false,
+       "resp_latency": 0.683,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.451
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.733,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.441,
+       "missed_eot": false,
+       "resp_latency": 0.673
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.44,
+       "missed_eot": false,
+       "resp_latency": 0.673
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.732,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.65,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后台去好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.45,
+       "missed_eot": false,
+       "resp_latency": 0.683
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.461,
+       "missed_eot": false,
+       "resp_latency": 0.692,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.65
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.733,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 4.616,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.451,
+       "missed_eot": false,
+       "resp_latency": 0.684
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.461,
+       "missed_eot": false,
+       "resp_latency": 0.693
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "adaptive": {
+  "config": "configs/exp/turn/adaptive.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 5,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.22,
+   "eot_p90": 0.351,
+   "resp_p50": 0.444,
+   "resp_p90": 0.583,
+   "stop_p50": 0.57,
+   "stop_p90": 0.57,
+   "score": 0.135,
+   "wall_s": 24.2
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.492,
+     "latency_p90": 0.492,
+     "latency_mean": 0.492,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.212,
+       "missed_eot": false,
+       "resp_latency": 0.444
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.632,
+     "latency_p90": 0.632,
+     "latency_mean": 0.562,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.131,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.191,
+       "missed_eot": false,
+       "resp_latency": 0.424
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.351,
+       "missed_eot": false,
+       "resp_latency": 0.583,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.131
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.492,
+     "latency_p90": 0.492,
+     "latency_mean": 0.492,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.201,
+       "missed_eot": false,
+       "resp_latency": 0.432
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.2,
+       "missed_eot": false,
+       "resp_latency": 0.432
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.632,
+     "latency_p90": 0.632,
+     "latency_mean": 0.582,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.57,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后台去好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.351,
+       "missed_eot": false,
+       "resp_latency": 0.583
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.26,
+       "missed_eot": false,
+       "resp_latency": 0.492,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.57
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 0.632,
+     "latency_p90": 0.632,
+     "latency_mean": 0.561,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 4.47,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.35,
+       "missed_eot": false,
+       "resp_latency": 0.582
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.22,
+       "missed_eot": false,
+       "resp_latency": 0.451
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "adaptive_silero": {
+  "config": "configs/exp/turn/adaptive_silero.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 5,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.32,
+   "eot_p90": 0.531,
+   "resp_p50": 0.552,
+   "resp_p90": 0.683,
+   "stop_p50": 0.211,
+   "stop_p90": 0.211,
+   "score": 0.01,
+   "wall_s": 24.2
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.493,
+     "latency_p90": 0.493,
+     "latency_mean": 0.493,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.251,
+       "missed_eot": false,
+       "resp_latency": 0.484
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.712,
+     "latency_p90": 0.712,
+     "latency_mean": 0.601,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.091,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.331,
+       "missed_eot": false,
+       "resp_latency": 0.563
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.531,
+       "missed_eot": false,
+       "resp_latency": 0.763,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.091
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.492,
+     "latency_p90": 0.492,
+     "latency_mean": 0.491,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.281,
+       "missed_eot": false,
+       "resp_latency": 0.513
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.301,
+       "missed_eot": false,
+       "resp_latency": 0.533
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.632,
+     "latency_p90": 0.632,
+     "latency_mean": 0.584,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.211,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.451,
+       "missed_eot": false,
+       "resp_latency": 0.683
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.302,
+       "missed_eot": false,
+       "resp_latency": 0.536,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.211
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 0.631,
+     "latency_p90": 0.631,
+     "latency_mean": 0.561,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 4.513,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.431,
+       "missed_eot": false,
+       "resp_latency": 0.662
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.32,
+       "missed_eot": false,
+       "resp_latency": 0.552
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "adaptive_ten": {
+  "config": "configs/exp/turn/adaptive_ten.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 5,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.31,
+   "eot_p90": 0.511,
+   "resp_p50": 0.535,
+   "resp_p90": 0.662,
+   "stop_p50": 0.432,
+   "stop_p90": 0.432,
+   "score": 0.071,
+   "wall_s": 24.2
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.492,
+     "latency_p90": 0.492,
+     "latency_mean": 0.492,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.31,
+       "missed_eot": false,
+       "resp_latency": 0.543
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.713,
+     "latency_p90": 0.713,
+     "latency_mean": 0.603,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.092,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.29,
+       "missed_eot": false,
+       "resp_latency": 0.523
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.511,
+       "missed_eot": false,
+       "resp_latency": 0.744,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.092
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.494,
+     "latency_p90": 0.494,
+     "latency_mean": 0.492,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.3,
+       "missed_eot": false,
+       "resp_latency": 0.532
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.301,
+       "missed_eot": false,
+       "resp_latency": 0.535
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.632,
+     "latency_p90": 0.632,
+     "latency_mean": 0.582,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.432,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后台好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.431,
+       "missed_eot": false,
+       "resp_latency": 0.662
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.34,
+       "missed_eot": false,
+       "resp_latency": 0.573,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.432
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 0.63,
+     "latency_p90": 0.63,
+     "latency_mean": 0.561,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 4.503,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.43,
+       "missed_eot": false,
+       "resp_latency": 0.662
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.3,
+       "missed_eot": false,
+       "resp_latency": 0.533
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "silero": {
+  "config": "configs/exp/turn/silero.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 5,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.541,
+   "eot_p90": 0.571,
+   "resp_p50": 0.774,
+   "resp_p90": 0.802,
+   "stop_p50": 0.372,
+   "stop_p90": 0.372,
+   "score": 0.157,
+   "wall_s": 24.2
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.733,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.491,
+       "missed_eot": false,
+       "resp_latency": 0.724
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.732,
+     "latency_p90": 0.732,
+     "latency_mean": 0.731,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.372,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.571,
+       "missed_eot": false,
+       "resp_latency": 0.802
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.552,
+       "missed_eot": false,
+       "resp_latency": 0.783,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.372
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.734,
+     "latency_p90": 0.734,
+     "latency_mean": 0.733,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.521,
+       "missed_eot": false,
+       "resp_latency": 0.753
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.541,
+       "missed_eot": false,
+       "resp_latency": 0.774
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.735,
+     "latency_p90": 0.735,
+     "latency_mean": 0.734,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.351,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.551,
+       "missed_eot": false,
+       "resp_latency": 0.784
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.502,
+       "missed_eot": false,
+       "resp_latency": 0.735,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.351
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.732,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 4.619,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.531,
+       "missed_eot": false,
+       "resp_latency": 0.765
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.561,
+       "missed_eot": false,
+       "resp_latency": 0.793
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "ten_vad": {
+  "config": "configs/exp/turn/ten_vad.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 5,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.54,
+   "eot_p90": 0.551,
+   "resp_p50": 0.773,
+   "resp_p90": 0.783,
+   "stop_p50": 0.432,
+   "stop_p90": 0.432,
+   "score": 0.186,
+   "wall_s": 24.2
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.733,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.551,
+       "missed_eot": false,
+       "resp_latency": 0.783
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.734,
+     "latency_p90": 0.734,
+     "latency_mean": 0.732,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.331,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.531,
+       "missed_eot": false,
+       "resp_latency": 0.764
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.53,
+       "missed_eot": false,
+       "resp_latency": 0.762,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.331
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.733,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.541,
+       "missed_eot": false,
+       "resp_latency": 0.774
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.54,
+       "missed_eot": false,
+       "resp_latency": 0.773
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.733,
+     "latency_p90": 0.733,
+     "latency_mean": 0.732,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.432,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.531,
+       "missed_eot": false,
+       "resp_latency": 0.763
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.541,
+       "missed_eot": false,
+       "resp_latency": 0.774,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.432
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 0.734,
+     "latency_p90": 0.734,
+     "latency_mean": 0.733,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 4.597,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.533,
+       "missed_eot": false,
+       "resp_latency": 0.766
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.541,
+       "missed_eot": false,
+       "resp_latency": 0.773
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fusion": {
+  "config": "configs/exp/turn/fusion.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 5,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.291,
+   "eot_p90": 1.161,
+   "resp_p50": 0.524,
+   "resp_p90": 1.108,
+   "stop_p50": 0.211,
+   "stop_p90": 0.211,
+   "score": 0.0,
+   "wall_s": 36.9
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.494,
+     "latency_p90": 0.494,
+     "latency_mean": 0.494,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.252,
+       "missed_eot": false,
+       "resp_latency": 0.485
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.513,
+     "latency_p90": 0.513,
+     "latency_mean": 0.503,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.091,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.331,
+       "missed_eot": false,
+       "resp_latency": 0.564
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.331,
+       "missed_eot": false,
+       "resp_latency": 0.563,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.091
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.472,
+     "latency_p90": 0.472,
+     "latency_mean": 0.472,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.261,
+       "missed_eot": false,
+       "resp_latency": 0.493
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.281,
+       "missed_eot": false,
+       "resp_latency": 0.512
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.512,
+     "latency_p90": 0.512,
+     "latency_mean": 0.493,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.211,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后台好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.291,
+       "missed_eot": false,
+       "resp_latency": 0.524
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.281,
+       "missed_eot": false,
+       "resp_latency": 0.513,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.211
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 1.333,
+     "latency_p90": 1.333,
+     "latency_mean": 0.952,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 2.048,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.371,
+       "missed_eot": false,
+       "resp_latency": 0.603
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.161,
+       "missed_eot": false,
+       "resp_latency": 1.108
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fusion_st": {
+  "config": "configs/exp/turn/fusion_st.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 4,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.371,
+   "eot_p90": 1.421,
+   "resp_p50": 0.602,
+   "resp_p90": 1.129,
+   "stop_p50": 0.351,
+   "stop_p90": 0.351,
+   "score": 0.061,
+   "wall_s": 37.0
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.512,
+     "latency_p90": 0.512,
+     "latency_mean": 0.512,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.271,
+       "missed_eot": false,
+       "resp_latency": 0.502
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.591,
+     "latency_p90": 0.591,
+     "latency_mean": 0.561,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.091,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.371,
+       "missed_eot": false,
+       "resp_latency": 0.602
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.411,
+       "missed_eot": false,
+       "resp_latency": 0.643,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.091
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.594,
+     "latency_p90": 0.594,
+     "latency_mean": 0.573,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.38,
+       "missed_eot": false,
+       "resp_latency": 0.614
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.361,
+       "missed_eot": false,
+       "resp_latency": 0.593
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.532,
+     "latency_p90": 0.532,
+     "latency_mean": 0.532,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.351,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后台好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.35,
+       "missed_eot": false,
+       "resp_latency": 0.582
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.301,
+       "missed_eot": false,
+       "resp_latency": 0.533,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.351
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 1.594,
+     "latency_p90": 1.594,
+     "latency_mean": 1.163,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 1.908,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。关你好呀，有什么可以帮你？",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": false,
+      "no_errors": true
+     },
+     "passed": false
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.531,
+       "missed_eot": false,
+       "resp_latency": 0.763
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.421,
+       "missed_eot": false,
+       "resp_latency": 1.129
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "lm_eot": {
+  "config": "configs/exp/turn/lm_eot.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 4,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.301,
+   "eot_p90": 2.061,
+   "resp_p50": 0.535,
+   "resp_p90": 1.109,
+   "stop_p50": 0.212,
+   "stop_p90": 0.212,
+   "score": 0.001,
+   "wall_s": 36.6
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.472,
+     "latency_p90": 0.472,
+     "latency_mean": 0.472,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.231,
+       "missed_eot": false,
+       "resp_latency": 0.463
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 0.492,
+     "latency_p90": 0.492,
+     "latency_mean": 0.481,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.091,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.31,
+       "missed_eot": false,
+       "resp_latency": 0.542
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.31,
+       "missed_eot": false,
+       "resp_latency": 0.542,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.091
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 0.514,
+     "latency_p90": 0.514,
+     "latency_mean": 0.493,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.301,
+       "missed_eot": false,
+       "resp_latency": 0.535
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.28,
+       "missed_eot": false,
+       "resp_latency": 0.514
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 0.512,
+     "latency_p90": 0.512,
+     "latency_mean": 0.492,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.212,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我让后台好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.291,
+       "missed_eot": false,
+       "resp_latency": 0.523
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.281,
+       "missed_eot": false,
+       "resp_latency": 0.512,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.212
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 2.232,
+     "latency_p90": 2.232,
+     "latency_mean": 1.392,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 2.071,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。关于你刚才你好呀，有什么可以帮你？",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": false,
+      "no_errors": true
+     },
+     "passed": false
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.351,
+       "missed_eot": false,
+       "resp_latency": 0.583
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 2.061,
+       "missed_eot": false,
+       "resp_latency": 1.109
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "smart_turn": {
+  "config": "configs/exp/turn/smart_turn.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 2,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.931,
+   "eot_p90": 1.801,
+   "resp_p50": 0.932,
+   "resp_p90": 1.773,
+   "stop_p50": 0.211,
+   "stop_p90": 0.211,
+   "score": 0.316,
+   "wall_s": 35.8
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.431,
+     "latency_p90": 0.431,
+     "latency_mean": 0.431,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.191,
+       "missed_eot": false,
+       "resp_latency": 0.422
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 1.553,
+     "latency_p90": 1.553,
+     "latency_mean": 1.153,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.091,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.591,
+       "missed_eot": false,
+       "resp_latency": 0.824
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.371,
+       "missed_eot": false,
+       "resp_latency": 1.603,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.091
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 1.733,
+     "latency_p90": 1.733,
+     "latency_mean": 1.322,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": false,
+      "no_errors": true
+     },
+     "passed": false
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.701,
+       "missed_eot": false,
+       "resp_latency": 0.932
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.541,
+       "missed_eot": false,
+       "resp_latency": 1.773
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 2.031,
+     "latency_p90": 2.031,
+     "latency_mean": 1.232,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.211,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 2,
+     "tasks_delivered": 2,
+     "fusion_wait_p50": 1.217,
+     "errors": 0,
+     "agent_said": "好的，我让后台关于你刚好的，我让后台去处理，你可以先聊点别的。关于你刚才问的「算了不用查了」，结果是：（模拟结果）已经完成「算了不用查了」。",
+     "checks": {
+      "tasks_spawned": false,
+      "tasks_delivered": false,
+      "said_contains:已经取消": false,
+      "no_errors": true
+     },
+     "passed": false
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.251,
+       "missed_eot": false,
+       "resp_latency": 0.484
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.801,
+       "missed_eot": false,
+       "resp_latency": 1.077,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.211
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 1.733,
+     "latency_p90": 1.733,
+     "latency_mean": 1.433,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 1.505,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。关于你好呀，有什么可以帮你？",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": false,
+      "no_errors": true
+     },
+     "passed": false
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.931,
+       "missed_eot": false,
+       "resp_latency": 1.164
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.561,
+       "missed_eot": false,
+       "resp_latency": 1.123
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "ten_turn": {
+  "config": "configs/exp/turn/ten_turn.toml",
+  "overrides": [
+   "asr.impl=lagged_mock",
+   "asr.partial_lag_ms=0",
+   "asr.final_lag_ms=0"
+  ],
+  "aggregate": {
+   "scenarios": 5,
+   "scenarios_passed": 4,
+   "turns": 9,
+   "paused_turns": 0,
+   "cut_in": 0,
+   "cut_in_rate": null,
+   "missed_eot": 0,
+   "barge_cases": 2,
+   "barge_invalid": 0,
+   "missed_barge": 0,
+   "missed_barge_rate": 0.0,
+   "distractors": 1,
+   "false_barge": 0,
+   "false_barge_rate": 0.0,
+   "false_turn": 0,
+   "eot_p50": 0.931,
+   "eot_p90": 1.132,
+   "resp_p50": 1.223,
+   "resp_p90": 1.364,
+   "stop_p50": 0.352,
+   "stop_p90": 0.352,
+   "score": 0.342,
+   "wall_s": 75.6
+  },
+  "scenarios": [
+   {
+    "scenario": "backchannel",
+    "path": "scenarios/turn/wav/base_backchannel.toml",
+    "base": {
+     "scenario": "backchannel",
+     "latency_p50": 0.951,
+     "latency_p90": 0.951,
+     "latency_mean": 0.951,
+     "turns_expected": 1,
+     "turns_detected": 1,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 1,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，你说的是「给我讲讲你今天都做了什么事情」，我明白了。",
+     "checks": {
+      "false_barge_in": true,
+      "turns_detected": true,
+      "said_contains:我明白了": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "backchannel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.711,
+       "missed_eot": false,
+       "resp_latency": 0.942
+      },
+      {
+       "kind": "backchannel",
+       "text": "嗯",
+       "start": 5.03,
+       "end": 5.35,
+       "agent_was_talking": true,
+       "false_barge": false,
+       "false_turn": false
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "barge_in",
+    "path": "scenarios/turn/wav/base_barge_in.toml",
+    "base": {
+     "scenario": "barge_in",
+     "latency_p50": 1.293,
+     "latency_p90": 1.293,
+     "latency_mean": 1.133,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.092,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "嗯，嗯，你说的是「停一下我换个问题」，我明白了。",
+     "checks": {
+      "barge_in_detected": true,
+      "max_barge_in_stop_latency": true,
+      "turns_detected": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "barge_in",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "给我讲讲你今天都做了什么事情",
+       "start": 0.5,
+       "end": 3.33,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.132,
+       "missed_eot": false,
+       "resp_latency": 1.364
+      },
+      {
+       "kind": "barge_in",
+       "text": "停一下我换个问题",
+       "start": 5.03,
+       "end": 6.63,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.791,
+       "missed_eot": false,
+       "resp_latency": 1.023,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.092
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "basic",
+    "path": "scenarios/turn/wav/base_basic.toml",
+    "base": {
+     "scenario": "basic",
+     "latency_p50": 1.273,
+     "latency_p90": 1.273,
+     "latency_mean": 1.082,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 0,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "你好呀，有什么可以帮你？我是你的语音助手。",
+     "checks": {
+      "turns_detected": true,
+      "said_contains:有什么可以帮你": true,
+      "said_contains:语音助手": true,
+      "max_latency_p50": false,
+      "no_errors": true
+     },
+     "passed": false
+    },
+    "turn": {
+     "scenario": "basic",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 0.5,
+       "end": 0.9,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.061,
+       "missed_eot": false,
+       "resp_latency": 1.294
+      },
+      {
+       "kind": "turn",
+       "text": "你是谁",
+       "start": 5.0,
+       "end": 5.62,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.7,
+       "missed_eot": false,
+       "resp_latency": 0.932
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "cancel",
+    "path": "scenarios/turn/wav/base_cancel.toml",
+    "base": {
+     "scenario": "cancel",
+     "latency_p50": 1.113,
+     "latency_p90": 1.113,
+     "latency_mean": 1.052,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 1,
+     "barge_in_detected": 1,
+     "barge_in_stop_latency": 0.352,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 0,
+     "fusion_wait_p50": null,
+     "errors": 0,
+     "agent_said": "好的，我好的，已经取消了。",
+     "checks": {
+      "tasks_spawned": true,
+      "tasks_delivered": true,
+      "said_contains:已经取消": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "cancel",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我查一下明天北京的天气",
+       "start": 0.5,
+       "end": 2.77,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.931,
+       "missed_eot": false,
+       "resp_latency": 1.164
+      },
+      {
+       "kind": "barge_in",
+       "text": "算了不用查了",
+       "start": 4.27,
+       "end": 5.6,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.76,
+       "missed_eot": false,
+       "resp_latency": 0.993,
+       "agent_was_talking": true,
+       "barge_detected": true,
+       "barge_stop_latency": 0.352
+      }
+     ]
+    }
+   },
+   {
+    "scenario": "delegate",
+    "path": "scenarios/turn/wav/base_delegate.toml",
+    "base": {
+     "scenario": "delegate",
+     "latency_p50": 1.272,
+     "latency_p90": 1.272,
+     "latency_mean": 1.232,
+     "turns_expected": 2,
+     "turns_detected": 2,
+     "barge_in_expected": 0,
+     "barge_in_detected": 0,
+     "barge_in_stop_latency": null,
+     "backchannels": 0,
+     "false_barge_in": 0,
+     "tasks_spawned": 1,
+     "tasks_delivered": 1,
+     "fusion_wait_p50": 1.459,
+     "errors": 0,
+     "agent_said": "好的，我让后台去处理，你可以先聊点别的。你好呀，有什么可以帮你？关于你刚才问的「帮我计算一下 23 乘以 47」，结果是：23 * 47 等于 1081。",
+     "checks": {
+      "min_tasks_spawned": true,
+      "min_tasks_delivered": true,
+      "said_contains:1081": true,
+      "no_errors": true
+     },
+     "passed": true
+    },
+    "turn": {
+     "scenario": "delegate",
+     "groups": [
+      {
+       "kind": "turn",
+       "text": "帮我计算一下 23 乘以 47",
+       "start": 0.5,
+       "end": 3.61,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 0.991,
+       "missed_eot": false,
+       "resp_latency": 1.223
+      },
+      {
+       "kind": "turn",
+       "text": "你好",
+       "start": 7.91,
+       "end": 8.36,
+       "paused": false,
+       "cut_in": false,
+       "eot_latency": 1.101,
+       "missed_eot": false,
+       "resp_latency": 1.334
+      }
+     ]
+    }
+   }
+  ]
+ }
+}
