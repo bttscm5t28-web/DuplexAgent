@@ -1,6 +1,7 @@
 """跑「候选 × 数据集」矩阵并汇总排行榜。每个任务一个子进程（内存/CPU 统计互不干扰），串行执行（实时延迟不受争抢影响）。
 
     python experiments/asr/matrix.py run  [--cands sensevoice ...] [--sets aishell ...] [--rt] [--force]
+    python experiments/asr/matrix.py scenarios [--cands ...]   # scenarios/asr/*.toml 端到端（真实 ASR 换进骨架）
     python experiments/asr/matrix.py summary          # -> experiments/asr/results/leaderboard.md + summary.json
 
 结果：experiments/asr/results/<候选>/<数据集>.json（实时模式为 <数据集>_rt.json）。
@@ -56,6 +57,17 @@ def job(cand: str, dataset: str, realtime: bool, extra: list[str], force: bool, 
         print("  ", r.stdout.strip().splitlines()[-1][:400], flush=True)
 
 
+def scenarios(cand: str, force: bool) -> None:
+    out = os.path.join(RES, cand, "scenarios.json")
+    if os.path.exists(out) and not force:
+        return
+    print(">>", cand, "scenarios", flush=True)
+    files = sorted(glob.glob(os.path.join(ROOT, "scenarios", "asr", "*.toml")))
+    cmd = [sys.executable, "-m", "duplexagent", "eval", *[os.path.relpath(f, ROOT) for f in files], "-c", f"configs/exp/asr/{cand}.toml", "--serial", "--out", out]
+    r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    print("\n".join(l for l in r.stdout.splitlines() if l.startswith(("PASS", "FAIL"))) or r.stderr[-2000:], flush=True)
+
+
 def load(cand: str, name: str) -> dict | None:
     p = os.path.join(RES, cand, f"{name}.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
@@ -88,17 +100,23 @@ def summary() -> None:
             r["fin50"], r["fin90"] = d["final_after_speech_end_s"]["p50"], d["final_after_speech_end_s"]["p90"]
             r["cpu"], r["fpu"], r["rt_cer"] = d["cpu_cores"], d["finals_per_utt"], d["cer"]
             r["rt_rss"] = d["peak_rss_mb"]
+        d = load(cand, "scenarios")
+        if d:
+            res = d["results"]
+            r["scen"] = f"{sum(m['passed'] for m in res)}/{len(res)}"
+            lat = [m["latency_p50"] for m in res if m["latency_p50"] is not None]
+            r["scen_lat"] = sorted(lat)[len(lat) // 2] if lat else None
         rows.append(r)
     rows.sort(key=lambda r: (r.get("aishell") is None, r.get("aishell") or 9))
-    head = ("| 候选 | AISHELL CER% | Wenet CER% | ASCEND MER% | 噪声均值 CER% | 白噪10/0 | babble10/0 | 附和保留% / 短句丢失% | RTF | 首 partial p50 (s) | final 延迟 p50/p90 (s) | CPU 核 | finals/句 | 内存 MB |\n"
-            "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    head = ("| 候选 | AISHELL CER% | Wenet CER% | ASCEND MER% | 噪声均值 CER% | 白噪10/0 | babble10/0 | 附和保留% / 短句丢失% | RTF | 首 partial p50 (s) | final 延迟 p50/p90 (s) | CPU 核 | finals/句 | 内存 MB | 场景通过 | 场景响应延迟 p50 (s) |\n"
+            "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     lines = [head]
     for r in rows:
         lines.append(
             f"| {r['cand']} | {fmt(r.get('aishell'), 1)} | {fmt(r.get('wenet'), 1)} | {fmt(r.get('ascend'), 1)} | {fmt(r.get('noisy'), 1)} | "
             f"{fmt(r.get('noisy_white10'), 1)}/{fmt(r.get('noisy_white0'), 1)} | {fmt(r.get('noisy_babble10'), 1)}/{fmt(r.get('noisy_babble0'), 1)} | "
             f"{fmt(r.get('bc_kept'), 1)}/{fmt(r.get('short_lost'), 1)} | {fmt(r.get('rtf'), nd=3)} | {fmt(r.get('fp50'))} | {fmt(r.get('fin50'))}/{fmt(r.get('fin90'))} | {fmt(r.get('cpu'))} | {fmt(r.get('fpu'))} | "
-            f"{fmt(r.get('rt_rss') or r.get('rss'), nd=0)} |"
+            f"{fmt(r.get('rt_rss') or r.get('rss'), nd=0)} | {r.get('scen', '—')} | {fmt(r.get('scen_lat'))} |"
         )
     md = "\n".join(lines)
     with open(os.path.join(RES, "leaderboard.md"), "w", encoding="utf-8") as f:
@@ -110,7 +128,7 @@ def summary() -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=["run", "summary"])
+    ap.add_argument("cmd", choices=["run", "scenarios", "summary"])
     ap.add_argument("--cands", nargs="*")
     ap.add_argument("--sets", nargs="*")
     ap.add_argument("--rt", action="store_true", help="also run the realtime latency job")
@@ -121,6 +139,10 @@ def main() -> None:
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
     if a.cmd == "summary":
+        return summary()
+    if a.cmd == "scenarios":
+        for cand in a.cands or candidates():
+            scenarios(cand, a.force)
         return summary()
     for cand in a.cands or candidates():
         if not a.rt_only:
