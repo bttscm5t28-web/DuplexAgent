@@ -39,6 +39,8 @@ def test_int_to_zh(n, zh):
     ("3,256.8元", "三千二百五十六点八元"),
     ("GPT-4", "G P T 四"),
     ("嗯……好吧", "嗯，好吧"),
+    ("23 * 47 等于 1081", "二十三乘四十七等于一千零八十一"),
+    ("**重点**", "重点"),
 ])
 def test_normalizer(text, spoken):
     assert say(text) == spoken

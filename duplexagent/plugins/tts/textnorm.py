@@ -28,7 +28,7 @@ PAUSE_WEIGHT = {
 SENTENCE_END = set("。！？!?；;…\n")
 CLAUSE_END = set("，,、：:—")
 # Characters that are neither read nor paused on.
-SILENT = set(" \t\r\"'“”‘’《》〈〉「」『』【】()（）[]{}<>*_`~^|")
+SILENT = set(" \t\r\"'“”‘’《》〈〉「」『』【】()（）[]{}<>_`~^|")
 
 SYMBOLS = {
     "+": "加", "=": "等于", "×": "乘", "÷": "除以", "&": "和", "@": "艾特", "#": "井号",
@@ -191,6 +191,13 @@ class Normalizer:
             if matched:
                 continue
             c = text[i]
+            if c == "*":  # "23 * 47" -> 乘; markdown emphasis -> silent
+                if re.search(r"\d\s*$", text[:i]) and re.match(r"\s*\d", text[i + 1 :]):
+                    self._emit_speech(out, c, "乘", "symbol")
+                else:
+                    out.append(Unit(c, "", 0.0, pause=True))
+                i += 1
+                continue
             if c in PAUSE_WEIGHT or c in SILENT or c.isspace():
                 j = i
                 while j < n and (text[j] in PAUSE_WEIGHT or text[j] in SILENT or text[j].isspace()):
@@ -201,8 +208,9 @@ class Normalizer:
                 # Normalize ASCII punctuation to Chinese so zh front-ends pause properly.
                 spoken = spoken.translate(str.maketrans({",": "，", ".": "。", "!": "！", "?": "？", ";": "；", ":": "：", "…": "，", "—": "，"}))
                 spoken = re.sub(r"([，。！？；：、])[，。！？；：、]+", r"\1", spoken)
-                if " " in seg and not spoken and out and not out[-1].pause:
-                    spoken = " "
+                nxt = text[j : j + 1]
+                if " " in seg and not spoken and out and not out[-1].pause and out[-1].spoken[-1:].isascii() and nxt.isascii() and nxt.isalnum():
+                    spoken = " "  # keep word spacing only between Latin words
                 out.append(Unit(seg, spoken, w, pause=True))
                 i = j
                 continue

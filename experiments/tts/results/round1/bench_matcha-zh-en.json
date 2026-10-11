@@ -1,0 +1,380 @@
+{
+  "config": "configs/exp/tts/matcha-zh-en.toml",
+  "overrides": [],
+  "module": "tts",
+  "impl": "sherpa",
+  "n": 60,
+  "first_chunk_s": {
+    "mean": 0.1182,
+    "p50": 0.1172,
+    "p90": 0.1579
+  },
+  "rtf": {
+    "mean": 0.0656,
+    "p50": 0.0559,
+    "p90": 0.0779
+  },
+  "alignment_ok": 1.0,
+  "rows": [
+    {
+      "text": "你好呀，有什么可以帮你？",
+      "first_chunk_s": 0.15016031599998314,
+      "audio_s": 2.212,
+      "aligned": true
+    },
+    {
+      "text": "好的。",
+      "first_chunk_s": 0.06453515300017898,
+      "audio_s": 0.672,
+      "aligned": true
+    },
+    {
+      "text": "嗯，我明白了。",
+      "first_chunk_s": 0.153668031000052,
+      "audio_s": 1.532,
+      "aligned": true
+    },
+    {
+      "text": "没问题，马上帮你看。",
+      "first_chunk_s": 0.15794591200005925,
+      "audio_s": 2.182,
+      "aligned": true
+    },
+    {
+      "text": "不客气。",
+      "first_chunk_s": 0.05754549900007078,
+      "audio_s": 0.882,
+      "aligned": true
+    },
+    {
+      "text": "抱歉，我没听清楚，能再说一遍吗？",
+      "first_chunk_s": 0.1159036340000057,
+      "audio_s": 3.34,
+      "aligned": true
+    },
+    {
+      "text": "稍等一下，我查一下。",
+      "first_chunk_s": 0.07183306599995376,
+      "audio_s": 2.09,
+      "aligned": true
+    },
+    {
+      "text": "对，就是这个意思。",
+      "first_chunk_s": 0.16104728599998452,
+      "audio_s": 1.852,
+      "aligned": true
+    },
+    {
+      "text": "哈哈，这个问题挺有意思的。",
+      "first_chunk_s": 0.19329070599997067,
+      "audio_s": 2.482,
+      "aligned": true
+    },
+    {
+      "text": "好嘞，那我们继续。",
+      "first_chunk_s": 0.12123217499993189,
+      "audio_s": 1.692,
+      "aligned": true
+    },
+    {
+      "text": "好的，我让后台去处理，你可以先聊点别的。",
+      "first_chunk_s": 0.14433388800011926,
+      "audio_s": 3.85,
+      "aligned": true
+    },
+    {
+      "text": "嗯……这个嘛，我觉得还是先别着急，咱们慢慢来。",
+      "first_chunk_s": 0.12294190300008268,
+      "audio_s": 4.57,
+      "aligned": true
+    },
+    {
+      "text": "其实吧，你说的也有道理，不过我还是建议你再想想。",
+      "first_chunk_s": 0.1452302679999775,
+      "audio_s": 4.44,
+      "aligned": true
+    },
+    {
+      "text": "哎呀，那可真是太不巧了，要不咱们改天再约？",
+      "first_chunk_s": 0.13650894700003846,
+      "audio_s": 3.89,
+      "aligned": true
+    },
+    {
+      "text": "你刚才说的那家店，我记得好像是在人民广场附近吧？",
+      "first_chunk_s": 0.08949915800008057,
+      "audio_s": 4.48,
+      "aligned": true
+    },
+    {
+      "text": "行，那就这么定了，回头我提醒你。",
+      "first_chunk_s": 0.12979980800014346,
+      "audio_s": 3.09,
+      "aligned": true
+    },
+    {
+      "text": "说实话，我也不太确定，要不我帮你查一下最新的消息？",
+      "first_chunk_s": 0.13520349400005216,
+      "audio_s": 4.69,
+      "aligned": true
+    },
+    {
+      "text": "别担心，这种情况挺常见的，一般休息几天就好了。",
+      "first_chunk_s": 0.1989566989998366,
+      "audio_s": 4.44,
+      "aligned": true
+    },
+    {
+      "text": "哦对了，你上次让我记的那件事，我已经记下来了。",
+      "first_chunk_s": 0.15479197100012243,
+      "audio_s": 4.14,
+      "aligned": true
+    },
+    {
+      "text": "嗯嗯，然后呢？后来怎么样了？",
+      "first_chunk_s": 0.11576573199999984,
+      "audio_s": 2.684,
+      "aligned": true
+    },
+    {
+      "text": "关于你刚才问的问题，结果是23乘以47等于1081。",
+      "first_chunk_s": 0.09370397600014257,
+      "audio_s": 5.8,
+      "aligned": true
+    },
+    {
+      "text": "今天是2025年10月11日，星期六。",
+      "first_chunk_s": 0.11892845900001703,
+      "audio_s": 3.44,
+      "aligned": true
+    },
+    {
+      "text": "明天最高气温28℃，最低气温19℃，降水概率30%。",
+      "first_chunk_s": 0.112282008999955,
+      "audio_s": 6.55,
+      "aligned": true
+    },
+    {
+      "text": "会议定在下午3:30，地点是3号楼502会议室。",
+      "first_chunk_s": 0.11919577099979506,
+      "audio_s": 5.09,
+      "aligned": true
+    },
+    {
+      "text": "这台电脑售价¥5999元，比上个月便宜了12%。",
+      "first_chunk_s": 0.13710738199984007,
+      "audio_s": 5.27,
+      "aligned": true
+    },
+    {
+      "text": "我的电话是13812345678，有事随时打给我。",
+      "first_chunk_s": 0.07218679999982669,
+      "audio_s": 5.012,
+      "aligned": true
+    },
+    {
+      "text": "从北京到上海大约1200公里，高铁最快4个半小时。",
+      "first_chunk_s": 0.1398472580001453,
+      "audio_s": 5.08,
+      "aligned": true
+    },
+    {
+      "text": "你的订单号是20251011008，预计2-3天送达。",
+      "first_chunk_s": 0.0764480600000752,
+      "audio_s": 5.112,
+      "aligned": true
+    },
+    {
+      "text": "这个月一共花了3,256.8元，比预算多了256元。",
+      "first_chunk_s": 0.14209728800005905,
+      "audio_s": 5.68,
+      "aligned": true
+    },
+    {
+      "text": "第1名得了98.5分，第2名得了96分。",
+      "first_chunk_s": 0.11013403199990535,
+      "audio_s": 4.05,
+      "aligned": true
+    },
+    {
+      "text": "成年人每天建议喝1500ml到2000ml的水。",
+      "first_chunk_s": 0.1342975079999178,
+      "audio_s": 4.272,
+      "aligned": true
+    },
+    {
+      "text": "全国人口大约14.1亿，其中城镇人口占66%。",
+      "first_chunk_s": 0.1350066049999441,
+      "audio_s": 5.27,
+      "aligned": true
+    },
+    {
+      "text": "这道题的答案是3/4，也就是0.75。",
+      "first_chunk_s": 0.10507912000002761,
+      "audio_s": 3.91,
+      "aligned": true
+    },
+    {
+      "text": "比赛在晚上8点开始，记得提前10分钟到。",
+      "first_chunk_s": 0.09656111699996472,
+      "audio_s": 3.78,
+      "aligned": true
+    },
+    {
+      "text": "汇率大概是1美元兑换7.1元人民币，$100就是710元左右。",
+      "first_chunk_s": 0.0784023219998744,
+      "audio_s": 6.402,
+      "aligned": true
+    },
+    {
+      "text": "OK, let me check that for you.",
+      "first_chunk_s": 0.13757642600012332,
+      "audio_s": 2.558,
+      "aligned": true
+    },
+    {
+      "text": "我用iPhone 15打开了GPT-4的网页。",
+      "first_chunk_s": 0.09307002399987141,
+      "audio_s": 3.172,
+      "aligned": true
+    },
+    {
+      "text": "你可以试试用Python写一个小脚本。",
+      "first_chunk_s": 0.10627284599991071,
+      "audio_s": 3.112,
+      "aligned": true
+    },
+    {
+      "text": "这个API的响应时间大概是200ms。",
+      "first_chunk_s": 0.12512745399999403,
+      "audio_s": 3.582,
+      "aligned": true
+    },
+    {
+      "text": "明天上午有个Zoom会议，记得带上PPT。",
+      "first_chunk_s": 0.09895065099999556,
+      "audio_s": 3.6,
+      "aligned": true
+    },
+    {
+      "text": "我把文件发到你的Gmail邮箱了，注意查收。",
+      "first_chunk_s": 0.08190387500008,
+      "audio_s": 3.922,
+      "aligned": true
+    },
+    {
+      "text": "这首歌是Taylor Swift的新专辑里的。",
+      "first_chunk_s": 0.08174849700003506,
+      "audio_s": 2.992,
+      "aligned": true
+    },
+    {
+      "text": "CPU占用率太高的话，可以先关掉几个Chrome标签页。",
+      "first_chunk_s": 0.10603597099998296,
+      "audio_s": 4.43,
+      "aligned": true
+    },
+    {
+      "text": "你说的是NBA总决赛吧？那场比赛确实很精彩。",
+      "first_chunk_s": 0.11329451899996457,
+      "audio_s": 4.444,
+      "aligned": true
+    },
+    {
+      "text": "我们周五去Costco买点东西，顺便吃个hot dog。",
+      "first_chunk_s": 0.10314441300010913,
+      "audio_s": 4.332,
+      "aligned": true
+    },
+    {
+      "text": "Wi-Fi密码是abc123，记得区分大小写。",
+      "first_chunk_s": 0.1630340140000044,
+      "audio_s": 4.2,
+      "aligned": true
+    },
+    {
+      "text": "这篇论文用的是Transformer架构，效果比LSTM好不少。",
+      "first_chunk_s": 0.10230762699984552,
+      "audio_s": 5.302,
+      "aligned": true
+    },
+    {
+      "text": "根据我查到的信息，这家餐厅的评分是4.6分，人均消费大概在150元左右，主打粤菜，比较有名的菜有烧鹅、虾饺和叉烧包，周末去的话建议提前预约，不然可能要排一个小时的队。",
+      "first_chunk_s": 0.08919124299995929,
+      "audio_s": 16.478,
+      "aligned": true
+    },
+    {
+      "text": "如果你想学游泳的话，我建议先从蛙泳开始，因为蛙泳的动作相对简单，而且换气比较容易掌握，每周练习三到四次，一般一个月左右就能在水里游起来了。",
+      "first_chunk_s": 0.11851938999984668,
+      "audio_s": 13.44,
+      "aligned": true
+    },
+    {
+      "text": "这次旅行的行程是这样安排的：第一天上午到达成都，下午去宽窄巷子逛逛；第二天去大熊猫基地，晚上看川剧变脸；第三天坐高铁去重庆，晚上看洪崖洞夜景。",
+      "first_chunk_s": 0.11717350399999304,
+      "audio_s": 14.068,
+      "aligned": true
+    },
+    {
+      "text": "关于你问的那个问题，简单来说就是，市场需求下降导致库存积压，企业为了回笼资金只能降价促销，而降价又进一步压缩了利润空间，形成了一个恶性循环。",
+      "first_chunk_s": 0.09960666999995738,
+      "audio_s": 13.99,
+      "aligned": true
+    },
+    {
+      "text": "我刚才帮你对比了一下这两款手机，前者的优势是拍照和续航，后者的优势是性能和屏幕，价格上前者贵了大概800元，如果你平时玩游戏比较多，我会推荐后者。",
+      "first_chunk_s": 0.0885115329999735,
+      "audio_s": 14.682,
+      "aligned": true
+    },
+    {
+      "text": "今天的新闻主要有三条：第一，央行宣布下调存款准备金率0.5个百分点；第二，某科技公司发布了新一代人工智能芯片；第三，本周末全国大部分地区将迎来降温天气。",
+      "first_chunk_s": 0.1040181340001709,
+      "audio_s": 15.068,
+      "aligned": true
+    },
+    {
+      "text": "番茄炒蛋的做法很简单，先把鸡蛋打散炒熟盛出来，然后把番茄切块下锅炒出汁，加一点盐和糖调味，最后把鸡蛋倒回去翻炒均匀就可以出锅了。",
+      "first_chunk_s": 0.10341510399985054,
+      "audio_s": 12.26,
+      "aligned": true
+    },
+    {
+      "text": "慢慢来，不着急，你可以先把手头的事情处理完，等你有空了我们再继续聊，我会一直在这里的。",
+      "first_chunk_s": 0.13247374200000195,
+      "audio_s": 7.97,
+      "aligned": true
+    },
+    {
+      "text": "「三体」这本书你看过吗？我觉得写得非常好！",
+      "first_chunk_s": 0.08792801699996744,
+      "audio_s": 3.484,
+      "aligned": true
+    },
+    {
+      "text": "注意：明天的会议改到线上了。",
+      "first_chunk_s": 0.16323646800015013,
+      "audio_s": 2.872,
+      "aligned": true
+    },
+    {
+      "text": "价格从100元涨到了150元——涨幅高达50%！",
+      "first_chunk_s": 0.1441562160000558,
+      "audio_s": 4.874,
+      "aligned": true
+    },
+    {
+      "text": "你可以按#号键返回上一级菜单。",
+      "first_chunk_s": 0.15106350900009602,
+      "audio_s": 3.152,
+      "aligned": true
+    },
+    {
+      "text": "3+5=8，这个很简单吧？",
+      "first_chunk_s": 0.08630216999995355,
+      "audio_s": 2.59,
+      "aligned": true
+    }
+  ]
+}
