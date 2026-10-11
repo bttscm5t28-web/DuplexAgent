@@ -1,0 +1,17 @@
+# 无命令词的插问“那明天呢”。期望：打断并接新轮次。
+# 类别: barge
+name = "barge_question"
+duration = 12
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+
+[[turns]]
+at = 5.5
+text = "那明天呢"
+kind = "barge_in"
+
+[expect]
+barge_in_detected = 1
+turns_detected = 2

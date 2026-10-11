@@ -1,0 +1,23 @@
+# 先附和“嗯”，随后以附和词开头真打断“嗯那我换个问题”。期望：前者不打断，后者打断。
+# 类别: backchannel
+name = "bc_then_barge"
+duration = 16
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+
+[[turns]]
+at = 6.2
+text = "嗯"
+kind = "backchannel"
+
+[[turns]]
+at = 7.5
+text = "嗯那我换个问题"
+kind = "barge_in"
+
+[expect]
+turns_detected = 2
+false_barge_in = 0
+barge_in_detected = 1

@@ -1,0 +1,16 @@
+# 难例：前半句语义已完整，“我今天有点累”停 0.7 s 后又补“而且还有点头疼”。期望：理想是不抢话；纯文本模型很难，用于观察取舍。
+# 类别: pause
+name = "pause_after_complete"
+duration = 10
+
+[[turns]]
+at = 0.5
+text = "我今天有点累"
+
+[[turns]]
+at = 2.4
+text = "而且还有点头疼"
+kind = "cont"
+
+[expect]
+turns_detected = 1

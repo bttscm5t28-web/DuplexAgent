@@ -1,0 +1,17 @@
+# 长回复中段打断“等等我是想问上海的”。期望：停下并接新轮次。
+# 类别: barge
+name = "barge_long_reply"
+duration = 16
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+
+[[turns]]
+at = 8.4
+text = "等等我是想问上海的"
+kind = "barge_in"
+
+[expect]
+barge_in_detected = 1
+turns_detected = 2

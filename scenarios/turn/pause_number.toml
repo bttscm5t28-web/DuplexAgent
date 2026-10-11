@@ -1,0 +1,16 @@
+# 报号码中停顿 0.8 s：“我的手机号是一三八……零零一二三四五六七”。期望：不抢话。
+# 类别: pause
+name = "pause_number"
+duration = 10
+
+[[turns]]
+at = 0.5
+text = "我的手机号是一三八"
+
+[[turns]]
+at = 3.1
+text = "零零一二三四五六七"
+kind = "cont"
+
+[expect]
+turns_detected = 1

@@ -1,0 +1,25 @@
+# 助手说话时用户咳嗽 0.3 s、敲键盘 0.4 s（无文字）。期望：不打断、不产生轮次。
+# 类别: noise
+name = "noise_cough"
+duration = 12
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+
+[[turns]]
+at = 5.0
+text = ""
+kind = "noise"
+duration = 0.3
+sound = "cough"  # experiments/turn/prepare_data.py 用它挑噪声素材
+
+[[turns]]
+at = 6.5
+text = ""
+kind = "noise"
+duration = 0.4
+sound = "keyboard"  # experiments/turn/prepare_data.py 用它挑噪声素材
+
+[expect]
+turns_detected = 1

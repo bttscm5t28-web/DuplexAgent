@@ -1,0 +1,16 @@
+# 关联词停顿 0.8 s：“因为明天要下雨……所以我想改个时间”。期望：不抢话（“因为”从句未完）。
+# 类别: pause
+name = "pause_because"
+duration = 10
+
+[[turns]]
+at = 0.5
+text = "因为明天要下雨"
+
+[[turns]]
+at = 2.7
+text = "所以我想改个时间"
+kind = "cont"
+
+[expect]
+turns_detected = 1

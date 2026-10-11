@@ -1,0 +1,32 @@
+# 更多附和“嗯哼/原来如此/可以/我知道了”。期望：不打断。
+# 类别: backchannel
+name = "bc_more"
+duration = 14
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+
+[[turns]]
+at = 6.2
+text = "嗯哼"
+kind = "backchannel"
+
+[[turns]]
+at = 7.1
+text = "原来如此"
+kind = "backchannel"
+
+[[turns]]
+at = 8.3
+text = "可以"
+kind = "backchannel"
+
+[[turns]]
+at = 9.1
+text = "我知道了"
+kind = "backchannel"
+
+[expect]
+turns_detected = 1
+false_barge_in = 0

@@ -1,0 +1,18 @@
+# 短命令打断“wait”（助手回复中途）。期望：快速停下（停止延迟 ≤ 0.5 s）。
+# 类别: command
+name = "stop_wait_en"
+duration = 12
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+
+[[turns]]
+at = 5.5
+text = "wait"
+kind = "barge_in"
+duration = 0.4
+
+[expect]
+barge_in_detected = 1
+max_barge_in_stop_latency = 0.8
