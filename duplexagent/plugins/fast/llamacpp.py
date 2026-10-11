@@ -34,6 +34,7 @@ from duplexagent.plugins.fast.common import (
     INFO_SEP,
     TASK_SEP,
     PhraseChunker,
+    canned_reply,
     conflicts,
     earlier_claim,
     fusion_text,
@@ -46,6 +47,7 @@ from duplexagent.plugins.fast.common import (
     speakable,
     spoken_result,
     strip_markdown,
+    unsupported_numbers,
 )
 from duplexagent.plugins.fast.router import delegate_context, structured_actions
 
@@ -85,7 +87,7 @@ SYSTEM_PROMPT = """你是语音助手的“快脑”，你说的每个字都会�
 
 FUSION_INSTRUCTION = (
     "后台任务刚完成，你已经开口说了：“{lead}”。现在直接接着往下说，用口语讲出最关键的结果，"
-    "不要重复开头，不要列表，不要念编号和符号，总共{limit}字以内。{extra}"
+    "只说这一件事，不要提别的任务；数字要和结果完全一致；不要重复开头，不要列表，不要念编号和符号，总共{limit}字以内。{extra}"
 )
 
 
@@ -136,7 +138,7 @@ def build_messages(ctx: BrainContext, system_prompt: str, fusion_limit: int = 50
             msgs.append({"role": "assistant", "content": f"[说] {m.content}{cut}"})
         else:
             msgs.append({"role": "user", "content": m.content})
-        if i == last_user:  # after the user turn: everything before it stays a cacheable prefix
+        if i == last_user and running_tasks(ctx):  # after the user turn: the history before it stays a cacheable prefix
             msgs.append({"role": "system", "content": task_table(ctx)})
     if ctx.trigger == "task_result":
         msgs.append({"role": "system", "content": FUSION_INSTRUCTION.format(lead=lead or fusion_lead(ctx), limit=fusion_limit, extra="")})
@@ -270,7 +272,8 @@ class LlamaCppFastBrain(FastBrain):
         warmup: bool = True,
         llm_decides: bool = True,  # hybrid: may the model still delegate / cancel when the router says "chat"?
         gate: float | None = None,
-        correction: str = "llm",  # how to detect a contradicted earlier guess: "llm" (judge) | "rule"  # llama.cpp only: act on a non-[说] tag only if its first-token prob >= gate
+        correction: str = "llm",
+        canned: bool = True,  # hybrid: exact-match replies for 你好/谢谢/再见… without the model  # how to detect a contradicted earlier guess: "llm" (judge) | "rule"  # llama.cpp only: act on a non-[说] tag only if its first-token prob >= gate
         **backend_kw,
     ) -> None:
         if mode not in ("llm", "hybrid"):
@@ -288,6 +291,7 @@ class LlamaCppFastBrain(FastBrain):
         self.llm_decides = llm_decides
         self.gate = gate
         self.correction = correction
+        self.canned = canned
         if backend == "llamacpp":
             self.backend = LlamaCppBackend(model_path, **backend_kw)
         elif backend == "openai":
@@ -343,6 +347,9 @@ class LlamaCppFastBrain(FastBrain):
                     yield a
                 yield Say(speech)
                 return
+            if self.canned and (reply := canned_reply(ctx.user_text)):
+                yield Say(reply)
+                return
             if not self.llm_decides:
                 async for a in self._llm_turn(ctx, force="说"):
                     yield a
@@ -380,15 +387,19 @@ class LlamaCppFastBrain(FastBrain):
             msgs = build_messages(sub, self.system_prompt, self.fusion_limit, lead=lead)
             prefill = self._prefill("[说] " + lead) if isinstance(self.backend, LlamaCppBackend) else ""
             gen = self.backend.stream(msgs, prefill, self.max_tokens, self.temperature)
-            said = ""
+            said, bad = "", False
             try:
                 async for s in self._speak(_cap(_clean_speech(gen), self.fusion_limit)):
+                    if unsupported_numbers(s.text, f"{t.result} {t.query}"):
+                        bad = True  # a number the result doesn't contain: never speak it
+                        self.stats.append({"number_guard": s.text, "task": t.id})
+                        break
                     said += s.text
                     yield s
             finally:
                 await gen.aclose()
-            if len(norm(said)) < 2:  # model produced nothing usable: fall back to the result itself
-                yield Say(spoken_result(t.result or "", self.fusion_limit))
+            if bad or len(norm(said)) < 2:  # fall back to the result itself
+                yield Say(("准确地说，" if said else "") + spoken_result(t.result or "", self.fusion_limit))
 
     async def _needs_correction(self, sub: BrainContext, t) -> bool:
         """Did we earlier make a hedged guess that the result contradicts? Numbers by rule, else ask the model."""
@@ -408,9 +419,10 @@ class LlamaCppFastBrain(FastBrain):
         msgs = build_messages(ctx, self.system_prompt)
         prefill = self._prefill(f"[{force}]" if force else "[")
         gen = self.backend.stream(msgs, prefill, self.max_tokens, self.temperature)
-        buf = f"[{force}]" if force else ("[" if prefill.endswith("[") else "")
-        if force and not isinstance(self.backend, LlamaCppBackend):
-            buf = ""  # no prefill on chat APIs: the model writes the tag itself
+        if isinstance(self.backend, LlamaCppBackend):
+            buf = f"[{force}]" if force else "["
+        else:
+            buf = ""  # chat APIs can't prefill: the model writes the tag itself
         head = parse_head(buf) if buf.endswith("]") else None
         try:
             async for piece in (gen if head is None else _empty()):

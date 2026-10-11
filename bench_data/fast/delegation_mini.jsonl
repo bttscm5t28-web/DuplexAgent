@@ -1,0 +1,63 @@
+{"id": "chitchat-001", "cat": "chitchat", "text": "你好", "delegate": false, "action": "say"}
+{"id": "chitchat-006", "cat": "chitchat", "text": "今天心情不太好", "delegate": false, "action": "say"}
+{"id": "chitchat-011", "cat": "chitchat", "text": "我今天加班到十点好累啊", "delegate": false, "action": "say"}
+{"id": "chitchat-016", "cat": "chitchat", "text": "你会唱歌吗", "delegate": false, "action": "say"}
+{"id": "chitchat-021", "cat": "chitchat", "text": "好的明白了", "delegate": false, "action": "say"}
+{"id": "chitchat-026", "cat": "chitchat", "text": "给我讲讲你今天都做了什么事情", "delegate": false, "action": "say"}
+{"id": "chitchat-031", "cat": "chitchat", "text": "夸夸我", "delegate": false, "action": "say"}
+{"id": "chitchat-036", "cat": "chitchat", "text": "下雨天适合干什么", "delegate": false, "action": "say"}
+{"id": "knowledge-003", "cat": "knowledge", "text": "水的沸点是多少度", "delegate": false, "action": "say"}
+{"id": "knowledge-008", "cat": "knowledge", "text": "一公斤等于多少斤", "delegate": false, "action": "say"}
+{"id": "knowledge-013", "cat": "knowledge", "text": "一周有几天", "delegate": false, "action": "say"}
+{"id": "knowledge-018", "cat": "knowledge", "text": "世界上最高的山是哪座", "delegate": false, "action": "say"}
+{"id": "trivial_calc-003", "cat": "trivial_calc", "text": "十乘以十是多少", "delegate": false, "action": "say"}
+{"id": "trivial_calc-008", "cat": "trivial_calc", "text": "一半的一半是多少", "delegate": false, "action": "say"}
+{"id": "calc-005", "cat": "calc", "text": "帮我算一下 15% 的小费 账单是 286 块", "delegate": true, "action": "delegate"}
+{"id": "calc-010", "cat": "calc", "text": "2 的 32 次方是多少", "delegate": true, "action": "delegate"}
+{"id": "calc-015", "cat": "calc", "text": "圆周率乘以半径 7.5 的平方是多少", "delegate": true, "action": "delegate"}
+{"id": "realtime-004", "cat": "realtime", "text": "特斯拉现在股价多少", "delegate": true, "action": "delegate"}
+{"id": "realtime-009", "cat": "realtime", "text": "今天油价多少", "delegate": true, "action": "delegate"}
+{"id": "realtime-014", "cat": "realtime", "text": "最近的地铁站在哪", "delegate": true, "action": "delegate"}
+{"id": "personal-003", "cat": "personal", "text": "提醒我下午三点开会", "delegate": true, "action": "delegate"}
+{"id": "personal-008", "cat": "personal", "text": "帮我订一张周五去上海的高铁票", "delegate": true, "action": "delegate"}
+{"id": "personal-013", "cat": "personal", "text": "我的快递到哪了", "delegate": true, "action": "delegate"}
+{"id": "plan-004", "cat": "plan", "text": "五千块预算配一台游戏电脑怎么配", "delegate": true, "action": "delegate"}
+{"id": "plan-009", "cat": "plan", "text": "比较一下三家银行的房贷利率", "delegate": true, "action": "delegate"}
+{"id": "plan-014", "cat": "plan", "text": "帮我规划一下怎么在三个月内学会 Python", "delegate": true, "action": "delegate"}
+{"id": "write-005", "cat": "write", "text": "给我写个生日祝福给我闺蜜 要长一点", "delegate": true, "action": "delegate"}
+{"id": "write-010", "cat": "write", "text": "帮我起草一个租房合同", "delegate": true, "action": "delegate"}
+{"id": "clarify-001", "cat": "clarify", "text": "帮我订个", "delegate": false, "action": "say"}
+{"id": "ctx-status-001", "cat": "status", "text": "天气查到了吗", "history": [{"role": "user", "content": "帮我查一下明天北京的天气"}, {"role": "assistant", "content": "好的，我让后台去处理，你可以先聊点别的。"}], "tasks": [{"id": "t1", "query": "查询明天北京的天气", "status": "running", "progress": ["正在查询天气接口"]}], "delegate": false, "action": "status", "forbid": ["晴", "雨", "度"]}
+{"id": "ctx-status-006", "cat": "status", "text": "票订上了没", "history": [{"role": "user", "content": "帮我订一张周五去上海的高铁票"}, {"role": "assistant", "content": "好的，我让后台去处理，你可以先聊点别的。"}], "tasks": [{"id": "t1", "query": "订一张周五去上海的高铁票", "status": "running", "progress": ["正在查询车次"]}], "delegate": false, "action": "status", "forbid": ["订好了", "已经订"]}
+{"id": "ctx-status-011", "cat": "status", "text": "怎么还没好", "history": [{"role": "user", "content": "帮我规划一个三天的杭州旅行路线"}, {"role": "assistant", "content": "好的，我让后台去处理，你可以先聊点别的。"}], "tasks": [{"id": "t1", "query": "规划一个三天的杭州旅行路线", "status": "running", "progress": ["已确定主要景点"]}], "delegate": false, "action": "status"}
+{"id": "ctx-cancel-004", "cat": "cancel", "text": "邮件不用写了我自己写吧", "history": [{"role": "user", "content": "写一封请假邮件给我老板"}, {"role": "assistant", "content": "好的，我让后台去处理，你可以先聊点别的。"}], "tasks": [{"id": "t1", "query": "写一封请假邮件给老板", "status": "running", "progress": ["正在起草"]}], "delegate": false, "action": "cancel"}
+{"id": "ctx-cancel-009", "cat": "cancel", "text": "never mind 不需要了", "history": [{"role": "user", "content": "帮我查一下明天北京的天气"}, {"role": "assistant", "content": "好的，我让后台去处理，你可以先聊点别的。"}], "tasks": [{"id": "t1", "query": "查询明天北京的天气", "status": "running", "progress": ["正在查询天气接口"]}], "delegate": false, "action": "cancel"}
+{"id": "ctx-amend-004", "cat": "amend", "text": "还有 我带着老人 别安排太累", "history": [{"role": "user", "content": "帮我规划一个三天的杭州旅行路线"}, {"role": "assistant", "content": "好的，我让后台去处理，你可以先聊点别的。"}], "tasks": [{"id": "t1", "query": "规划一个三天的杭州旅行路线", "status": "running", "progress": ["已确定主要景点"]}], "delegate": false, "action": "amend"}
+{"id": "ctx-chitchat-001", "cat": "chitchat", "text": "算了", "history": [{"role": "user", "content": "讲个笑话吧"}, {"role": "assistant", "content": "好啊，有一天小明去……", "interrupted": true}], "delegate": false, "action": "say"}
+{"id": "ctx-interrupt-004", "cat": "interrupt", "text": "不是这个意思 我是问它能干嘛", "history": [{"role": "user", "content": "什么是区块链"}, {"role": "assistant", "content": "区块链是一种分布式账本", "interrupted": true}], "delegate": false, "action": "say"}
+{"id": "ctx-interrupt-009", "cat": "interrupt", "text": "好了好了我知道了", "history": [{"role": "user", "content": "睡不着怎么办"}, {"role": "assistant", "content": "可以试试睡前别看手机，泡个脚，还有", "interrupted": true}], "delegate": false, "action": "say"}
+{"id": "ctx-chitchat-005", "cat": "chitchat", "text": "你觉得杭州好玩吗", "history": [{"role": "user", "content": "帮我规划一个三天的杭州旅行路线"}, {"role": "assistant", "content": "好的，我让后台去处理，你可以先聊点别的。"}], "tasks": [{"id": "t1", "query": "规划一个三天的杭州旅行路线", "status": "running", "progress": ["已确定主要景点"]}], "delegate": false, "action": "say"}
+{"id": "ho-001", "cat": "chitchat", "text": "我查了一下午资料好累啊", "delegate": false, "action": "say"}
+{"id": "ho-006", "cat": "chitchat", "text": "那个 我最近老是睡不着怎么办", "delegate": false, "action": "say"}
+{"id": "ho-011", "cat": "chitchat", "text": "嗯嗯 好的 谢谢你", "delegate": false, "action": "say"}
+{"id": "ho-016", "cat": "chitchat", "text": "我刚跑完五公里 累死了", "delegate": false, "action": "say"}
+{"id": "ho-021", "cat": "chitchat", "text": "你喜欢下雨天吗", "delegate": false, "action": "say"}
+{"id": "ho-026", "cat": "knowledge", "text": "一年有几个月", "delegate": false, "action": "say"}
+{"id": "ho-031", "cat": "knowledge", "text": "太阳从哪边升起", "delegate": false, "action": "say"}
+{"id": "ho-036", "cat": "knowledge", "text": "查一下 长城在哪个城市", "delegate": false, "action": "say"}
+{"id": "ho-041", "cat": "calc", "text": "3847乘以269等于多少", "delegate": true, "action": "delegate"}
+{"id": "ho-046", "cat": "calc", "text": "贷款一百五十万三十年等额本息利率百分之三点九 月供多少", "delegate": true, "action": "delegate"}
+{"id": "ho-051", "cat": "calc", "text": "从1加到1000再除以37是多少", "delegate": true, "action": "delegate"}
+{"id": "ho-056", "cat": "realtime", "text": "今晚有什么球赛", "delegate": true, "action": "delegate"}
+{"id": "ho-061", "cat": "realtime", "text": "what's the weather like in Shanghai now", "delegate": true, "action": "delegate"}
+{"id": "ho-066", "cat": "personal", "text": "设个明早六点半的闹钟", "delegate": true, "action": "delegate"}
+{"id": "ho-071", "cat": "personal", "text": "把空调调到二十六度", "delegate": true, "action": "delegate"}
+{"id": "ho-076", "cat": "planning", "text": "比较一下北京和上海的房价走势", "delegate": true, "action": "delegate"}
+{"id": "ho-081", "cat": "planning", "text": "plan a three day trip to Tokyo for me", "delegate": true, "action": "delegate"}
+{"id": "ho-086", "cat": "writing", "text": "给我写一篇五百字的读后感 读的是活着", "delegate": true, "action": "delegate"}
+{"id": "ho-091", "cat": "writing", "text": "给我女朋友写段生日祝福 长一点 走心一点", "delegate": true, "action": "delegate"}
+{"id": "ho-096", "cat": "status", "text": "算出来了没有", "tasks": [{"id": "t1", "query": "计算3847乘以269", "status": "running", "progress": []}], "delegate": false, "action": "status", "forbid": ["1034843", "103万"]}
+{"id": "ho-101", "cat": "cancel", "text": "算了不用查了", "tasks": [{"id": "t1", "query": "查明天北京天气", "status": "running", "progress": []}], "delegate": false, "action": "cancel"}
+{"id": "ho-106", "cat": "cancel", "text": "不用发了 我自己跟他说", "tasks": [{"id": "t1", "query": "给老王发微信说晚点到", "status": "running", "progress": []}], "delegate": false, "action": "cancel"}
+{"id": "ho-111", "cat": "amend", "text": "那个 邮件语气正式一点", "tasks": [{"id": "t1", "query": "写一封请假邮件", "status": "running", "progress": []}], "delegate": false, "action": "amend"}
+{"id": "ho-116", "cat": "continuation", "text": "等一下 你刚才说的第二点是什么", "history": [{"role": "user", "content": "怎么缓解压力"}, {"role": "assistant", "content": "第一可以多运动 第二可以找朋友聊", "interrupted": true}], "delegate": false, "action": "say"}

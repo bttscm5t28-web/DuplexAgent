@@ -348,3 +348,25 @@ def speakable(phrase: str) -> str:
     s = re.sub(r"\s*\n+\s*", "，", s)
     s = re.sub(r"([，。；：！？,;:])[，,]+", r"\1", s)
     return s
+
+
+def unsupported_numbers(phrase: str, sources: str) -> list[float]:
+    """Numbers in `phrase` not backed by any number in `sources` (±0.5 %); 0–3 always pass."""
+    src = numbers_in(sources)
+    return [x for x in numbers_in(phrase) if x > 3 and not any(abs(x - y) <= 0.005 * max(abs(y), 1) for y in src)]
+
+
+_CANNED_GROUPS = [
+    (("你好", "你好呀", "您好", "嗨", "hi", "hello", "哈喽"), "你好呀，有什么可以帮你？"),
+    (("谢谢", "谢谢你", "多谢", "谢啦", "thanks", "thankyou"), "不客气。"),
+    (("再见", "拜拜", "bye", "回头见"), "再见，回头聊。"),
+    (("晚安",), "晚安，好梦。"),
+    (("你是谁", "你叫什么", "你叫什么名字"), "我是你的语音助手，可以陪你聊天，复杂的事我会交给后台去办。"),
+    (("嗯", "嗯嗯", "好的", "好", "嗯好的", "嗯嗯好的", "ok", "okay"), "好的。"),
+]
+CANNED_EXACT = {k: v for keys, v in _CANNED_GROUPS for k in keys}
+
+
+def canned_reply(text: str) -> str | None:
+    """Instant reply for the most frequent short turns (exact match after normalization)."""
+    return CANNED_EXACT.get(norm(text))

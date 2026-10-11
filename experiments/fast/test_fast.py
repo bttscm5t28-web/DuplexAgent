@@ -98,8 +98,11 @@ def test_router_fusion_corrects():
     assert "更正" in said and "1138712" in said
 
 
-class FakeBackend:
-    """Replays a scripted completion token by token (no model)."""
+from duplexagent.plugins.fast.llamacpp import LlamaCppBackend  # noqa: E402
+
+
+class FakeBackend(LlamaCppBackend):
+    """Replays a scripted completion token by token (no model), honoring llama.cpp-style prefill."""
 
     def __init__(self, text):
         self.text = text
@@ -156,3 +159,25 @@ def test_hybrid_router_shortcut_and_fusion_lead():
     fast = _llm("[说] 更正一下我刚才说的，关于3847 乘以 296，结果是 1138712。", mode="hybrid")
     said = "".join(a.text for a in _run(fast, BrainContext("task_result", hist, tasks=[t], deliver=[t])) if isinstance(a, Say))
     assert said.startswith("更正一下") and "1138712" in said
+
+
+def test_llm_protocol_chat_api_backend():
+    from duplexagent.plugins.fast.llamacpp import LlamaCppFastBrain, OpenAIBackend
+
+    class FakeChat(OpenAIBackend):
+        def __init__(self, text):
+            self.text = text
+
+        async def start(self):
+            pass
+
+        async def stream(self, msgs, prefill, max_tokens, temperature):
+            assert prefill == "" or not prefill.strip("[")  # nothing is prefilled on chat APIs
+            for i in range(0, len(self.text), 3):
+                yield self.text[i : i + 3]
+
+    fast = LlamaCppFastBrain(mode="llm", warmup=False)
+    fast.backend = FakeChat("[委派] 好，我让后台查一下。[任务] 查询今天的油价")
+    acts = _run(fast, ctx("今天油价多少"))
+    assert "".join(a.text for a in acts if isinstance(a, Say)) == "好，我让后台查一下。"
+    assert [a.query for a in acts if isinstance(a, Delegate)] == ["查询今天的油价"]

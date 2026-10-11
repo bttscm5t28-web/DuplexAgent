@@ -58,9 +58,13 @@ def build_messages(ctx: BrainContext, system_prompt: str) -> list[dict]:
 
 @register("fast", "openai_compat")
 class OpenAICompatFastBrain(FastBrain):
-    def __init__(self, base_url: str, model: str, api_key_env: str = "OPENAI_API_KEY", system_prompt: str = SYSTEM_PROMPT, **params):
+    def __init__(self, base_url: str, model: str, api_key_env: str = "OPENAI_API_KEY", system_prompt: str = SYSTEM_PROMPT,
+                 stream: bool = True, **params):
         self.cfg = dict(base_url=base_url, model=model, api_key_env=api_key_env, **params)
         self.system_prompt = system_prompt
+        # Some servers (e.g. llama-cpp-python's chatml-function-calling) never stream tool calls:
+        # the model then *says* it delegated while no task is created. stream=False avoids that.
+        self.stream = stream
 
     async def start(self) -> None:
         from duplexagent.core.llm import ChatClient
@@ -70,9 +74,18 @@ class OpenAICompatFastBrain(FastBrain):
     async def close(self) -> None:
         await self.client.close()
 
+    async def _deltas(self, msgs: list[dict]) -> AsyncIterator[dict]:
+        if self.stream:
+            async for delta in self.client.stream(msgs, TOOLS):
+                yield delta
+            return
+        msg = await self.client.complete(msgs, TOOLS)
+        calls = [{**tc, "index": i} for i, tc in enumerate(msg.get("tool_calls") or [])]
+        yield {"content": msg.get("content") or "", "tool_calls": calls}
+
     async def respond(self, ctx: BrainContext) -> AsyncIterator[FastAction]:
         calls: dict[int, dict] = {}
-        async for delta in self.client.stream(build_messages(ctx, self.system_prompt), TOOLS):
+        async for delta in self._deltas(build_messages(ctx, self.system_prompt)):
             if delta.get("content"):
                 yield Say(delta["content"])
             for tc in delta.get("tool_calls") or []:

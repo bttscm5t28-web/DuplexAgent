@@ -26,21 +26,21 @@ def main() -> None:
         r = json.load(open(f, encoding="utf-8"))
         name = os.path.basename(f)[6:-5]
         dl, ho = r.get("delegation", {}), r.get("heldout", {})
-        fu, fh = r.get("fusion", {}), r.get("fusion_heldout", {})
+        fu, fh, ft = r.get("fusion", {}), r.get("fusion_heldout", {}), r.get("fusion_test", {})
         # say-turn TTFT: what the user waits for when the fast brain answers itself
         say_ttft = sorted(x["ttft"] for x in dl.get("rows", []) + ho.get("rows", []) if x["got"] == "say" and x["ttft"] is not None)
         all_ttft = sorted(x["ttft"] for x in dl.get("rows", []) + ho.get("rows", []) if x["ttft"] is not None)
         q = lambda xs, p: xs[min(len(xs) - 1, int(p * len(xs)))] if xs else None  # noqa: E731
-        rows.append((name, dl, ho, fu, fh, q(all_ttft, 0.5), q(all_ttft, 0.9), q(say_ttft, 0.5), q(say_ttft, 0.9)))
+        rows.append((name, dl, ho, fu, fh, ft, q(all_ttft, 0.5), q(all_ttft, 0.9), q(say_ttft, 0.5), q(say_ttft, 0.9)))
     rows.sort(key=lambda r: -(r[2].get("action_accuracy") or 0))
-    print("| 候选 | 委派准确率 主/留出 | 精确率 留出 | 召回 留出 | 动作准确率 主/留出 | 瞎猜违规 | 融合通过 主/留出 | TTFT p50/p90 全部 | TTFT p50/p90 自答轮 |")
+    print("| 候选 | 委派准确率 主/留出 | 精确率 留出 | 召回 留出 | 动作准确率 主/留出 | 瞎猜违规 | 融合通过 主/留出/测试 | TTFT p50/p90 全部 | TTFT p50/p90 自答轮 |")
     print("|---|---|---|---|---|---|---|---|---|")
-    for name, dl, ho, fu, fh, a50, a90, s50, s90 in rows:
+    for name, dl, ho, fu, fh, ft, a50, a90, s50, s90 in rows:
         forbid = [x for x in (dl.get("forbid_violation_rate"), ho.get("forbid_violation_rate")) if x is not None]
         print(
             f"| {name} | {pct(dl.get('delegation_accuracy'))} / {pct(ho.get('delegation_accuracy'))} | {pct(ho.get('delegation_precision'))} | "
             f"{pct(ho.get('delegation_recall'))} | {pct(dl.get('action_accuracy'))} / {pct(ho.get('action_accuracy'))} | "
-            f"{pct(max(forbid) if forbid else None)} | {pct(fu.get('fusion_all'))} / {pct(fh.get('fusion_all'))} | "
+            f"{pct(max(forbid) if forbid else None)} | {pct(fu.get('fusion_all'))} / {pct(fh.get('fusion_all'))} / {pct(ft.get('fusion_all'))} | "
             f"{sec(a50)} / {sec(a90)} | {sec(s50)} / {sec(s90)} |"
         )
     e2e = sorted(glob.glob(os.path.join(d, "e2e_*.json")))
