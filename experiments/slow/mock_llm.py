@@ -46,8 +46,9 @@ def decide(messages: list[dict]) -> tuple[str, dict | None]:
     """Return (text, tool_call) for a normalized [{role, content:str}] conversation."""
     from duplexagent.plugins.slow.router import apply_amendments, extract_math
 
-    task = next((m["content"] for m in messages if m["role"] == "user"), "")
-    task = re.sub(r"^任务：", "", task.split("\n")[0])
+    first = next((m["content"] for m in messages if m["role"] == "user"), "")
+    m0 = re.search(r"任务：([^\n]+)", first)  # the task line may follow harness preambles
+    task = m0.group(1) if m0 else first.split("\n")[0]
     amends = []
     for m in messages:
         if m["role"] == "user":
@@ -65,7 +66,7 @@ def decide(messages: list[dict]) -> tuple[str, dict | None]:
         return f"结论：结果是 {value}。\n详细：根据工具输出「{tool_out}」。", None
     if "用程序" in q or "编程" in q:
         return "", {"name": "python", "arguments": {"code": "import time\nfor _ in range(10**8): pass\nprint('done')"}}
-    expr = extract_math(q)
+    expr = extract_math(q, strict=False)
     if expr:
         return "先算一下。", {"name": "calculator", "arguments": {"expression": expr}}
     return f"结论：（模拟）关于「{q}」我没有工具可用。", None
@@ -73,6 +74,7 @@ def decide(messages: list[dict]) -> tuple[str, dict | None]:
 
 class Handler(BaseHTTPRequestHandler):
     delay = 0.3
+    reject_betas = False  # emulate an account/platform without the beta features
     protocol_version = "HTTP/1.1"
 
     def log_message(self, *a):
@@ -82,6 +84,32 @@ class Handler(BaseHTTPRequestHandler):
         body = json.dumps(obj, ensure_ascii=False).encode()
         self.send_response(code)
         self.send_header("content-type", "application/json")
+        self.send_header("content-length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _stream_anthropic(self, msg: dict) -> None:
+        def ev(name: str, data: dict) -> bytes:
+            return f"event: {name}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n".encode()
+
+        out = [ev("message_start", {"type": "message_start", "message": {**msg, "content": [], "stop_reason": None, "usage": {"input_tokens": 10, "output_tokens": 1}}})]
+        for i, b in enumerate(msg["content"]):
+            if b["type"] == "text":
+                out += [ev("content_block_start", {"type": "content_block_start", "index": i, "content_block": {"type": "text", "text": ""}}),
+                        ev("content_block_delta", {"type": "content_block_delta", "index": i, "delta": {"type": "text_delta", "text": b["text"]}})]
+            elif b["type"] == "thinking":
+                out += [ev("content_block_start", {"type": "content_block_start", "index": i, "content_block": {"type": "thinking", "thinking": "", "signature": ""}}),
+                        ev("content_block_delta", {"type": "content_block_delta", "index": i, "delta": {"type": "thinking_delta", "thinking": b["thinking"]}}),
+                        ev("content_block_delta", {"type": "content_block_delta", "index": i, "delta": {"type": "signature_delta", "signature": b["signature"]}})]
+            elif b["type"] == "tool_use":
+                out += [ev("content_block_start", {"type": "content_block_start", "index": i, "content_block": {"type": "tool_use", "id": b["id"], "name": b["name"], "input": {}}}),
+                        ev("content_block_delta", {"type": "content_block_delta", "index": i, "delta": {"type": "input_json_delta", "partial_json": json.dumps(b["input"], ensure_ascii=False)}})]
+            out.append(ev("content_block_stop", {"type": "content_block_stop", "index": i}))
+        out += [ev("message_delta", {"type": "message_delta", "delta": {"stop_reason": msg["stop_reason"], "stop_sequence": None}, "usage": {"output_tokens": 5}}),
+                ev("message_stop", {"type": "message_stop"})]
+        body = b"".join(out)
+        self.send_response(200)
+        self.send_header("content-type", "text/event-stream")
         self.send_header("content-length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
@@ -103,8 +131,24 @@ class Handler(BaseHTTPRequestHandler):
             if call:
                 msg["tool_calls"] = [{"id": f"call_{uuid.uuid4().hex[:8]}", "type": "function",
                                       "function": {"name": call["name"], "arguments": json.dumps(call["arguments"], ensure_ascii=False)}}]
+            if req.get("stream"):
+                chunks = [{"content": msg["content"]}] if msg["content"] else []
+                for i, tc in enumerate(msg.get("tool_calls", [])):
+                    a = tc["function"]["arguments"]
+                    chunks.append({"tool_calls": [{"index": i, "id": tc["id"], "type": "function", "function": {"name": tc["function"]["name"], "arguments": a[: len(a) // 2]}}]})
+                    chunks.append({"tool_calls": [{"index": i, "function": {"arguments": a[len(a) // 2:]}}]})
+                body = b"".join(f"data: {json.dumps({'choices': [{'index': 0, 'delta': c}]}, ensure_ascii=False)}\n\n".encode() for c in chunks) + b"data: [DONE]\n\n"
+                self.send_response(200)
+                self.send_header("content-type", "text/event-stream")
+                self.send_header("content-length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
             self._send({"id": "x", "object": "chat.completion", "model": req.get("model"),
                         "choices": [{"index": 0, "message": msg, "finish_reason": "tool_calls" if call else "stop"}]})
+        elif path.endswith("/messages") and self.reject_betas and "anthropic-beta" in self.headers:
+            beta = self.headers["anthropic-beta"]
+            self._send({"type": "error", "error": {"type": "invalid_request_error", "message": f"Unexpected value(s) `{beta}` for the `anthropic-beta` header (fallback/display not enabled)"}}, 400)
         elif path.endswith("/messages"):
             msgs = [{"role": m["role"], "content": _texts(m.get("content"))} for m in req["messages"]]
             allow = bool(req.get("tools")) and req.get("tool_choice", {}).get("type") != "none"
@@ -116,9 +160,16 @@ class Handler(BaseHTTPRequestHandler):
                 content.append({"type": "text", "text": text})
             if call:
                 content.append({"type": "tool_use", "id": f"toolu_{uuid.uuid4().hex[:8]}", "name": call["name"], "input": call["arguments"]})
-            self._send({"id": f"msg_{uuid.uuid4().hex[:8]}", "type": "message", "role": "assistant", "model": req.get("model"),
-                        "content": content, "stop_reason": "tool_use" if call else "end_turn", "stop_sequence": None,
-                        "usage": {"input_tokens": 10, "output_tokens": 5}})
+            if call:  # map to the caller's tool name (e.g. Agent SDK's mcp__slowtools__calculator)
+                names = [t.get("name", "") for t in req.get("tools", [])]
+                content[-1]["name"] = next((n for n in names if n == call["name"] or n.endswith("__" + call["name"])), call["name"])
+            msg = {"id": f"msg_{uuid.uuid4().hex[:8]}", "type": "message", "role": "assistant", "model": req.get("model"),
+                   "content": content, "stop_reason": "tool_use" if call else "end_turn", "stop_sequence": None,
+                   "usage": {"input_tokens": 10, "output_tokens": 5}}
+            if req.get("stream"):
+                self._stream_anthropic(msg)
+            else:
+                self._send(msg)
         else:
             self._send({"error": "not found"}, 404)
 
@@ -130,9 +181,9 @@ class _Server(ThreadingHTTPServer):
         pass
 
 
-def serve(port: int = 0, delay: float = 0.3) -> tuple[ThreadingHTTPServer, int]:
+def serve(port: int = 0, delay: float = 0.3, reject_betas: bool = False) -> tuple[ThreadingHTTPServer, int]:
     """Start in a background thread; returns (server, port)."""
-    handler = type("H", (Handler,), {"delay": delay})
+    handler = type("H", (Handler,), {"delay": delay, "reject_betas": reject_betas})
     srv = _Server(("127.0.0.1", port), handler)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     return srv, srv.server_address[1]

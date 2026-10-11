@@ -1,0 +1,64 @@
+{"id": "calc-01", "cat": "calc", "query": "计算 23 * 47", "answer_contains": ["1081"]}
+{"id": "calc-02", "cat": "calc", "query": "计算 (12 + 8) * 3", "answer_contains": ["60"]}
+{"id": "calc-03", "cat": "calc", "query": "帮我算一下 1234 乘以 5678", "answer_contains": ["7006652"]}
+{"id": "calc-04", "cat": "calc", "query": "三百六十五乘以二十四等于多少", "answer_contains": ["8760"]}
+{"id": "calc-05", "cat": "calc", "query": "计算 (17.5 + 2.5) ÷ 4 再乘以 3", "answer_contains": ["15"]}
+{"id": "calc-06", "cat": "calc", "query": "2 的 20 次方是多少", "answer_contains": ["1048576"]}
+{"id": "calc-07", "cat": "calc", "query": "9801 的平方根是多少", "answer_contains": ["99"]}
+{"id": "calc-08", "cat": "calc", "query": "1000 的百分之十五是多少", "answer_contains": ["150"]}
+{"id": "calc-09", "cat": "calc", "query": "计算 123456789 加 987654321", "answer_contains": ["1111111110"]}
+{"id": "calc-10", "cat": "calc", "query": "计算 7 的阶乘", "answer_contains": ["5040"]}
+{"id": "calc-11", "cat": "calc", "query": "100 除以 8 等于多少", "answer_contains": ["12.5"]}
+{"id": "unit-01", "cat": "unit", "query": "5 公里等于多少米", "answer_contains": ["5000"]}
+{"id": "unit-02", "cat": "unit", "query": "100 华氏度是多少摄氏度？保留一位小数", "answer_contains": ["37.8"]}
+{"id": "unit-03", "cat": "unit", "query": "3 斤是多少克", "answer_contains": ["1500"]}
+{"id": "unit-04", "cat": "unit", "query": "10 英里是多少公里？保留两位小数", "answer_contains": ["16.09"]}
+{"id": "unit-05", "cat": "unit", "query": "2 小时 15 分钟一共是多少分钟", "answer_contains": ["135"]}
+{"id": "unit-06", "cat": "unit", "query": "1 GB 等于多少 MB（按 1024 进制）", "answer_contains": ["1024"]}
+{"id": "unit-07", "cat": "unit", "query": "30 摄氏度是多少华氏度", "answer_contains": ["86"]}
+{"id": "date-01", "cat": "date", "query": "2024年2月1日到2024年3月1日有多少天", "answer_contains": ["29"]}
+{"id": "date-02", "cat": "date", "query": "2026年10月1日是星期几", "accept_any": [["星期四", "周四"]]}
+{"id": "date-03", "cat": "date", "query": "2026年1月1日之后100天是几月几号", "accept_any": [["4月11", "4-11", "04-11"]]}
+{"id": "date-04", "cat": "date", "query": "今天是星期几", "accept_any": [["星期日", "周日", "星期天", "礼拜天"]]}
+{"id": "date-05", "cat": "date", "query": "从今天算起，距离2027年1月1日还有多少天", "answer_contains": ["82"]}
+{"id": "date-06", "cat": "date", "query": "2000年是闰年吗", "accept_any": [["是闰年", "是一个闰年", "属于闰年"]], "reject_any": ["不是闰年", "不是"]}
+{"id": "date-07", "cat": "date", "query": "1900年2月有多少天", "accept_any": [["28"]], "reject_any": ["29"]}
+{"id": "date-08", "cat": "date", "query": "从2025年3月15日到2025年12月25日一共多少天", "answer_contains": ["285"]}
+{"id": "date-09", "cat": "date", "query": "今天之后的第45天是几月几号", "accept_any": [["11月25"]]}
+{"id": "fact-01", "cat": "fact", "query": "一年有多少个月", "accept_any": [["12", "十二"]]}
+{"id": "fact-02", "cat": "fact", "query": "水的化学式是什么", "answer_contains": ["H2O"]}
+{"id": "fact-03", "cat": "fact", "query": "中国的首都是哪个城市", "answer_contains": ["北京"]}
+{"id": "fact-04", "cat": "fact", "query": "光在真空中的速度大约是每秒多少公里", "accept_any": [["30万", "300000", "299792", "3×10", "3x10", "三十万"]]}
+{"id": "fact-05", "cat": "fact", "query": "地球上最大的大洋是哪个", "answer_contains": ["太平洋"]}
+{"id": "fact-06", "cat": "fact", "query": "食盐的主要成分的化学式是什么", "answer_contains": ["NaCl"]}
+{"id": "fact-07", "cat": "fact", "query": "一个标准大气压下水的沸点是多少摄氏度", "answer_contains": ["100"]}
+{"id": "fact-08", "cat": "fact", "query": "《红楼梦》的作者是谁", "answer_contains": ["曹雪芹"]}
+{"id": "fact-09", "cat": "fact", "query": "人体最大的器官是什么", "answer_contains": ["皮肤"]}
+{"id": "fact-10", "cat": "fact", "query": "日本的首都是哪里", "answer_contains": ["东京"]}
+{"id": "fact-11", "cat": "fact", "query": "一周有几天", "accept_any": [["7", "七"]]}
+{"id": "reason-01", "cat": "reason", "query": "一件衣服原价 400 元，先打八折，再在折后价上减 50 元，最后要付多少钱", "answer_contains": ["270"]}
+{"id": "reason-02", "cat": "reason", "query": "鸡兔同笼，共有 35 个头、94 只脚，兔子有几只", "answer_contains": ["12"]}
+{"id": "reason-03", "cat": "reason", "query": "小明每分钟走 60 米，小红每分钟走 80 米，两人从相距 2800 米的两地同时相向而行，几分钟后相遇", "answer_contains": ["20"]}
+{"id": "reason-04", "cat": "reason", "query": "10000 元存银行，年利率 3%，按年复利计算，3 年后本息合计多少元？保留两位小数", "answer_contains": ["10927.27"]}
+{"id": "reason-05", "cat": "reason", "query": "一个长方形周长 30 厘米，长比宽多 5 厘米，面积是多少平方厘米", "answer_contains": ["50"]}
+{"id": "reason-06", "cat": "reason", "query": "一辆车百公里油耗 8 升，油价每升 7.5 元，开 350 公里要花多少油费", "answer_contains": ["210"]}
+{"id": "reason-07", "cat": "reason", "query": "3 个人吃饭一共花了 386 元，AA 平摊每人多少钱？保留两位小数", "answer_contains": ["128.67"]}
+{"id": "reason-08", "cat": "reason", "query": "一个水池，甲管单独 6 小时注满，乙管单独 3 小时注满，两管同时开几小时注满", "answer_contains": ["2"]}
+{"id": "reason-09", "cat": "reason", "query": "某商品先涨价 20%，再降价 20%，最终价格是原价的百分之几", "answer_contains": ["96"]}
+{"id": "reason-10", "cat": "reason", "query": "我今年 28 岁，我妈妈比我大 26 岁，等我 40 岁时妈妈多少岁", "answer_contains": ["66"]}
+{"id": "prog-01", "cat": "prog", "query": "1 到 100 之间所有质数的和是多少", "answer_contains": ["1060"]}
+{"id": "prog-02", "cat": "prog", "query": "1 到 1000 之间有多少个质数", "answer_contains": ["168"]}
+{"id": "prog-03", "cat": "prog", "query": "斐波那契数列第 30 项是多少（第 1、2 项都是 1）", "answer_contains": ["832040"]}
+{"id": "prog-04", "cat": "prog", "query": "2 的 100 次方各位数字之和是多少", "answer_contains": ["115"]}
+{"id": "prog-05", "cat": "prog", "query": "1 到 100 中能被 3 或 5 整除的数的和是多少", "answer_contains": ["2418"]}
+{"id": "prog-06", "cat": "prog", "query": "100 的阶乘末尾有多少个 0", "answer_contains": ["24"]}
+{"id": "prog-07", "cat": "prog", "query": "从 1 写到 1000，数字 7 一共出现了多少次", "answer_contains": ["300"]}
+{"id": "prog-08", "cat": "prog", "query": "求 1 到 50 的平方和", "answer_contains": ["42925"]}
+{"id": "prog-09", "cat": "prog", "query": "252 和 198 的最大公约数是多少", "answer_contains": ["18"]}
+{"id": "prog-10", "cat": "prog", "query": "从 10 个人里选 3 个人组成小组，有多少种选法", "answer_contains": ["120"]}
+{"id": "plan-01", "cat": "plan", "query": "帮我规划一个周末两天的北京旅行行程", "rubric": {"keywords": [["第一天", "周六", "Day 1", "上午"], ["第二天", "周日", "Day 2"], ["故宫", "长城", "天安门", "颐和园", "胡同", "天坛"]], "min_hits": 3}}
+{"id": "plan-02", "cat": "plan", "query": "我想三个月内减重 5 公斤，给我一个可执行的计划", "rubric": {"keywords": [["饮食", "热量", "卡路里"], ["运动", "锻炼", "跑步", "有氧"], ["每周", "每天"], ["睡眠", "喝水", "体重"]], "min_hits": 3}}
+{"id": "plan-03", "cat": "plan", "query": "帮我列一个准备英语口语考试的一周复习计划", "rubric": {"keywords": [["周一", "第一天", "Day 1"], ["听", "跟读", "模仿"], ["练习", "模拟", "录音"], ["词汇", "表达", "话题"]], "min_hits": 3}}
+{"id": "plan-04", "cat": "plan", "query": "给 5 个人的部门聚餐做个预算方案，人均不超过 150 元", "rubric": {"keywords": [["750", "总预算", "总共"], ["150", "人均"], ["饮料", "酒水", "菜"]], "min_hits": 2}}
+{"id": "plan-05", "cat": "plan", "query": "明天早上 9 点要开会，帮我安排一下今晚的准备工作顺序", "rubric": {"keywords": [["首先", "第一", "先"], ["材料", "资料", "PPT", "议程"], ["睡", "休息", "闹钟"]], "min_hits": 2}}
+{"id": "plan-06", "cat": "plan", "query": "我要搬家，帮我列一个搬家前一周的待办清单", "rubric": {"keywords": [["打包", "装箱"], ["搬家公司", "车"], ["水电", "燃气", "物业", "地址"], ["清洁", "打扫"]], "min_hits": 3}}

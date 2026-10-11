@@ -1,0 +1,435 @@
+{
+ "name": "agent_qwen3_4b_stream",
+ "config": "configs/exp/slow/agent_qwen3_4b.toml",
+ "overrides": [
+  "slow.stream=true"
+ ],
+ "slow_cfg": {
+  "impl": "agent",
+  "base_url": "http://localhost:8082/v1",
+  "model": "qwen3-4b",
+  "tool_mode": "native",
+  "temperature": 0.2,
+  "max_tokens": 768,
+  "max_steps": 4,
+  "time_budget_s": 90.0,
+  "stream": true,
+  "fixed_now": "2026-10-11T10:00"
+ },
+ "hardware": {
+  "cpus": 4,
+  "machine": "x86_64",
+  "python": "3.13.16"
+ },
+ "amend": {
+  "n": 8,
+  "amend_while_running": 8,
+  "adopted_rate_all": 0.875,
+  "adopted_rate_running": 0.875,
+  "stale_rate_running": 0.0,
+  "acknowledged_rate_running": 1.0,
+  "rows": [
+   {
+    "id": "amend-01",
+    "cat": null,
+    "query": "3 个人平分 360 元，每人多少钱",
+    "amend_while_running": true,
+    "amend_at": 1.0,
+    "result": "4个人平分360元，每人90元。",
+    "status": "result",
+    "latency_s": 18.459,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：3 个人平分 360 元，每人多少钱",
+     "收到补充「把 3 个人改成 4 个人」，按新条件重新考虑",
+     "正在用计算器算 360 / 4",
+     "用计算器算 360 / 4，得到 360 / 4 = 90"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 12.067,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "原任务是3人分360元，每人120元；用户补充改为4人，所以每人金额为360÷4=90元。计算准确，结果合理。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-02",
+    "cat": null,
+    "query": "计算 25 乘以 16",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "25 乘以 17 等于 425。",
+    "status": "result",
+    "latency_s": 20.407,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：计算 25 乘以 16",
+     "收到补充「把 16 改成 17」，按新条件重新考虑",
+     "正在用计算器算 25 * 17",
+     "用计算器算 25 * 17，得到 25 * 17 = 425"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 13.4,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "原题为 25×16，用户补充将 16 改为 17，因此计算 25×17=425。计算过程准确无误。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-03",
+    "cat": null,
+    "query": "5 公里等于多少米",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "8公里等于8000米。",
+    "status": "result",
+    "latency_s": 19.52,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：5 公里等于多少米",
+     "收到补充「把 5 公里改成 8 公里」，按新条件重新考虑",
+     "正在把 8公里 换算成米",
+     "把 8公里 换算成米，得到 8 公里 = 8000 米"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 11.351,
+    "spoken_chars": 11,
+    "has_detail": true,
+    "detail": "根据单位换算规则，1公里=1000米，因此8公里乘以1000得到8000米。计算过程简单直接，结果准确无误。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-04",
+    "cat": null,
+    "query": "一件衣服原价 400 元打八折要付多少",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "衣服打七折后要付280元。",
+    "status": "result",
+    "latency_s": 16.858,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一件衣服原价 400 元打八折要付多少",
+     "收到补充「不是八折，是七折」，按新条件重新考虑",
+     "正在用计算器算 400 * 0.7",
+     "用计算器算 400 * 0.7，得到 400 * 0.7 = 280"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 10.218,
+    "spoken_chars": 13,
+    "has_detail": true,
+    "detail": "原价400元，七折即乘以0.7，计算得400 × 0.7 = 280元。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-05",
+    "cat": null,
+    "query": "2026年10月1日之后30天是几月几号",
+    "amend_while_running": true,
+    "amend_at": 1.0,
+    "result": "2026年10月1日之后60天是11月30日。",
+    "status": "result",
+    "latency_s": 27.072,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2026年10月1日之后30天是几月几号",
+     "收到补充「把 30 天改成 60 天」，按新条件重新考虑",
+     "正在推算日期 2026-10-01",
+     "推算日期 2026-10-01，得到 2026年10月1日（星期四） 加 60 天是 2026年1…"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 18.238,
+    "spoken_chars": 23,
+    "has_detail": true,
+    "detail": "从2026年10月1日起，加上60天，经日期计算得2026年11月30日，该日为星期一。计算基于标准日历推算，未考虑闰年影响（10月后无闰日）。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-06",
+    "cat": null,
+    "query": "1 到 100 之间所有质数的和是多少",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "1到50之间所有质数的和是329。",
+    "status": "result",
+    "latency_s": 34.465,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1 到 100 之间所有质数的和是多少",
+     "收到补充「范围改成 1 到 50」，按新条件重新考虑",
+     "正在写程序计算",
+     "写程序计算，得到 329"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 22.088,
+    "spoken_chars": 17,
+    "has_detail": true,
+    "detail": "通过枚举1到50之间的数字，判断每个数是否为质数（只能被1和自身整除），然后求和。质数包括2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47，共15个，总和为329。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "adopted": false,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-07",
+    "cat": null,
+    "query": "10000 元存银行年利率 3% 复利，3 年后本息多少？保留两位小数",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "5年后本息约11592.74元。",
+    "status": "result",
+    "latency_s": 22.811,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：10000 元存银行年利率 3% 复利，3 年后本息多少？保…",
+     "收到补充「年限改成 5 年」，按新条件重新考虑",
+     "正在用计算器算 10000 * (1 + 0.03) ** 5",
+     "用计算器算 10000 * (1 + 0.03) ** 5，得到 10000 * (1 + 0.03) ** 5 = 1159…"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 14.24,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "按年利率3%复利计算，本金10000元，存期5年，公式为10000×(1+0.03)^5，结果保留两位小数为11592.74元。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-08",
+    "cat": null,
+    "query": "开车 350 公里，百公里油耗 8 升，油价每升 7.5 元，油费多少",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "油费是224元。",
+    "status": "result",
+    "latency_s": 20.925,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：开车 350 公里，百公里油耗 8 升，油价每升 7.5 元…",
+     "收到补充「油价改成每升 8 元」，按新条件重新考虑",
+     "正在用计算器算 350 / 100 * 8 * 8",
+     "用计算器算 350 / 100 * 8 * 8，得到 350 / 100 * 8 * 8 = 224"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 13.125,
+    "spoken_chars": 8,
+    "has_detail": true,
+    "detail": "行驶350公里，每百公里油耗8升，总耗油量为350÷100×8=28升。油价改为8元/升，总费用为28×8=224元。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   }
+  ]
+ },
+ "cancel": {
+  "n": 6,
+  "cancelled_while_running": 6,
+  "cancel_latency_p50_s": 0.001,
+  "cancel_latency_max_s": 0.0009,
+  "leftover_procs": 0,
+  "rows": [
+   {
+    "id": "cancel-01",
+    "cat": null,
+    "query": "写个程序：从 1 到 10 的 9 次方逐个累加求和",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0005,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 1.504,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：写个程序：从 1 到 10 的 9 次方逐个累加求和"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 1.503,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-02",
+    "cat": null,
+    "query": "帮我详细规划一个十天的欧洲旅行",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0009,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 1.505,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：帮我详细规划一个十天的欧洲旅行"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 1.505,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-03",
+    "cat": null,
+    "query": "1 到 1000 之间有多少个质数",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0005,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.504,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：1 到 1000 之间有多少个质数"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.504,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-04",
+    "cat": null,
+    "query": "计算 23 * 47",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0005,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.204,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：计算 23 * 47"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.203,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-05",
+    "cat": null,
+    "query": "今天是星期几",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0004,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.203,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：今天是星期几"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.203,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-06",
+    "cat": null,
+    "query": "100 的阶乘末尾有多少个 0",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0006,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 3.004,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：100 的阶乘末尾有多少个 0"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 3.004,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   }
+  ]
+ }
+}

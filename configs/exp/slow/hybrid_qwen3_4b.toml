@@ -38,6 +38,7 @@ impl = "agent"
 base_url = "http://localhost:8082/v1"
 model = "qwen3-4b"
 tool_mode = "native"
+stream = true
 temperature = 0.2
 max_tokens = 768
 max_steps = 4

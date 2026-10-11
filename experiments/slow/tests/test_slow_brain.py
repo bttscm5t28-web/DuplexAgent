@@ -99,6 +99,7 @@ def _cfgs(url):
         {"impl": "agent", "base_url": url + "/v1", "model": "scripted"},
         {"impl": "agent", "base_url": url + "/v1", "model": "scripted", "tool_mode": "prompt"},
         {"impl": "claude", "base_url": url, "model": "claude-opus-5-5"},
+        {"impl": "agent", "base_url": url + "/v1", "model": "scripted", "stream": True},
     ]
 
 
@@ -131,7 +132,7 @@ async def _drive(cfg, query, amend=None, cancel_at=None):
     return ups, cancel_latency
 
 
-@pytest.mark.parametrize("i", [0, 1, 2])
+@pytest.mark.parametrize("i", [0, 1, 2, 3])
 def test_agent_loop_tools_progress(mock_url, i):
     ups, _ = run(_drive(_cfgs(mock_url)[i], "计算 360/3"))
     kinds = [u.kind for u in ups]
@@ -140,7 +141,7 @@ def test_agent_loop_tools_progress(mock_url, i):
     assert any("计算器" in u.text for u in ups if u.kind == "progress")
 
 
-@pytest.mark.parametrize("i", [0, 1, 2])
+@pytest.mark.parametrize("i", [0, 1, 2, 3])
 def test_agent_amendment_preempts(mock_url, i):
     ups, _ = run(_drive(_cfgs(mock_url)[i], "计算 360/3", amend=(0.1, "把 3 改成 4")))
     assert "90" in ups[-1].text
@@ -196,3 +197,24 @@ def test_hybrid_routes_and_falls_back():
 
     a, b = run(go())
     assert "1081" in a and "模拟结果" in b
+
+
+def test_claude_degrades_without_betas():
+    import mock_llm
+
+    srv, port = mock_llm.serve(0, 0.05, reject_betas=True)
+    try:
+        cfg = {"impl": "claude", "base_url": f"http://127.0.0.1:{port}", "model": "claude-opus-5-5"}
+
+        async def go():
+            os.environ.setdefault("ANTHROPIC_API_KEY", "dummy")
+            b = create("slow", cfg)
+            await b.start()
+            ups = [u async for u in b.run(TaskRecord(query="计算 360/3"))]
+            await b.close()
+            return ups, b
+
+        ups, b = run(go())
+        assert "120" in ups[-1].text and not b.progress_notes and not b.fallbacks
+    finally:
+        srv.shutdown()

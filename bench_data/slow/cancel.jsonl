@@ -1,0 +1,6 @@
+{"id": "cancel-01", "query": "写个程序：从 1 到 10 的 9 次方逐个累加求和", "cancel_after_s": 1.5}
+{"id": "cancel-02", "query": "帮我详细规划一个十天的欧洲旅行", "cancel_after_s": 1.5}
+{"id": "cancel-03", "query": "1 到 1000 之间有多少个质数", "cancel_after_s": 0.5}
+{"id": "cancel-04", "query": "计算 23 * 47", "cancel_after_s": 0.2}
+{"id": "cancel-05", "query": "今天是星期几", "cancel_after_s": 0.2}
+{"id": "cancel-06", "query": "100 的阶乘末尾有多少个 0", "cancel_after_s": 3.0}

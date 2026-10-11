@@ -34,8 +34,18 @@ def cn2num(s: str) -> int:
     return total + section + num
 
 
+_NOT_NUMBER_AFTER = set("下点些共起样般直定旦切致齐同")
+
+
 def replace_cn_numbers(s: str) -> str:
-    return re.sub(r"[零〇一二两三四五六七八九十百千万亿]{1,12}", lambda m: str(cn2num(m.group())) if not re.fullmatch(r"[万亿千百]+", m.group()) else m.group(), s)
+    def sub(m: re.Match) -> str:
+        w = m.group()
+        nxt = s[m.end(): m.end() + 1]
+        if re.fullmatch(r"[万亿千百]+", w) or (w in ("一", "两") and nxt in _NOT_NUMBER_AFTER):
+            return w  # 一下 / 一共 / 两样 … are words, not numbers
+        return str(cn2num(w))
+
+    return re.sub(r"[零〇一二两三四五六七八九十百千万亿]{1,12}", sub, s)
 
 
 def apply_amendments(query: str, amendments: list[str]) -> str:
@@ -56,21 +66,38 @@ _OPS = [(r"乘以|乘上|乘|×|x(?=\s*\d)|X(?=\s*\d)", "*"), (r"除以|÷", "/"
         (r"的平方根|开平方", "**0.5"), (r"的平方", "**2"), (r"的立方", "**3"), (r"的\s*(\d+)\s*次方", r"**\1"), (r"（", "("), (r"）", ")")]
 
 
-def extract_math(q: str) -> str | None:
+_FILLER = re.compile(r"帮我|帮忙|请你|请|麻烦|计算一下|计算|算一下|算算|算|一下|等于|结果|是多少|多少|是|几|呢|吗|啊|的值|值|再|然后|[？?。.!！，,：:\s]")
+
+
+def extract_math(q: str, strict: bool = True) -> str | None:
+    """Pull an arithmetic expression out of a (spoken) request.
+
+    strict: only succeed when the expression covers the whole request (apart from filler words),
+    so word problems ("先打八折再减 50…") are left to an LLM instead of being half-parsed.
+    """
     s = replace_cn_numbers(q)
+    s = re.sub(r"保留\s*\d+\s*位小数", "", s)
     s = re.sub(r"百分之\s*(\d+(?:\.\d+)?)", r"\1%", s)
     s = re.sub(r"(\d+(?:\.\d+)?)\s*的\s*(\d+(?:\.\d+)?)\s*%", r"(\1*\2/100)", s)
     for a, b in _OPS:
         s = re.sub(a, b, s)
+    s = re.sub(r"([\+\-\*/])\s*(?:再|然后)\s*", r"\1", s)
+    s = re.sub(r"(?:再|然后)\s*([\+\-\*/])", r"\1", s)
     s = re.sub(r"(\d)\s*%", r"(\1/100)", s)
     cands = re.findall(r"[\d\.\s\+\-\*/\(\)%]+", s)
     cands = [c.strip() for c in cands if re.search(r"\d", c) and re.search(r"[\+\-\*/]", c)]
     if not cands:
         return None
     expr = max(cands, key=len)
-    # Re-attach "sqrt" style tails like "2**0.5" are already in; strip dangling operators.
+    if strict and _FILLER.sub("", s.replace(expr, "", 1)):
+        return None
     expr = re.sub(r"^[\*/\+\s]+|[\+\-\*/\s]+$", "", expr)
     return expr or None
+
+
+def decimals_wanted(q: str) -> int | None:
+    m = re.search(r"保留\s*([\d一二两三四五])\s*位小数", q)
+    return None if not m else int(m.group(1)) if m.group(1).isdigit() else cn2num(m.group(1))
 
 
 def speak_expr(expr: str) -> str:
@@ -126,11 +153,18 @@ class RuleSolver:
                 if frm.endswith("的"):
                     frm = frm[:-1]
                 out = await use("unit_convert", value=float(m.group(1)), from_unit=frm, to_unit=to)
+                nd = decimals_wanted(q)
+                if nd is not None:
+                    v = float(out.split("= ", 1)[1].split()[0])
+                    return calls, f"{m.group(1)} {frm} 约等于 {v:.{nd}f} {to}。"
                 return calls, out + "。"
             expr = extract_math(q)
             if expr:
                 out = await use("calculator", expression=expr)
                 v = out.rsplit("=", 1)[-1].strip()
+                nd = decimals_wanted(q)
+                if nd is not None:
+                    v = f"{float(v):.{nd}f}"
                 return calls, f"{speak_expr(expr)}等于 {v}。"
         except (ValueError, AttributeError, ZeroDivisionError, OverflowError):
             return None

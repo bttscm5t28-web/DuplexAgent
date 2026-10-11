@@ -100,9 +100,14 @@ class ClaudeSlowBrain(AgentSlowBrain):
         try:
             resp = await self.client.beta.messages.create(betas=betas, **req) if betas else await self.client.messages.create(**req)
         except self._anthropic.BadRequestError as e:
-            if not (self.progress_notes and "display" in str(e)):
+            # Beta features this account/model/platform does not accept: drop them once and retry.
+            msg = str(e)
+            if self.progress_notes and ("display" in msg or UPDATES_BETA in msg):
+                self.progress_notes = False
+            elif self.fallbacks and "fallback" in msg:
+                self.fallbacks = False
+            else:
                 raise
-            self.progress_notes = False  # account/model without the progress-updates beta: degrade once
             return await self._chat(messages, allow_tools)
         self.usage["requests"] += 1
         u = getattr(resp, "usage", None)

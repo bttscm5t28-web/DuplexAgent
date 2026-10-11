@@ -35,17 +35,19 @@ from duplexagent.core.registry import register
 from duplexagent.core.types import TaskRecord, TaskUpdate
 from duplexagent.plugins.slow.toolbox import ToolBox, ToolResult
 
-SYSTEM_PROMPT = """你是语音助手的后台“慢脑”，负责认真完成前台转交的任务。前台会把你的结论念给用户听。
+SYSTEM_PROMPT = """你是语音助手的后台“慢脑”，负责认真完成前台转交的任务。前台会把你的结论念给用户听，用户无法和你直接对话。
 
 工作方式：
-- 需要计算、日期推算、单位换算、枚举统计时，一定调用工具，不要心算。复杂或多步的计算用 python 工具写代码。
+- 需要计算、日期推算、单位换算、枚举统计时，一定调用工具，不要心算。应用题先列式再用工具算；数列、计数类问题用 python 写代码并打印前几项核对下标。
+- 问题涉及“今天、明天、现在、距今”等相对时间时，先调用 now 工具获取当前日期。
 - 每次工具返回后检查结果是否合理；出错就换个办法。
+- 信息不全时不要反问，按常见情况做合理假设，并在详细里说明假设。
 - 如果收到“用户补充”，以补充为准重新考虑，最终答案必须体现补充的条件。
 - 不确定的事实要说明不确定，不要编造。
 
 完成后按下面格式给出最终答复（这时不要再调用工具）：
-结论：一到两句口语化的话，直接给出答案和关键数字，60字以内，不要用 markdown、列表、公式符号。
-详细：关键依据或步骤（可选，可以稍长）。"""
+结论：一到两句口语化的话，直接给出答案和关键数字，60字以内，不要用 markdown、列表、公式符号。规划类任务在这里概括两三个要点。
+详细：关键依据、步骤或完整方案（可选，可以稍长）。"""
 
 PROMPT_TOOLS_TEMPLATE = """
 
@@ -259,6 +261,12 @@ class AgentSlowBrain(SlowBrain):
                 return
             for note in turn.notes:
                 yield TaskUpdate("progress", f"思路：{clip(note, 40)}")
+            if turn.stop == "bad_tool_call":
+                empty += 1
+                if empty <= 2:
+                    self._append_user(messages, "上一条工具调用不完整。请输出完整的工具调用，或者直接按“结论：…”给出最终答复。")
+                    continue
+                turn.text = re.sub(r"(?s)<tool_call>.*", "", turn.text)
             if turn.stop == "pause_turn" and not turn.calls:  # server-side tool loop paused: resend to continue
                 self._append_assistant(messages, turn)
                 steps += 1
@@ -319,7 +327,7 @@ class OpenAICompatAgent(AgentSlowBrain):
     """
 
     def __init__(self, base_url: str, model: str, api_key_env: str = "OPENAI_API_KEY", tool_mode: str = "native",
-                 timeout: float = 120.0, params: dict | None = None, **kw):
+                 timeout: float = 120.0, params: dict | None = None, stream: bool = False, **kw):
         agent_keys = {"tools", "web", "max_steps", "time_budget_s", "system_prompt", "preempt_on_amend", "timezone", "fixed_now", "mcp_servers", "amend_poll_s"}
         super().__init__(**{k: v for k, v in kw.items() if k in agent_keys})
         self.params = dict(params or {}, **{k: v for k, v in kw.items() if k not in agent_keys})
@@ -327,6 +335,9 @@ class OpenAICompatAgent(AgentSlowBrain):
         if tool_mode not in ("native", "prompt"):
             raise ValueError("tool_mode must be 'native' or 'prompt'")
         self.tool_mode = tool_mode
+        # stream=True: when a call is cancelled/pre-empted, closing the stream makes the server stop
+        # generating (non-streamed requests keep a local server busy until they finish).
+        self.stream = stream
 
     async def start(self) -> None:
         from duplexagent.core.llm import ChatClient
@@ -352,6 +363,8 @@ class OpenAICompatAgent(AgentSlowBrain):
 
         for attempt in range(retries + 1):
             try:
+                if self.stream:
+                    return await self._complete_stream(messages, tools)
                 return await self.client.complete(messages, tools=tools)
             except (httpx.TransportError, httpx.HTTPStatusError) as e:
                 status = getattr(getattr(e, "response", None), "status_code", 0)
@@ -359,6 +372,22 @@ class OpenAICompatAgent(AgentSlowBrain):
                     raise
                 await asyncio.sleep(0.5 * 2**attempt)
         raise RuntimeError("unreachable")
+
+    async def _complete_stream(self, messages: list, tools: list | None) -> dict:
+        content, calls = [], {}
+        async for d in self.client.stream(messages, tools=tools):
+            if d.get("content"):
+                content.append(d["content"])
+            for tc in d.get("tool_calls") or []:
+                c = calls.setdefault(tc.get("index", len(calls)), {"id": "", "type": "function", "function": {"name": "", "arguments": ""}})
+                c["id"] = tc.get("id") or c["id"]
+                fn = tc.get("function") or {}
+                c["function"]["name"] += fn.get("name") or ""
+                c["function"]["arguments"] += fn.get("arguments") or ""
+        msg = {"role": "assistant", "content": "".join(content)}
+        if calls:
+            msg["tool_calls"] = [calls[k] for k in sorted(calls)]
+        return msg
 
     async def _chat(self, messages: list, allow_tools: bool) -> ModelTurn:
         native = self.tool_mode == "native" and allow_tools
@@ -369,7 +398,8 @@ class OpenAICompatAgent(AgentSlowBrain):
             cleaned, calls = parse_prompt_tool_calls(strip_think(text)) if allow_tools else (text, [])
             if calls:
                 return ModelTurn(cleaned, calls, {"role": "assistant", "content": text})
-            return ModelTurn(text, [], {"role": "assistant", "content": text})
+            bad = "<tool_call>" in text  # a tool call the model started but never completed
+            return ModelTurn(text, [], {"role": "assistant", "content": text}, "bad_tool_call" if bad else "")
         calls = []
         for tc in msg["tool_calls"]:
             fn = tc.get("function", {})

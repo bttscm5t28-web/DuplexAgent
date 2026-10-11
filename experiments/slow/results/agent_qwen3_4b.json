@@ -1,0 +1,2087 @@
+{
+ "name": "agent_qwen3_4b",
+ "config": "configs/exp/slow/agent_qwen3_4b.toml",
+ "overrides": [],
+ "slow_cfg": {
+  "impl": "agent",
+  "base_url": "http://localhost:8082/v1",
+  "model": "qwen3-4b",
+  "tool_mode": "native",
+  "temperature": 0.2,
+  "max_tokens": 768,
+  "max_steps": 4,
+  "time_budget_s": 90.0,
+  "fixed_now": "2026-10-11T10:00"
+ },
+ "hardware": {
+  "cpus": 4,
+  "machine": "x86_64",
+  "python": "3.13.16"
+ },
+ "tasks": {
+  "n": 64,
+  "accuracy": 0.9219,
+  "accuracy_by_cat": {
+   "calc": 1.0,
+   "date": 1.0,
+   "fact": 1.0,
+   "plan": 0.833,
+   "prog": 0.8,
+   "reason": 0.8,
+   "unit": 1.0
+  },
+  "errors": 0,
+  "latency_p50_s": 19.831,
+  "latency_p90_s": 26.789,
+  "latency_mean_s": 19.35,
+  "first_progress_p50_s": 0.0,
+  "progress_per_task": 2.72,
+  "informative_progress_ratio": 0.632,
+  "tasks_with_informative_progress": 0.812,
+  "max_silence_p50_s": 14.059,
+  "max_silence_p90_s": 19.799,
+  "tool_calls_per_task": 0.86,
+  "tool_success_rate": 0.964,
+  "spoken_chars_mean": 17.0,
+  "detail_rate": 0.984,
+  "wall_s": 1238.4,
+  "rows": [
+   {
+    "id": "calc-01",
+    "cat": "calc",
+    "query": "计算 23 * 47",
+    "result": "23乘以47等于1081。",
+    "status": "result",
+    "latency_s": 31.11,
+    "first_progress_s": 0.0005,
+    "progress": [
+     "开始处理：计算 23 * 47",
+     "正在用计算器算 23 * 47",
+     "用计算器算 23 * 47，得到 23 * 47 = 1081"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 24.585,
+    "spoken_chars": 13,
+    "has_detail": true,
+    "detail": "直接计算得出结果，无需额外工具或步骤验证。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-02",
+    "cat": "calc",
+    "query": "计算 (12 + 8) * 3",
+    "result": "计算结果是60。",
+    "status": "result",
+    "latency_s": 11.873,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：计算 (12 + 8) * 3",
+     "正在用计算器算 (12+8)*3",
+     "用计算器算 (12+8)*3，得到 (12+8)*3 = 60"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 7.177,
+    "spoken_chars": 8,
+    "has_detail": true,
+    "detail": "12加8等于20，乘以3得60。计算过程简单直接，结果准确。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-03",
+    "cat": "calc",
+    "query": "帮我算一下 1234 乘以 5678",
+    "result": "1234乘以5678等于7006652。",
+    "status": "result",
+    "latency_s": 14.538,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：帮我算一下 1234 乘以 5678",
+     "正在用计算器算 1234 * 5678",
+     "用计算器算 1234 * 5678，得到 1234 * 5678 = 7006652"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 8.865,
+    "spoken_chars": 20,
+    "has_detail": true,
+    "detail": "直接使用计算器计算得出结果，无需额外步骤，验证无误。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-04",
+    "cat": "calc",
+    "query": "三百六十五乘以二十四等于多少",
+    "result": "365天乘以24小时等于8760小时。",
+    "status": "result",
+    "latency_s": 16.526,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：三百六十五乘以二十四等于多少",
+     "正在用计算器算 365 * 24",
+     "用计算器算 365 * 24，得到 365 * 24 = 8760"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 11.548,
+    "spoken_chars": 19,
+    "has_detail": true,
+    "detail": "直接计算得出，365 × 24 = 8760，这是地球一年总时长的理论值，常用于时间换算或日历推算。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-05",
+    "cat": "calc",
+    "query": "计算 (17.5 + 2.5) ÷ 4 再乘以 3",
+    "result": "结果是15。",
+    "status": "result",
+    "latency_s": 17.679,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：计算 (17.5 + 2.5) ÷ 4 再乘以 3",
+     "正在用计算器算 (17.5 + 2.5) / 4 * 3",
+     "用计算器算 (17.5 + 2.5) / 4 * 3，得到 (17.5 + 2.5) / 4 * 3 = 15"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 10.798,
+    "spoken_chars": 6,
+    "has_detail": true,
+    "detail": "先算括号内17.5 + 2.5 = 20，再除以4得5，最后乘以3得到15。计算过程准确无误。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-06",
+    "cat": "calc",
+    "query": "2 的 20 次方是多少",
+    "result": "2的20次方是1048576。",
+    "status": "result",
+    "latency_s": 19.857,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2 的 20 次方是多少",
+     "正在用计算器算 2**20",
+     "用计算器算 2**20，得到 2**20 = 1048576"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 15.29,
+    "spoken_chars": 15,
+    "has_detail": true,
+    "detail": "通过计算器计算 2 的 20 次方，结果为 1048576，这是一个常见的幂运算结果，用于计算机科学中的内存大小计算（如 1MB = 1024KB = 2^20 字节）。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-07",
+    "cat": "calc",
+    "query": "9801 的平方根是多少",
+    "result": "9801的平方根是99。",
+    "status": "result",
+    "latency_s": 15.398,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：9801 的平方根是多少",
+     "正在用计算器算 sqrt(9801)",
+     "用计算器算 sqrt(9801)，得到 sqrt(9801) = 99"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 10.203,
+    "spoken_chars": 12,
+    "has_detail": true,
+    "detail": "通过数学计算，√9801 = 99，验证无误。该结果符合完全平方数特性，99² = 9801。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-08",
+    "cat": "calc",
+    "query": "1000 的百分之十五是多少",
+    "result": "1000的15%是150。",
+    "status": "result",
+    "latency_s": 13.189,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1000 的百分之十五是多少",
+     "正在用计算器算 1000 * 0.15",
+     "用计算器算 1000 * 0.15，得到 1000 * 0.15 = 150"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 7.715,
+    "spoken_chars": 13,
+    "has_detail": true,
+    "detail": "直接计算1000乘以0.15，结果为150。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-09",
+    "cat": "calc",
+    "query": "计算 123456789 加 987654321",
+    "result": "123456789 加 987654321 等于 1111111110。",
+    "status": "result",
+    "latency_s": 22.857,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：计算 123456789 加 987654321",
+     "正在用计算器算 123456789 + 987654321",
+     "用计算器算 123456789 + 987654321，得到 123456789 + 987654321 = 111111…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 14.902,
+    "spoken_chars": 36,
+    "has_detail": true,
+    "detail": "直接计算得出结果，两个数相加为 1111111110，是典型的对称数字，符合数学规律。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-10",
+    "cat": "calc",
+    "query": "计算 7 的阶乘",
+    "result": "7的阶乘是5040。",
+    "status": "result",
+    "latency_s": 15.172,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：计算 7 的阶乘",
+     "正在用计算器算 factorial(7)",
+     "用计算器算 factorial(7)，得到 factorial(7) = 5040"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 10.749,
+    "spoken_chars": 10,
+    "has_detail": true,
+    "detail": "通过计算器函数计算 7! = 7×6×5×4×3×2×1，结果为5040。该计算准确无误，符合数学定义。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "calc-11",
+    "cat": "calc",
+    "query": "100 除以 8 等于多少",
+    "result": "100除以8等于12.5。",
+    "status": "result",
+    "latency_s": 12.464,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：100 除以 8 等于多少",
+     "正在用计算器算 100 / 8",
+     "用计算器算 100 / 8，得到 100 / 8 = 12.5"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 7.774,
+    "spoken_chars": 13,
+    "has_detail": true,
+    "detail": "直接计算得出结果，100 ÷ 8 = 12.5，无需额外步骤。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "unit-01",
+    "cat": "unit",
+    "query": "5 公里等于多少米",
+    "result": "5公里等于5000米。",
+    "status": "result",
+    "latency_s": 16.823,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：5 公里等于多少米",
+     "正在把 5公里 换算成米",
+     "把 5公里 换算成米，得到 5 公里 = 5000 米"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 10.685,
+    "spoken_chars": 11,
+    "has_detail": true,
+    "detail": "根据单位换算规则，1公里 = 1000米，因此5公里 = 5 × 1000 = 5000米，计算正确且简单直接。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "unit-02",
+    "cat": "unit",
+    "query": "100 华氏度是多少摄氏度？保留一位小数",
+    "result": "100华氏度约等于37.8摄氏度。",
+    "status": "result",
+    "latency_s": 21.92,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：100 华氏度是多少摄氏度？保留一位小数",
+     "正在把 100F 换算成C",
+     "把 100F 换算成C，得到 100 F = 37.777778 C"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 15.041,
+    "spoken_chars": 17,
+    "has_detail": true,
+    "detail": "使用华氏度转摄氏度公式 (C = 5/9 × (F - 32)) 计算，100°F 转换后为 37.78°C，保留一位小数得 37.8°C。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "unit-03",
+    "cat": "unit",
+    "query": "3 斤是多少克",
+    "result": "3斤等于1500克。",
+    "status": "result",
+    "latency_s": 15.082,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：3 斤是多少克",
+     "正在把 3斤 换算成克",
+     "把 3斤 换算成克，得到 3 斤 = 1500 克"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 8.474,
+    "spoken_chars": 10,
+    "has_detail": true,
+    "detail": "1斤等于500克，因此3斤就是3 × 500 = 1500克，换算正确。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "unit-04",
+    "cat": "unit",
+    "query": "10 英里是多少公里？保留两位小数",
+    "result": "10英里约等于16.09公里。",
+    "status": "result",
+    "latency_s": 20.921,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：10 英里是多少公里？保留两位小数",
+     "正在把 10英里 换算成公里",
+     "把 10英里 换算成公里，得到 10 英里 = 16.09344 公里"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 14.46,
+    "spoken_chars": 15,
+    "has_detail": true,
+    "detail": "根据标准换算，1英里等于1.609344公里，因此10英里乘以1.609344得16.09344公里，保留两位小数为16.09公里。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "unit-05",
+    "cat": "unit",
+    "query": "2 小时 15 分钟一共是多少分钟",
+    "result": "2小时15分钟等于135分钟。",
+    "status": "result",
+    "latency_s": 14.191,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2 小时 15 分钟一共是多少分钟",
+     "正在用计算器算 2*60 + 15",
+     "用计算器算 2*60 + 15，得到 2*60 + 15 = 135"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 9.008,
+    "spoken_chars": 15,
+    "has_detail": true,
+    "detail": "将2小时转换为分钟（2×60=120），加上15分钟，总共135分钟。计算简单且准确。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "unit-06",
+    "cat": "unit",
+    "query": "1 GB 等于多少 MB（按 1024 进制）",
+    "result": "1 GB 等于 1024 MB。",
+    "status": "result",
+    "latency_s": 17.609,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1 GB 等于多少 MB（按 1024 进制）",
+     "正在把 1GB 换算成MB",
+     "把 1GB 换算成MB，得到 1 GB = 1024 MB"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 11.277,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "按照计算机常用的 1024 进制，1GB（吉字节）等于 1024MB（兆字节），这是标准的二进制单位换算方式。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "unit-07",
+    "cat": "unit",
+    "query": "30 摄氏度是多少华氏度",
+    "result": "30摄氏度等于86华氏度。",
+    "status": "result",
+    "latency_s": 15.812,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：30 摄氏度是多少华氏度",
+     "正在把 30C 换算成F",
+     "把 30C 换算成F，得到 30 C = 86 F"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 9.386,
+    "spoken_chars": 13,
+    "has_detail": true,
+    "detail": "根据华氏温度换算公式 F = C × 1.8 + 32，代入30°C计算得86°F，结果准确。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-01",
+    "cat": "date",
+    "query": "2024年2月1日到2024年3月1日有多少天",
+    "result": "从2024年2月1日到3月1日共有29天。",
+    "status": "result",
+    "latency_s": 26.672,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2024年2月1日到2024年3月1日有多少天",
+     "正在推算日期 2024-02-01",
+     "推算日期 2024-02-01，得到 从 2024年2月1日（星期四） 到 2024年3月1日（星…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 18.434,
+    "spoken_chars": 21,
+    "has_detail": true,
+    "detail": "计算起始日期2024-02-01到结束日期2024-03-01的天数差，经验证2024年是闰年，2月有29天，因此从2月1日到3月1日正好是29天。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-02",
+    "cat": "date",
+    "query": "2026年10月1日是星期几",
+    "result": "2026年10月1日是星期四。",
+    "status": "result",
+    "latency_s": 17.052,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2026年10月1日是星期几",
+     "正在推算日期 2026-10-01",
+     "推算日期 2026-10-01，得到 2026年10月1日（星期四），是当年第 274 天，202…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 11.508,
+    "spoken_chars": 15,
+    "has_detail": true,
+    "detail": "通过日期计算工具查得，2026年10月1日是星期四，为当年第274天，2026年不是闰年。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-03",
+    "cat": "date",
+    "query": "2026年1月1日之后100天是几月几号",
+    "result": "2026年1月1日之后100天是4月11日。",
+    "status": "result",
+    "latency_s": 23.438,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2026年1月1日之后100天是几月几号",
+     "正在推算日期 2026-01-01",
+     "推算日期 2026-01-01，得到 2026年1月1日（星期四） 加 100 天是 2026年4…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 16.414,
+    "spoken_chars": 22,
+    "has_detail": true,
+    "detail": "从2026年1月1日起，加100天计算得2026年4月11日。经日期推算验证，该日期在当年日历中正确无误，且符合常规月份天数分布。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-04",
+    "cat": "date",
+    "query": "今天是星期几",
+    "result": "今天是星期日。",
+    "status": "result",
+    "latency_s": 9.968,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：今天是星期几",
+     "正在查看当前日期时间",
+     "查看当前日期时间，得到 现在是 2026年10月11日（星期日） 10:00（Asi…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 7.051,
+    "spoken_chars": 7,
+    "has_detail": true,
+    "detail": "根据系统时间，当前日期为2026年10月11日，对应星期日。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "now"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-05",
+    "cat": "date",
+    "query": "从今天算起，距离2027年1月1日还有多少天",
+    "result": "从今天到2027年1月1日还有82天。",
+    "status": "result",
+    "latency_s": 27.283,
+    "first_progress_s": 0.0,
+    "progress": [
+     "开始处理：从今天算起，距离2027年1月1日还有多少天",
+     "正在查看当前日期时间",
+     "查看当前日期时间，得到 现在是 2026年10月11日（星期日） 10:00（Asi…",
+     "正在推算日期 2026-10-11",
+     "推算日期 2026-10-11，得到 从 2026年10月11日（星期日） 到 2027年1月1日…"
+    ],
+    "n_progress": 5,
+    "n_informative": 4,
+    "max_silence_s": 15.637,
+    "spoken_chars": 19,
+    "has_detail": true,
+    "detail": "当前日期为2026年10月11日，通过日期计算工具得出，到2027年1月1日相差82天，包含10月剩余天数（20天）和11、12、1月的天数。",
+    "tool_calls": 2,
+    "tool_ok": 2,
+    "tools": [
+     "now",
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-06",
+    "cat": "date",
+    "query": "2000年是闰年吗",
+    "result": "2000年是闰年。",
+    "status": "result",
+    "latency_s": 21.661,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2000年是闰年吗",
+     "正在推算日期 2000-01-01",
+     "推算日期 2000-01-01，得到 2000年1月1日（星期六），是当年第 1 天，2000 年…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 16.335,
+    "spoken_chars": 9,
+    "has_detail": true,
+    "detail": "根据日期计算工具，2000年1月1日是该年的第一天，且系统明确标注2000年为闰年。判断依据是能被4整除但不能被100整除，或能被400整除；2000能被400整除，因此是闰年。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-07",
+    "cat": "date",
+    "query": "1900年2月有多少天",
+    "result": "1900年2月有28天，但实际只有28天，因为1900年是平年。",
+    "status": "result",
+    "latency_s": 26.59,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1900年2月有多少天",
+     "正在推算日期 1900-02-01",
+     "推算日期 1900-02-01，得到 从 1900年2月1日（星期四） 到 1900年2月28日（…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 18.498,
+    "spoken_chars": 32,
+    "has_detail": true,
+    "detail": "1900年不是闰年（能被4整除但能被100整除且不能被400整除），所以2月只有28天。计算显示从2月1日到2月28日相差27天，说明该月共有28天。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-08",
+    "cat": "date",
+    "query": "从2025年3月15日到2025年12月25日一共多少天",
+    "result": "从3月15日到12月25日共285天。",
+    "status": "result",
+    "latency_s": 22.179,
+    "first_progress_s": 0.0,
+    "progress": [
+     "开始处理：从2025年3月15日到2025年12月25日一共多少天",
+     "正在推算日期 2025-03-15",
+     "推算日期 2025-03-15，得到 从 2025年3月15日（星期六） 到 2025年12月25…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 14.059,
+    "spoken_chars": 19,
+    "has_detail": true,
+    "detail": "通过日期计算工具，从2025年3月15日到2025年12月25日的天数差为285天，包含所有月份的天数累加，结果准确。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "date-09",
+    "cat": "date",
+    "query": "今天之后的第45天是几月几号",
+    "result": "今天之后的第45天是11月25日。",
+    "status": "result",
+    "latency_s": 24.583,
+    "first_progress_s": 0.0,
+    "progress": [
+     "开始处理：今天之后的第45天是几月几号",
+     "正在查看当前日期时间",
+     "查看当前日期时间，得到 现在是 2026年10月11日（星期日） 10:00（Asi…",
+     "正在推算日期 2026-10-11",
+     "推算日期 2026-10-11，得到 2026年10月11日（星期日） 加 45 天是 2026年…"
+    ],
+    "n_progress": 5,
+    "n_informative": 4,
+    "max_silence_s": 14.264,
+    "spoken_chars": 17,
+    "has_detail": true,
+    "detail": "当前日期为2026年10月11日，通过日期计算加45天，得到2026年11月25日，星期三。该结果经验证合理，符合常规日历推算。",
+    "tool_calls": 2,
+    "tool_ok": 2,
+    "tools": [
+     "now",
+     "date_calc"
+    ],
+    "ok": true
+   },
+   {
+    "id": "fact-01",
+    "cat": "fact",
+    "query": "一年有多少个月",
+    "result": "一年有12个月。",
+    "status": "result",
+    "latency_s": 12.732,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一年有多少个月",
+     "正在写程序计算",
+     "写程序计算，得到 12"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 8.439,
+    "spoken_chars": 8,
+    "has_detail": true,
+    "detail": "这是公历的基本结构，全年分为12个月份，每个月长度不同，但总数固定为12个月，无需计算或工具验证。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "fact-02",
+    "cat": "fact",
+    "query": "水的化学式是什么",
+    "result": "水的化学式是H2O。",
+    "status": "result",
+    "latency_s": 7.284,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：水的化学式是什么"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 7.284,
+    "spoken_chars": 10,
+    "has_detail": true,
+    "detail": "水是由两个氢原子和一个氧原子组成的分子，这是化学中基础且公认的常识，无需工具计算或推算。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "fact-03",
+    "cat": "fact",
+    "query": "中国的首都是哪个城市",
+    "result": "中国的首都是北京。",
+    "status": "result",
+    "latency_s": 6.179,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：中国的首都是哪个城市"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 6.179,
+    "spoken_chars": 9,
+    "has_detail": true,
+    "detail": "根据常识，中国首都为北京市，这是官方认定的地理和政治中心，无需工具查询即可确认。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "fact-04",
+    "cat": "fact",
+    "query": "光在真空中的速度大约是每秒多少公里",
+    "result": "光在真空中的速度是每秒299792公里，这是一个物理常数，无需换算。",
+    "status": "result",
+    "latency_s": 22.153,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：光在真空中的速度大约是每秒多少公里",
+     "正在把 299792.458km/s 换算成km/s",
+     "把 299792.458km/s 换算成km/s没成功，换个办法",
+     "正在把 299792.458km/s 换算成km/s",
+     "把 299792.458km/s 换算成km/s没成功，换个办法"
+    ],
+    "n_progress": 5,
+    "n_informative": 4,
+    "max_silence_s": 8.519,
+    "spoken_chars": 34,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 2,
+    "tool_ok": 0,
+    "tools": [
+     "unit_convert",
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "fact-05",
+    "cat": "fact",
+    "query": "地球上最大的大洋是哪个",
+    "result": "太平洋是地球上最大的大洋，面积超过1.6亿平方公里。",
+    "status": "result",
+    "latency_s": 15.105,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：地球上最大的大洋是哪个"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 15.105,
+    "spoken_chars": 26,
+    "has_detail": true,
+    "detail": "根据地理常识，地球上的大洋中，太平洋位于西半球和东半球之间，覆盖面积约为1.65亿平方公里，是四大洋中最大、最深的。其他大洋如大西洋、印度洋、北冰洋面积均小于太平洋。该结论基于权威地理资料，无需工具调用。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "fact-06",
+    "cat": "fact",
+    "query": "食盐的主要成分的化学式是什么",
+    "result": "食盐的主要成分是氯化钠，化学式为 NaCl。",
+    "status": "result",
+    "latency_s": 11.754,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：食盐的主要成分的化学式是什么"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 11.754,
+    "spoken_chars": 22,
+    "has_detail": true,
+    "detail": "食盐（氯化钠）是由钠离子（Na⁺）和氯离子（Cl⁻）组成的无机化合物，其化学式为 NaCl。这是化学常识，无需工具计算或推算。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "fact-07",
+    "cat": "fact",
+    "query": "一个标准大气压下水的沸点是多少摄氏度",
+    "result": "标准大气压下水的沸点是100摄氏度。",
+    "status": "result",
+    "latency_s": 18.138,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一个标准大气压下水的沸点是多少摄氏度",
+     "正在把 100C 换算成C",
+     "把 100C 换算成C，得到 100 C = 100 C"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 11.715,
+    "spoken_chars": 18,
+    "has_detail": true,
+    "detail": "根据物理常识，一个标准大气压（101.325 kPa）下，纯水的沸点为100℃，单位换算验证结果一致，无需额外计算。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "ok": true
+   },
+   {
+    "id": "fact-08",
+    "cat": "fact",
+    "query": "《红楼梦》的作者是谁",
+    "result": "《红楼梦》的作者是曹雪芹，后四十回一般认为是高鹗续写。",
+    "status": "result",
+    "latency_s": 11.465,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：《红楼梦》的作者是谁"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 11.465,
+    "spoken_chars": 27,
+    "has_detail": true,
+    "detail": "根据文学史共识，《红楼梦》前八十回由清代作家曹雪芹创作，后四十回普遍认为由高鹗续写完成。这是学术界广泛接受的观点，无争议。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "fact-09",
+    "cat": "fact",
+    "query": "人体最大的器官是什么",
+    "result": "皮肤是人体最大的器官，面积约1.5平方米。",
+    "status": "result",
+    "latency_s": 10.524,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：人体最大的器官是什么"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 10.524,
+    "spoken_chars": 21,
+    "has_detail": true,
+    "detail": "皮肤覆盖全身，具有保护、调节体温和感知外界刺激等功能，其表面积通常在1.2到2平方米之间，是人体最大且最复杂的器官之一。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "fact-10",
+    "cat": "fact",
+    "query": "日本的首都是哪里",
+    "result": "日本的首都是东京。",
+    "status": "result",
+    "latency_s": 5.689,
+    "first_progress_s": 0.0,
+    "progress": [
+     "开始处理：日本的首都是哪里"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 5.689,
+    "spoken_chars": 9,
+    "has_detail": true,
+    "detail": "根据常识，日本的首都为东京，这是国际公认的事实，无需工具查询或计算。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "fact-11",
+    "cat": "fact",
+    "query": "一周有几天",
+    "result": "一周有7天。",
+    "status": "result",
+    "latency_s": 6.798,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一周有几天"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 6.798,
+    "spoken_chars": 6,
+    "has_detail": true,
+    "detail": "这是国际通用的历法标准，无论哪一年、哪个国家，一周始终由7天组成，分别是周一到周日。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "reason-01",
+    "cat": "reason",
+    "query": "一件衣服原价 400 元，先打八折，再在折后价上减 50 元，最后要付多少钱",
+    "result": "最后要付 270 元。",
+    "status": "result",
+    "latency_s": 21.845,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一件衣服原价 400 元，先打八折，再在折后价上减 50 元…",
+     "正在用计算器算 400 * 0.8 - 50",
+     "用计算器算 400 * 0.8 - 50，得到 400 * 0.8 - 50 = 270"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 15.592,
+    "spoken_chars": 11,
+    "has_detail": true,
+    "detail": "原价 400 元打八折后是 320 元，再减 50 元，得到最终价格 270 元。计算过程为 400 × 0.8 = 320，320 - 50 = 270。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-02",
+    "cat": "reason",
+    "query": "鸡兔同笼，共有 35 个头、94 只脚，兔子有几只",
+    "result": "兔子有12只。",
+    "status": "result",
+    "latency_s": 41.2,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：鸡兔同笼，共有 35 个头、94 只脚，兔子有几只",
+     "正在写程序计算",
+     "写程序计算，得到 12"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 28.118,
+    "spoken_chars": 7,
+    "has_detail": true,
+    "detail": "设鸡和兔子的只数分别为x和y，根据头数得x + y = 35，脚数得2x + 4y = 94。解方程得y = 12，即兔子有12只，鸡有23只。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-03",
+    "cat": "reason",
+    "query": "小明每分钟走 60 米，小红每分钟走 80 米，两人从相距 2800 米的两地同时相向而行，几分钟后相遇",
+    "result": "35分钟相遇。",
+    "status": "result",
+    "latency_s": 26.789,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：小明每分钟走 60 米，小红每分钟走 80 米，两人从相距 …",
+     "正在用计算器算 (60 + 80) * 2800",
+     "用计算器算 (60 + 80) * 2800，得到 (60 + 80) * 2800 = 392000"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 20.429,
+    "spoken_chars": 7,
+    "has_detail": true,
+    "detail": "两人相向而行，速度和为每分钟140米。总距离2800米，用除法算得时间：2800 ÷ 140 = 20分钟。计算错误，正确答案是20分钟。  \n（修正：实际相遇时间为 2800 ÷ (60 + 80) = 2800 ÷ 140 = 20 分钟）",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": false
+   },
+   {
+    "id": "reason-04",
+    "cat": "reason",
+    "query": "10000 元存银行，年利率 3%，按年复利计算，3 年后本息合计多少元？保留两位小数",
+    "result": "3年后本息合计10927.27元。",
+    "status": "result",
+    "latency_s": 22.407,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：10000 元存银行，年利率 3%，按年复利计算，3 年后本…",
+     "正在用计算器算 10000 * (1 + 0.03) ** 3",
+     "用计算器算 10000 * (1 + 0.03) ** 3，得到 10000 * (1 + 0.03) ** 3 = 1092…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 15.063,
+    "spoken_chars": 17,
+    "has_detail": true,
+    "detail": "按年复利计算，公式为本金×(1+利率)^年数。代入10000×(1+0.03)^3，经计算得10927.27元，保留两位小数。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-05",
+    "cat": "reason",
+    "query": "一个长方形周长 30 厘米，长比宽多 5 厘米，面积是多少平方厘米",
+    "result": "面积是50平方厘米。",
+    "status": "result",
+    "latency_s": 25.396,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一个长方形周长 30 厘米，长比宽多 5 厘米，面积是多少平…",
+     "正在写程序计算",
+     "写程序计算，得到 10.0, 5.0, 50.0"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 14.352,
+    "spoken_chars": 10,
+    "has_detail": true,
+    "detail": "周长30厘米，长比宽多5厘米，设宽为x，则长为x+5。由2(x + x+5) = 30解得x=5，所以宽5厘米，长10厘米，面积为5×10=50平方厘米。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-06",
+    "cat": "reason",
+    "query": "一辆车百公里油耗 8 升，油价每升 7.5 元，开 350 公里要花多少油费",
+    "result": "开350公里油费是210元。",
+    "status": "result",
+    "latency_s": 23.219,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一辆车百公里油耗 8 升，油价每升 7.5 元，开 350 …",
+     "正在用计算器算 (350 / 100) * 8 * 7.5",
+     "用计算器算 (350 / 100) * 8 * 7.5，得到 (350 / 100) * 8 * 7.5 = 210"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 15.735,
+    "spoken_chars": 14,
+    "has_detail": true,
+    "detail": "每百公里耗8升油，350公里需耗油 (350÷100)×8 = 28升。油价7.5元/升，总费用为 28 × 7.5 = 210元。计算准确，无其他因素影响。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-07",
+    "cat": "reason",
+    "query": "3 个人吃饭一共花了 386 元，AA 平摊每人多少钱？保留两位小数",
+    "result": "每人需要付 128.67 元。",
+    "status": "result",
+    "latency_s": 17.187,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：3 个人吃饭一共花了 386 元，AA 平摊每人多少钱？保留…",
+     "正在用计算器算 386 / 3",
+     "用计算器算 386 / 3，得到 386 / 3 = 128.6666667"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 12.415,
+    "spoken_chars": 15,
+    "has_detail": true,
+    "detail": "总花费 386 元除以 3 人，计算得每人 128.666... 元，保留两位小数为 128.67 元。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-08",
+    "cat": "reason",
+    "query": "一个水池，甲管单独 6 小时注满，乙管单独 3 小时注满，两管同时开几小时注满",
+    "result": "两管同时开2小时可以注满水池。",
+    "status": "result",
+    "latency_s": 18.027,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一个水池，甲管单独 6 小时注满，乙管单独 3 小时注满，两…",
+     "正在用计算器算 (1/6 + 1/3) ** -1",
+     "用计算器算 (1/6 + 1/3) ** -1，得到 (1/6 + 1/3) ** -1 = 2"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 11.701,
+    "spoken_chars": 15,
+    "has_detail": true,
+    "detail": "甲管每小时注水量为1/6，乙管为1/3，合起来每小时注水1/6 + 1/3 = 1/2，所以需要2小时注满。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-09",
+    "cat": "reason",
+    "query": "某商品先涨价 20%，再降价 20%，最终价格是原价的百分之几",
+    "result": "最终价格是原价的96%。",
+    "status": "result",
+    "latency_s": 19.831,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：某商品先涨价 20%，再降价 20%，最终价格是原价的百分之…",
+     "正在用计算器算 (1 + 0.2) * (1 - 0.2)",
+     "用计算器算 (1 + 0.2) * (1 - 0.2)，得到 (1 + 0.2) * (1 - 0.2) = 0.96"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 13.174,
+    "spoken_chars": 12,
+    "has_detail": true,
+    "detail": "先涨价20%即乘以1.2，再降价20%即乘以0.8，计算得1.2 × 0.8 = 0.96，所以最终价格为原价的96%。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "reason-10",
+    "cat": "reason",
+    "query": "我今年 28 岁，我妈妈比我大 26 岁，等我 40 岁时妈妈多少岁",
+    "result": "当你40岁时，妈妈是54岁。",
+    "status": "result",
+    "latency_s": 20.188,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：我今年 28 岁，我妈妈比我大 26 岁，等我 40 岁时妈…",
+     "正在用计算器算 28 + 12",
+     "用计算器算 28 + 12，得到 28 + 12 = 40"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 14.889,
+    "spoken_chars": 14,
+    "has_detail": true,
+    "detail": "你今年28岁，妈妈比你大26岁，所以她今年54岁。等你40岁时，年龄差仍为26岁，因此妈妈是40 + 26 = 66岁。我最初计算错误，已修正。正确答案是66岁。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": false
+   },
+   {
+    "id": "prog-01",
+    "cat": "prog",
+    "query": "1 到 100 之间所有质数的和是多少",
+    "result": "<tool_call>",
+    "status": "result",
+    "latency_s": 21.121,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1 到 100 之间所有质数的和是多少"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 21.121,
+    "spoken_chars": 11,
+    "has_detail": true,
+    "detail": "<tool_call>\n{\"name\": \"python\", \"arguments\": {\"code\": \"n = 100\\nprimes = []\\nfor num in range(2, n + 1):\\n    is_prime = True\\n    for i in range(2, int(num ** 0.5) + 1):\\n        if num % i == 0:\\n            is_prime = False\\n            break\\n    if is_prime:\\n        primes.append(num)\\nsum_primes = sum(primes)\\nprimes[:10]\"} \n</tool_call>",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": false
+   },
+   {
+    "id": "prog-02",
+    "cat": "prog",
+    "query": "1 到 1000 之间有多少个质数",
+    "result": "1到1000之间有168个质数。",
+    "status": "result",
+    "latency_s": 31.913,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1 到 1000 之间有多少个质数",
+     "正在写程序计算",
+     "写程序计算，得到 168"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 19.604,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "通过筛选法判断每个数是否为质数，检查范围从2到1000，只验证到平方根以提高效率。计算结果经程序验证准确，共找到168个质数。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "prog-03",
+    "cat": "prog",
+    "query": "斐波那契数列第 30 项是多少（第 1、2 项都是 1）",
+    "result": "斐波那契数列第30项是832040。",
+    "status": "result",
+    "latency_s": 23.766,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：斐波那契数列第 30 项是多少（第 1、2 项都是 1）",
+     "正在写程序计算",
+     "写程序计算，得到 832040"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 13.32,
+    "spoken_chars": 18,
+    "has_detail": true,
+    "detail": "通过编程计算斐波那契数列，从第1项和第2项均为1开始，逐项累加得到第30项结果为832040。该值经代码验证准确无误。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "prog-04",
+    "cat": "prog",
+    "query": "2 的 100 次方各位数字之和是多少",
+    "result": "2的100次方各位数字之和是115。",
+    "status": "result",
+    "latency_s": 18.462,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2 的 100 次方各位数字之和是多少",
+     "正在写程序计算",
+     "写程序计算，得到 115"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 10.259,
+    "spoken_chars": 18,
+    "has_detail": true,
+    "detail": "通过编程计算2^100的值，将其转换为字符串后逐位求和得到结果115，验证准确无误。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "prog-05",
+    "cat": "prog",
+    "query": "1 到 100 中能被 3 或 5 整除的数的和是多少",
+    "result": "1到100中能被3或5整除的数的和是2418。",
+    "status": "result",
+    "latency_s": 26.23,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1 到 100 中能被 3 或 5 整除的数的和是多少",
+     "正在写程序计算",
+     "写程序计算，得到 2418"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 16.439,
+    "spoken_chars": 23,
+    "has_detail": true,
+    "detail": "通过枚举1到100中的所有数，筛选出能被3或5整除的数（如3, 5, 6, 9, 10等），然后求和得到结果2418。该方法确保不遗漏任何符合条件的数字。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "prog-06",
+    "cat": "prog",
+    "query": "100 的阶乘末尾有多少个 0",
+    "result": "100的阶乘末尾有24个0。",
+    "status": "result",
+    "latency_s": 31.94,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：100 的阶乘末尾有多少个 0",
+     "正在写程序计算",
+     "写程序计算，得到 24"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 18.18,
+    "spoken_chars": 14,
+    "has_detail": true,
+    "detail": "通过计算100!的值并统计末尾零的个数得出结果。末尾零的数量由因子10的个数决定，每个10来自2和5的配对，而5的因子更少，因此只需统计5的倍数次数即可。但为确保准确，直接计算阶乘后验证，最终确认有24个末尾零。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "prog-07",
+    "cat": "prog",
+    "query": "从 1 写到 1000，数字 7 一共出现了多少次",
+    "result": "数字7在1到1000之间出现了300次。",
+    "status": "result",
+    "latency_s": 25.458,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：从 1 写到 1000，数字 7 一共出现了多少次",
+     "正在写程序计算",
+     "写程序计算，得到 300"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 16.332,
+    "spoken_chars": 20,
+    "has_detail": true,
+    "detail": "通过遍历1到1000每个数，统计其中包含的“7”字符数量。例如，7、17、27、...、77、177、277等都算一次。程序验证结果为300次，覆盖个位、十位和百位的所有情况。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "prog-08",
+    "cat": "prog",
+    "query": "求 1 到 50 的平方和",
+    "result": "1到50的平方和是171700。",
+    "status": "result",
+    "latency_s": 28.198,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：求 1 到 50 的平方和",
+     "正在写程序计算",
+     "写程序计算，得到 1^2=1 2^2=4 3^2=9 4^2=16 5^2=2…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 19.799,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "通过编程枚举1到50每个数的平方并累加，结果为171700。计算过程验证无误，符合数学规律。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": false
+   },
+   {
+    "id": "prog-09",
+    "cat": "prog",
+    "query": "252 和 198 的最大公约数是多少",
+    "result": "252和198的最大公约数是18。",
+    "status": "result",
+    "latency_s": 15.216,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：252 和 198 的最大公约数是多少",
+     "正在用计算器算 gcd(252, 198)",
+     "用计算器算 gcd(252, 198)，得到 gcd(252, 198) = 18"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 9.689,
+    "spoken_chars": 17,
+    "has_detail": true,
+    "detail": "通过数学计算得出，252和198的公因数最大值为18，验证过程符合欧几里得算法原理。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "ok": true
+   },
+   {
+    "id": "prog-10",
+    "cat": "prog",
+    "query": "从 10 个人里选 3 个人组成小组，有多少种选法",
+    "result": "有120种不同的选法。",
+    "status": "result",
+    "latency_s": 23.474,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：从 10 个人里选 3 个人组成小组，有多少种选法",
+     "正在写程序计算",
+     "写程序计算，得到 120"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 12.557,
+    "spoken_chars": 11,
+    "has_detail": true,
+    "detail": "从10个人中选出3人，不考虑顺序，使用组合公式 C(10,3) = 10! / (3! × (10-3)!) 计算得120种。代码验证结果正确。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "ok": true
+   },
+   {
+    "id": "plan-01",
+    "cat": "plan",
+    "query": "帮我规划一个周末两天的北京旅行行程",
+    "result": "周末两天可游览故宫和天坛，下午安排胡同漫步，轻松惬意。",
+    "status": "result",
+    "latency_s": 19.909,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：帮我规划一个周末两天的北京旅行行程",
+     "正在查看当前日期时间",
+     "查看当前日期时间，得到 现在是 2026年10月11日（星期日） 10:00（Asi…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 17.025,
+    "spoken_chars": 27,
+    "has_detail": true,
+    "detail": "今天是10月11日（星期日），周末为10月11日至13日。第一天上午参观故宫，下午逛南锣鼓巷；第二天上午游天坛公园，下午前往什刹海周边散步。行程避开高峰时段，建议提前预约门票，步行为主减少疲劳。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "now"
+    ],
+    "ok": true
+   },
+   {
+    "id": "plan-02",
+    "cat": "plan",
+    "query": "我想三个月内减重 5 公斤，给我一个可执行的计划",
+    "result": "每月减重约1.7公斤，建议控制饮食+增加运动，保持规律作息。",
+    "status": "result",
+    "latency_s": 24.231,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：我想三个月内减重 5 公斤，给我一个可执行的计划",
+     "正在查看当前日期时间",
+     "查看当前日期时间，得到 现在是 2026年10月11日（星期日） 10:00（Asi…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 21.134,
+    "spoken_chars": 30,
+    "has_detail": true,
+    "detail": "目标5公斤在3个月内实现，平均每月需减重1.67公斤。合理计划包括：每日减少500大卡热量摄入（如少吃主食、避免高糖食物），每周进行3次中等强度有氧运动（如快走、游泳）和2次力量训练。保证睡眠7小时以上，避免熬夜。若体重未达标，可微调饮食结构或增加运动量。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "now"
+    ],
+    "ok": true
+   },
+   {
+    "id": "plan-03",
+    "cat": "plan",
+    "query": "帮我列一个准备英语口语考试的一周复习计划",
+    "result": "每天专注1小时，循序渐进练习对话和听力，周末做模拟考试。",
+    "status": "result",
+    "latency_s": 14.828,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：帮我列一个准备英语口语考试的一周复习计划"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 14.827,
+    "spoken_chars": 28,
+    "has_detail": true,
+    "detail": "计划覆盖基础词汇、常见句型、情景对话和听力训练。周一至周五每天安排一个主题（如问候、购物），配对练习与录音；周六全真模拟考试，周日总结错题并调整下周重点。保持规律作息，避免疲劳。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "plan-04",
+    "cat": "plan",
+    "query": "给 5 个人的部门聚餐做个预算方案，人均不超过 150 元",
+    "result": "5人聚餐总预算不超过750元，人均150元内，可控制在中等消费水平。",
+    "status": "result",
+    "latency_s": 17.12,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：给 5 个人的部门聚餐做个预算方案，人均不超过 150 元"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 17.12,
+    "spoken_chars": 34,
+    "has_detail": true,
+    "detail": "每人预算150元，5人总计750元。假设餐饮为中式自助或简餐，人均消费约120-180元，符合预算范围。建议选择性价比高的餐厅，提前预订避免涨价，并预留20%余量应对突发支出。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": true
+   },
+   {
+    "id": "plan-05",
+    "cat": "plan",
+    "query": "明天早上 9 点要开会，帮我安排一下今晚的准备工作顺序",
+    "result": "今晚需在8点前完成材料准备，10点前检查设备，确保准时参会。",
+    "status": "result",
+    "latency_s": 20.354,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：明天早上 9 点要开会，帮我安排一下今晚的准备工作顺序",
+     "正在查看当前日期时间",
+     "查看当前日期时间，得到 现在是 2026年10月11日（星期日） 10:00（Asi…"
+    ],
+    "n_progress": 3,
+    "n_informative": 2,
+    "max_silence_s": 17.217,
+    "spoken_chars": 30,
+    "has_detail": true,
+    "detail": "会议在明天（10月12日）上午9点，当前是10月11日，因此今晚要提前安排。先完成所有材料整理和打印（建议8点前），再检查会议室设备及网络连接（10点前）。避免临时出错，确保会前充分准备。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "now"
+    ],
+    "ok": true
+   },
+   {
+    "id": "plan-06",
+    "cat": "plan",
+    "query": "我要搬家，帮我列一个搬家前一周的待办清单",
+    "result": "整理物品、打包家具、清空杂物、检查家电、确认搬运公司、准备工具和车辆、制定路线图。",
+    "status": "result",
+    "latency_s": 19.825,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：我要搬家，帮我列一个搬家前一周的待办清单"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 19.825,
+    "spoken_chars": 41,
+    "has_detail": true,
+    "detail": "1. 每天列出需处理的物品，按类别（衣物、书籍、电子设备）分类；2. 用标签或收纳盒标记易碎品和贵重物；3. 提前联系搬家公司确认时间与费用；4. 准备打包带、胶带、垃圾袋等工具；5. 制定搬家路线，避免堵车。",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": [],
+    "ok": false
+   }
+  ]
+ },
+ "amend": {
+  "n": 8,
+  "amend_while_running": 8,
+  "adopted_rate_all": 0.875,
+  "adopted_rate_running": 0.875,
+  "stale_rate_running": 0.0,
+  "acknowledged_rate_running": 1.0,
+  "rows": [
+   {
+    "id": "amend-01",
+    "cat": null,
+    "query": "3 个人平分 360 元，每人多少钱",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "4个人平分360元，每人90元。",
+    "status": "result",
+    "latency_s": 21.247,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：3 个人平分 360 元，每人多少钱",
+     "收到补充「把 3 个人改成 4 个人」，按新条件重新考虑",
+     "正在用计算器算 360 / 4",
+     "用计算器算 360 / 4，得到 360 / 4 = 90"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 11.539,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "原任务是3人分360元，每人120元；用户补充改为4人，所以每人金额为360÷4=90元。计算准确，结果合理。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-02",
+    "cat": null,
+    "query": "计算 25 乘以 16",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "25乘以17等于425。",
+    "status": "result",
+    "latency_s": 20.173,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：计算 25 乘以 16",
+     "收到补充「把 16 改成 17」，按新条件重新考虑",
+     "正在用计算器算 25 * 17",
+     "用计算器算 25 * 17，得到 25 * 17 = 425"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 10.729,
+    "spoken_chars": 12,
+    "has_detail": true,
+    "detail": "原题为25×16，用户补充将16改为17，因此计算25×17=425。计算过程直接使用乘法运算得出结果。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-03",
+    "cat": null,
+    "query": "5 公里等于多少米",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "8公里等于8000米。",
+    "status": "result",
+    "latency_s": 23.748,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：5 公里等于多少米",
+     "收到补充「把 5 公里改成 8 公里」，按新条件重新考虑",
+     "正在把 8公里 换算成米",
+     "把 8公里 换算成米，得到 8 公里 = 8000 米"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 12.402,
+    "spoken_chars": 11,
+    "has_detail": true,
+    "detail": "根据单位换算规则，1公里=1000米，因此8公里乘以1000得到8000米。计算过程简单直接，结果准确。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "unit_convert"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-04",
+    "cat": null,
+    "query": "一件衣服原价 400 元打八折要付多少",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "衣服打七折后要付280元。",
+    "status": "result",
+    "latency_s": 19.478,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：一件衣服原价 400 元打八折要付多少",
+     "收到补充「不是八折，是七折」，按新条件重新考虑",
+     "正在用计算器算 400 * 0.7",
+     "用计算器算 400 * 0.7，得到 400 * 0.7 = 280"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 9.373,
+    "spoken_chars": 13,
+    "has_detail": true,
+    "detail": "原价400元，七折即乘以0.7，计算得400 × 0.7 = 280元。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-05",
+    "cat": null,
+    "query": "2026年10月1日之后30天是几月几号",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "2026年10月1日之后60天是11月30日。",
+    "status": "result",
+    "latency_s": 32.438,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：2026年10月1日之后30天是几月几号",
+     "收到补充「把 30 天改成 60 天」，按新条件重新考虑",
+     "正在推算日期 2026-10-01",
+     "推算日期 2026-10-01，得到 2026年10月1日（星期四） 加 60 天是 2026年1…"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 18.029,
+    "spoken_chars": 23,
+    "has_detail": true,
+    "detail": "从2026年10月1日起，加60天计算得11月30日。10月有31天，剩余29天（31-1）加上60天共89天，经日期推算，最终落在11月30日，为星期一。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "date_calc"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-06",
+    "cat": null,
+    "query": "1 到 100 之间所有质数的和是多少",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "1到50之间所有质数的和是329。",
+    "status": "result",
+    "latency_s": 54.018,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：1 到 100 之间所有质数的和是多少",
+     "收到补充「范围改成 1 到 50」，按新条件重新考虑",
+     "正在写程序计算",
+     "写程序计算，得到 329"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 31.266,
+    "spoken_chars": 17,
+    "has_detail": true,
+    "detail": "通过枚举1到50之间的数字，判断每个数是否为质数（只能被1和自身整除），然后求和。质数包括2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47，共15个，总和为329。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "python"
+    ],
+    "adopted": false,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-07",
+    "cat": null,
+    "query": "10000 元存银行年利率 3% 复利，3 年后本息多少？保留两位小数",
+    "amend_while_running": true,
+    "amend_at": 1.001,
+    "result": "5年后本息约11592.74元。",
+    "status": "result",
+    "latency_s": 29.189,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：10000 元存银行年利率 3% 复利，3 年后本息多少？保…",
+     "收到补充「年限改成 5 年」，按新条件重新考虑",
+     "正在用计算器算 10000 * (1 + 0.03) ** 5",
+     "用计算器算 10000 * (1 + 0.03) ** 5，得到 10000 * (1 + 0.03) ** 5 = 1159…"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 14.992,
+    "spoken_chars": 16,
+    "has_detail": true,
+    "detail": "按年利率3%复利计算，本金10000元，存期5年，公式为10000×(1+0.03)^5，结果保留两位小数为11592.74元。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   },
+   {
+    "id": "amend-08",
+    "cat": null,
+    "query": "开车 350 公里，百公里油耗 8 升，油价每升 7.5 元，油费多少",
+    "amend_while_running": true,
+    "amend_at": 1.0,
+    "result": "油费是224元。",
+    "status": "result",
+    "latency_s": 27.276,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：开车 350 公里，百公里油耗 8 升，油价每升 7.5 元…",
+     "收到补充「油价改成每升 8 元」，按新条件重新考虑",
+     "正在用计算器算 350 / 100 * 8 * 8",
+     "用计算器算 350 / 100 * 8 * 8，得到 350 / 100 * 8 * 8 = 224"
+    ],
+    "n_progress": 4,
+    "n_informative": 3,
+    "max_silence_s": 14.152,
+    "spoken_chars": 8,
+    "has_detail": true,
+    "detail": "行驶350公里，每百公里油耗8升，总耗油量为350÷100×8=28升。油价调整为8元/升，费用为28×8=224元。计算过程准确，符合补充条件。",
+    "tool_calls": 1,
+    "tool_ok": 1,
+    "tools": [
+     "calculator"
+    ],
+    "adopted": true,
+    "stale": false,
+    "acknowledged": true
+   }
+  ]
+ },
+ "cancel": {
+  "n": 6,
+  "cancelled_while_running": 6,
+  "cancel_latency_p50_s": 0.001,
+  "cancel_latency_max_s": 0.0014,
+  "leftover_procs": 0,
+  "rows": [
+   {
+    "id": "cancel-01",
+    "cat": null,
+    "query": "写个程序：从 1 到 10 的 9 次方逐个累加求和",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0014,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 1.504,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：写个程序：从 1 到 10 的 9 次方逐个累加求和"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 1.504,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-02",
+    "cat": null,
+    "query": "帮我详细规划一个十天的欧洲旅行",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0004,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 1.503,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：帮我详细规划一个十天的欧洲旅行"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 1.503,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-03",
+    "cat": null,
+    "query": "1 到 1000 之间有多少个质数",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0005,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.503,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：1 到 1000 之间有多少个质数"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.503,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-04",
+    "cat": null,
+    "query": "计算 23 * 47",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0007,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.203,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：计算 23 * 47"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.203,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-05",
+    "cat": null,
+    "query": "今天是星期几",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0005,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 0.203,
+    "first_progress_s": 0.0001,
+    "progress": [
+     "开始处理：今天是星期几"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 0.203,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   },
+   {
+    "id": "cancel-06",
+    "cat": null,
+    "query": "100 的阶乘末尾有多少个 0",
+    "finished_before_cancel": false,
+    "cancel_latency_s": 0.0005,
+    "leftover_sandbox_procs": 0,
+    "result": "",
+    "status": "none",
+    "latency_s": 3.004,
+    "first_progress_s": 0.0002,
+    "progress": [
+     "开始处理：100 的阶乘末尾有多少个 0"
+    ],
+    "n_progress": 1,
+    "n_informative": 0,
+    "max_silence_s": 3.003,
+    "spoken_chars": 0,
+    "has_detail": false,
+    "detail": "",
+    "tool_calls": 0,
+    "tool_ok": 0,
+    "tools": []
+   }
+  ]
+ }
+}
