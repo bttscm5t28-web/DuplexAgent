@@ -288,16 +288,74 @@ def align_units(units: list[Unit], x, sr: int, min_pause_ms: int = 60, anchor: b
     return out
 
 
-def trim_silence(x, sr: int, lead_ms: int = 20, tail_ms: int = 60):
+def trim_silence(x, sr: int, lead_ms: int = 20, tail_ms: int = 60, with_offset: bool = False):
     mask, hop = voiced_mask(x, sr)
     import numpy as np
 
     v = np.flatnonzero(mask)
     if len(v) == 0:
-        return x[:0]
+        return (x[:0], 0) if with_offset else x[:0]
     a = max(0, int(v[0]) * hop - sr * lead_ms // 1000)
     b = min(len(x), (int(v[-1]) + 1) * hop + sr * tail_ms // 1000)
-    return x[a:b]
+    return (x[a:b], a) if with_offset else x[a:b]
+
+
+def marks_to_spans(units: list[Unit], marks: list[tuple[str, float, float]], n: int, sr: int) -> list[tuple[int, int]] | None:
+    """Unit spans from backend timing marks [(spoken text, start_s, end_s)], e.g. word boundaries.
+
+    Mark characters are matched in order to the units' spoken characters; characters without a
+    mark are interpolated. Returns None when too little matches (caller falls back to energy).
+    """
+    chars = [(i, c) for i, u in enumerate(units) if not u.pause for c in u.spoken.lower() if c.isalnum()]
+    if not chars or not marks:
+        return None
+    times: list[tuple[float, float] | None] = [None] * len(chars)
+    k = 0
+    for text, a, b in marks:
+        mc = [c for c in text.lower() if c.isalnum()]
+        for q, c in enumerate(mc):
+            for look in range(k, min(len(chars), k + 4)):
+                if chars[look][1] == c:
+                    s0 = a + (b - a) * q / len(mc)
+                    times[look] = (s0, a + (b - a) * (q + 1) / len(mc))
+                    k = look + 1
+                    break
+    known = [j for j, t in enumerate(times) if t is not None]
+    if len(known) < max(1, len(chars) // 2):
+        return None
+    for j in range(len(chars)):  # interpolate gaps
+        if times[j] is None:
+            lo = max((x for x in known if x < j), default=None)
+            hi = min((x for x in known if x > j), default=None)
+            if lo is None:
+                times[j] = (times[hi][0], times[hi][0])
+            elif hi is None:
+                times[j] = (times[lo][1], times[lo][1])
+            else:
+                f = (j - lo) / (hi - lo)
+                t = times[lo][1] + (times[hi][0] - times[lo][1]) * f
+                times[j] = (t, t)
+    start: dict[int, float] = {}
+    end: dict[int, float] = {}
+    for (i, _), (a, b) in zip(chars, times):
+        start[i] = min(start.get(i, a), a)
+        end[i] = max(end.get(i, b), b)
+    bounds = [0.0] * (len(units) + 1)
+    prev_end = 0.0
+    for i in range(len(units)):
+        if i in start:
+            bounds[i] = start[i] if i else 0.0
+            prev_end = end[i]
+        else:
+            bounds[i] = prev_end if i else 0.0
+    bounds[len(units)] = n / sr
+    out, last = [], 0
+    for i in range(len(units)):
+        a = max(last, min(n, int(round(bounds[i] * sr))))
+        b = max(a, min(n, int(round(bounds[i + 1] * sr)))) if i + 1 < len(units) else n
+        out.append((a, b))
+        last = b
+    return out
 
 
 # ---- model cache -----------------------------------------------------------------------------------
@@ -367,7 +425,17 @@ class StreamingTTS(TTS):
         raise NotImplementedError
 
     def _synth(self, model: Any, text: str, stop: threading.Event):
-        """Return (float32 numpy samples, sample_rate). Check `stop` to abort early if possible."""
+        """Return (float32 samples, sample_rate[, marks]); runs in a worker thread.
+
+        Check `stop` to abort early if possible. Optional `marks` are timing marks
+        [(spoken text, start_s, end_s)] relative to the returned audio (exact alignment).
+        """
+        raise NotImplementedError
+
+    #: backends doing network I/O can set this and implement `_synth_async` instead
+    is_async = False
+
+    async def _synth_async(self, model: Any, text: str, stop: threading.Event):
         raise NotImplementedError
 
     # -- lifecycle --
@@ -486,9 +554,14 @@ class StreamingTTS(TTS):
         units = self.norm.units(s)
         spoken = spoken_text(units)
         t0 = time.monotonic()
+        marks = None
         if any(not u.pause and u.spoken.strip() for u in units):
-            loaded = self._loaded
-            x, sr = await asyncio.get_running_loop().run_in_executor(loaded.pool, self._synth_locked, spoken, stop)
+            if self.is_async:
+                res = await self._synth_async(self._loaded.model, spoken, stop)
+            else:
+                res = await asyncio.get_running_loop().run_in_executor(self._loaded.pool, self._synth_locked, spoken, stop)
+            x, sr = res[0], res[1]
+            marks = res[2] if len(res) > 2 else None
             x = resample(np.asarray(x, dtype=np.float32), sr, SAMPLE_RATE)
         else:
             x = np.zeros(0, dtype=np.float32)
@@ -496,8 +569,10 @@ class StreamingTTS(TTS):
         if stop.is_set():
             self.stats["cancelled_synth_s"] += dt
             return
-        x = self._shape_silence(x, units)
-        chunks = self._split(units, x)
+        x, shift = self._shape_silence(x, units)
+        if marks:
+            marks = [(t, a - shift / SAMPLE_RATE, b - shift / SAMPLE_RATE) for t, a, b in marks]
+        chunks = self._split(units, x, marks)
         dur = len(x) / SAMPLE_RATE
         self.stats["segments"].append({"text": s, "spoken": spoken, "synth_s": round(dt, 4), "audio_s": round(dur, 3)})
         for c in chunks:
@@ -523,17 +598,22 @@ class StreamingTTS(TTS):
             tail_w = max(tail_w, u.weight)
         tail_ms = self.pause_tail_ms if self.pause_tail_ms is not None else int(40 + 120 * tail_w)
         if len(x) == 0:
-            return np.zeros(int(SAMPLE_RATE * tail_ms / 1000), dtype=np.float32) if tail_w else x
-        y = trim_silence(x, SAMPLE_RATE, lead_ms=20, tail_ms=30)
+            return (np.zeros(int(SAMPLE_RATE * tail_ms / 1000), dtype=np.float32) if tail_w else x), 0
+        y, shift = trim_silence(x, SAMPLE_RATE, lead_ms=20, tail_ms=30, with_offset=True)
         pad = np.zeros(int(SAMPLE_RATE * max(0, tail_ms - 30) / 1000), dtype=np.float32)
-        return np.concatenate([y, pad])
+        return np.concatenate([y, pad]), shift
 
-    def _split(self, units: list[Unit], x) -> list[TTSChunk]:
+    def _split(self, units: list[Unit], x, marks: list | None = None) -> list[TTSChunk]:
         if not units:
             return []
         if self.align == "segment" or len(x) == 0:
             return [TTSChunk(to_pcm16(x), "".join(u.orig for u in units))]
-        if self.align == "uniform":
+        spans = None
+        if marks and self.align in ("anchor", "marks"):
+            spans = marks_to_spans(units, marks, len(x), SAMPLE_RATE)
+        if spans is not None:
+            pass
+        elif self.align == "uniform":
             # naive baseline: every non-space character gets the same share of the audio
             ws = [Unit(u.orig, u.spoken, float(len(u.orig.strip())), u.pause) for u in units]
             spans = align_units(ws, x, SAMPLE_RATE, anchor=False)

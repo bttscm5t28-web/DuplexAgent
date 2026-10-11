@@ -181,3 +181,47 @@ def test_cancel_stops_synthesis():
 
 def test_sherpa_registered():
     assert "sherpa" in available("tts")["tts"]
+
+
+def test_openai_speech_against_stub_server():
+    import http.server
+    import json as _json
+
+    got = {}
+
+    class H(http.server.BaseHTTPRequestHandler):
+        def do_POST(self):
+            got["body"] = _json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            n = int(0.2 * 24000) * sum(1 for c in got["body"]["input"] if c.isalnum())
+            pcm = (0.3 * np.sin(np.arange(n) * 0.06) * 32767).astype("<i2").tobytes()
+            self.send_response(200)
+            self.send_header("Content-Type", "audio/pcm")
+            self.end_headers()
+            self.wfile.write(pcm)
+
+        def log_message(self, *a):
+            pass
+
+    srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    try:
+        from duplexagent.core.registry import create
+
+        tts = create("tts", {"impl": "openai_speech", "base_url": f"http://127.0.0.1:{srv.server_port}/v1", "voice": "x"})
+        chunks = asyncio.run(_collect(tts, "你好，世界。"))
+    finally:
+        srv.shutdown()
+    assert "".join(c.text for c in chunks) == "你好，世界。"
+    assert got["body"]["voice"] == "x" and got["body"]["response_format"] == "pcm"
+    assert sum(c.duration for c in chunks) > 0.6
+
+
+def test_marks_alignment():
+    from duplexagent.plugins.tts.streaming import marks_to_spans
+
+    units = Normalizer().units("关于23，好")
+    marks = [("关于", 0.0, 0.4), ("二十三", 0.4, 1.0), ("好", 1.3, 1.5)]
+    spans = marks_to_spans(units, marks, 16000 * 2, 16000)
+    starts = [round(a / 16000, 2) for a, _ in spans]
+    assert [u.orig for u in units] == ["关", "于", "23", "，", "好"]
+    assert starts == [0.0, 0.2, 0.4, 1.0, 1.3]

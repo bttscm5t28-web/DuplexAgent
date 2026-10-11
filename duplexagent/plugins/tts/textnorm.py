@@ -207,7 +207,10 @@ class Normalizer:
                 i = j
                 continue
             if c in SYMBOLS:
-                self._emit_speech(out, c, SYMBOLS[c], "symbol")
+                sym = SYMBOLS[c]
+                if c == "#" and text.startswith("号", i + 1):
+                    sym = "井"  # "#号键"
+                self._emit_speech(out, c, sym, "symbol")
             elif c in CURRENCY:
                 self._emit_speech(out, c, CURRENCY[c], "symbol")
             else:
