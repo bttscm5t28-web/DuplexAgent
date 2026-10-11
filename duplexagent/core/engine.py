@@ -97,6 +97,9 @@ class DuplexEngine:
         self.orch = TaskOrchestrator(self.c.slow, self.now, self.timeline, self.cfg.max_tasks)
         for p in self.c.all():
             await p.start()
+        # Restart the session clock once every plugin is loaded: model loading can take seconds,
+        # and scenario times / metrics are relative to when audio starts flowing.
+        self._t0 = asyncio.get_running_loop().time()
         self.log("session_start", modules={k: getattr(self.c, k).plugin_name for k in Components.__annotations__})
         asr_in: Channel[AudioFrame] = Channel()
         asr_task = asyncio.create_task(self._asr_loop(asr_in), name="asr")
