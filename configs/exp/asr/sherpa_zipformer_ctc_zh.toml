@@ -1,0 +1,49 @@
+# ASR 实验：sherpa-onnx 流式 Zipformer-CTC 中文（2025-06-30, int8）
+# 基于 configs/default.toml，只改 [asr]。
+# Baseline: every module is a mock, so the whole engine runs with no models or network.
+# Swap any module by changing `impl` (see `python -m duplexagent list`), or on the CLI:
+#   --set asr.impl=funasr --set asr.model=paraformer-zh-streaming
+
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 15.0
+cancel_on_resume = true
+
+[plugins]
+modules = []  # extra modules that register plugins, e.g. ["experiments.asr.funasr_plugin"]
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "sherpa_online"
+model = "zipformer-ctc-zh-2025"
+endpoint_ms = 400
+num_threads = 2
+itn = true  # 二十三 -> 23；CER 评测时 experiments/asr/matrix.py 会关掉
+
+[turn]
+impl = "rule"
+eot_silence_ms = 500
+barge_in_ms = 300
+
+[fast]
+impl = "rule"
+think_ms = 150
+
+[slow]
+impl = "mock"
+delay_s = 3.0
+
+[tts]
+impl = "mock"
+chars_per_sec = 6.0
+first_chunk_ms = 80
+
+[fusion]
+impl = "idle"
+idle_ms = 800

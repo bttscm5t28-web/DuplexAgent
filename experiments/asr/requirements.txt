@@ -1,0 +1,13 @@
+# ASR 实验的可选依赖（核心骨架仍然只依赖标准库）
+numpy>=1.26
+huggingface_hub>=0.24      # 模型 / 数据下载
+sherpa-onnx>=1.12          # sherpa_online / sherpa_offline 插件，以及所有伪流式插件共用的 Silero VAD
+# 数据准备（experiments/asr/prepare_data.py）
+pyarrow>=15
+soundfile>=0.12
+# faster_whisper 插件
+faster-whisper>=1.1
+# funasr_streaming 插件（PyTorch CPU 版：pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu）
+funasr>=1.2
+torch>=2.3
+torchaudio>=2.3
