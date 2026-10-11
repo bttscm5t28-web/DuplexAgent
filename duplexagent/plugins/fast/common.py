@@ -37,11 +37,12 @@ def cn_to_number(s: str) -> float | None:
         if ia is None or not b or any(c not in _CN_DIGITS for c in b):
             return None
         return ia + float("0." + "".join(str(_CN_DIGITS[c]) for c in b))
-    total, section, digit = 0, 0, None
+    total, section, digit, last_unit = 0, 0, None, 0
     for c in s:
         if c in _CN_DIGITS:
             digit = _CN_DIGITS[c]
         elif c in _CN_UNITS:
+            last_unit = _CN_UNITS[c]
             u = _CN_UNITS[c]
             if u >= 10000:
                 total = (total + section + (digit or 0)) * u
@@ -51,6 +52,8 @@ def cn_to_number(s: str) -> float | None:
             digit = None
         else:
             return None
+    if digit is not None and last_unit >= 100 and s[-2] in _CN_UNITS:
+        digit *= last_unit // 10  # colloquial: 一百三 = 130, 一千二 = 1200, 一万五 = 15000
     return total + section + (digit or 0)
 
 
@@ -237,15 +240,18 @@ def earlier_claim(history: list[Message], task: TaskRecord) -> str | None:
     return None
 
 
-def conflicts(claim: str, result: str) -> bool:
-    """Crude: the claim states numbers/entities none of which appear in the result."""
-    cn = [round(x) for x in numbers_in(claim) if x >= 10]
+def conflicts(claim: str, result: str, query: str = "") -> bool | None:
+    """Does the hedged claim contradict the result? None = can't tell from numbers (ask a model).
+
+    Numbers that merely restate the question are ignored; a claim number within 10 % of a
+    result number counts as agreeing.
+    """
+    asked = numbers_in(query)
+    cn = [x for x in numbers_in(claim) if not any(abs(x - q) < 1e-9 for q in asked)]
+    if not cn:
+        return None
     rn = numbers_in(result)
-    if cn:
-        # a hedged estimate within 10 % of a number in the result is not a conflict
-        return not any(abs(c - r) <= 0.1 * max(abs(r), 1) for c in cn for r in rn)
-    words = re.findall(r"[打是对].{0,1}([一-鿿]{2})", claim)
-    return bool(words) and not any(w in result for w in words)
+    return not any(abs(c - r) <= 0.1 * max(abs(r), 1) for c in cn for r in rn)
 
 
 def spoken_result(result: str, limit: int = 60) -> str:
@@ -265,7 +271,7 @@ def fusion_text(ctx: BrainContext, task: TaskRecord) -> str:
         return f"抱歉，「{q}」没能完成：{spoken_result(task.result or '原因不明', 40)}。要不要再试一次？"
     prefix = ""
     claim = earlier_claim(ctx.history, task)
-    if claim and conflicts(claim, task.result or ""):
+    if claim and conflicts(claim, task.result or "", task.query):  # None (unsure) -> don't correct
         prefix = "更正一下我刚才说的，"
     return f"{prefix}你刚才问的「{q}」有结果了：{spoken_result(task.result or '')}"
 

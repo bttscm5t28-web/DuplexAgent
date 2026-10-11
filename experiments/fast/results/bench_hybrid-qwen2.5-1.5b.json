@@ -1,0 +1,5421 @@
+{
+ "impl": "llamacpp",
+ "config": "configs/exp/fast/hybrid-qwen2.5-1.5b.toml",
+ "overrides": [],
+ "warm": true,
+ "delegation": {
+  "n": 194,
+  "delegation_accuracy": 0.9021,
+  "delegation_precision": 0.8191,
+  "delegation_recall": 0.9747,
+  "delegation_f1": 0.8902,
+  "action_accuracy": 0.9021,
+  "forbid_violation_rate": 0.0,
+  "silent_delegate": 0,
+  "errors": 0,
+  "ttft_s": {
+   "mean": 0.3464,
+   "p50": 0.0001,
+   "p90": 0.9042
+  },
+  "per_cat_accuracy": {
+   "amend": 0.75,
+   "calc": 0.882,
+   "cancel": 1.0,
+   "chitchat": 0.744,
+   "clarify": 1.0,
+   "interrupt": 0.727,
+   "knowledge": 0.95,
+   "personal": 1.0,
+   "plan": 1.0,
+   "realtime": 1.0,
+   "status": 1.0,
+   "trivial_calc": 1.0,
+   "write": 1.0
+  },
+  "confusion": {
+   "amend->amend": 8,
+   "amend->delegate": 2,
+   "cancel->cancel": 10,
+   "delegate->delegate": 77,
+   "delegate->say": 2,
+   "say->delegate": 15,
+   "say->say": 68,
+   "status->say": 12
+  },
+  "rows": [
+   {
+    "id": "chitchat-001",
+    "cat": "chitchat",
+    "text": "你好",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你好，有什么可以帮助你的吗？",
+    "forbid_hit": [],
+    "ttft": 0.5431,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-002",
+    "cat": "chitchat",
+    "text": "你是谁",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我是语音助手的“快脑”，可以帮你做各种事情。",
+    "forbid_hit": [],
+    "ttft": 0.5832,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-003",
+    "cat": "chitchat",
+    "text": "谢谢你",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "不客气，有什么问题随时可以问我。",
+    "forbid_hit": [],
+    "ttft": 0.6841,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-004",
+    "cat": "chitchat",
+    "text": "再见",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "请随时叫我。",
+    "forbid_hit": [],
+    "ttft": 0.7113,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-005",
+    "cat": "chitchat",
+    "text": "早上好呀",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下天气。",
+    "forbid_hit": [],
+    "ttft": 0.803,
+    "decision_s": 2.1035,
+    "error": null,
+    "actions": [
+     "Delegate(查询天气，地点为北京)"
+    ]
+   },
+   {
+    "id": "chitchat-006",
+    "cat": "chitchat",
+    "text": "今天心情不太好",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我会帮你找一些积极的素材来改善心情。",
+    "forbid_hit": [],
+    "ttft": 0.7269,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-007",
+    "cat": "chitchat",
+    "text": "你喜欢什么颜色",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我喜欢蓝色。",
+    "forbid_hit": [],
+    "ttft": 0.7588,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-008",
+    "cat": "chitchat",
+    "text": "讲个笑话吧",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下笑话。",
+    "forbid_hit": [],
+    "ttft": 0.7965,
+    "decision_s": 1.7194,
+    "error": null,
+    "actions": [
+     "Delegate(查询笑话)"
+    ]
+   },
+   {
+    "id": "chitchat-009",
+    "cat": "chitchat",
+    "text": "嗯嗯好的",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好的，有什么我能帮忙的吗？",
+    "forbid_hit": [],
+    "ttft": 0.8272,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-010",
+    "cat": "chitchat",
+    "text": "哈哈哈你真有意思",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好的，我明白了。",
+    "forbid_hit": [],
+    "ttft": 0.9355,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-011",
+    "cat": "chitchat",
+    "text": "我今天加班到十点好累啊",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "休息一下吧，早点休息。",
+    "forbid_hit": [],
+    "ttft": 0.8605,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-012",
+    "cat": "chitchat",
+    "text": "你觉得猫好还是狗好",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "这个问题比较主观，因为猫和狗各有各的优点。你更喜欢哪一种呢？",
+    "forbid_hit": [],
+    "ttft": 0.8106,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-013",
+    "cat": "chitchat",
+    "text": "我刚查了一下午资料头都大了",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我明白，你有什么问题我可以帮你解答。",
+    "forbid_hit": [],
+    "ttft": 0.8663,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-014",
+    "cat": "chitchat",
+    "text": "算了不说这个了",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好的，这个任务已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.9713,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-015",
+    "cat": "chitchat",
+    "text": "我有点紧张明天要面试",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下面试地点和时间。",
+    "forbid_hit": [],
+    "ttft": 0.8629,
+    "decision_s": 2.2825,
+    "error": null,
+    "actions": [
+     "Delegate(查询面试地点和时间)"
+    ]
+   },
+   {
+    "id": "chitchat-016",
+    "cat": "chitchat",
+    "text": "你会唱歌吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "不会，但我可以帮你查资料或者写长内容。",
+    "forbid_hit": [],
+    "ttft": 0.6332,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-017",
+    "cat": "chitchat",
+    "text": "晚安",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "晚安，希望你有一个美好的夜晚。",
+    "forbid_hit": [],
+    "ttft": 0.8479,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-018",
+    "cat": "chitchat",
+    "text": "你叫什么名字",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我叫快脑，可以帮你解答问题或提供信息。",
+    "forbid_hit": [],
+    "ttft": 0.762,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-019",
+    "cat": "chitchat",
+    "text": "你能听懂方言吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "当然，我可以用普通话和方言交流。",
+    "forbid_hit": [],
+    "ttft": 0.7019,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-020",
+    "cat": "chitchat",
+    "text": "我刚才说到哪了",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我刚才说到深圳明天的天气。",
+    "forbid_hit": [],
+    "ttft": 0.7197,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-021",
+    "cat": "chitchat",
+    "text": "好的明白了",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好的，我明白了。",
+    "forbid_hit": [],
+    "ttft": 0.783,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-022",
+    "cat": "chitchat",
+    "text": "对对对就是这个意思",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "了解，我会等结果。",
+    "forbid_hit": [],
+    "ttft": 0.7377,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-023",
+    "cat": "chitchat",
+    "text": "你说得有道理",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你说得有道理。",
+    "forbid_hit": [],
+    "ttft": 0.747,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-024",
+    "cat": "chitchat",
+    "text": "我想养只猫你觉得怎么样",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "看你喜欢不，养猫确实需要一定的责任感和照顾。",
+    "forbid_hit": [],
+    "ttft": 0.7519,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-025",
+    "cat": "chitchat",
+    "text": "周末一般干点啥比较好",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(周末一般干点啥比较好)"
+    ]
+   },
+   {
+    "id": "chitchat-026",
+    "cat": "chitchat",
+    "text": "给我讲讲你今天都做了什么事情",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我今天主要负责提供语音助手服务，没有具体的工作内容。",
+    "forbid_hit": [],
+    "ttft": 0.8495,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-027",
+    "cat": "chitchat",
+    "text": "那个 呃 你在吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我在，有什么可以帮助你的吗？",
+    "forbid_hit": [],
+    "ttft": 0.7658,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-028",
+    "cat": "chitchat",
+    "text": "我们聊聊天吧",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好呀，我们聊聊天吧。",
+    "forbid_hit": [],
+    "ttft": 0.857,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-029",
+    "cat": "chitchat",
+    "text": "你觉得人工智能会取代人类吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我认为人工智能在某些领域已经超越了人类，但人工智能不会完全取代人类。",
+    "forbid_hit": [],
+    "ttft": 0.7743,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-030",
+    "cat": "chitchat",
+    "text": "我失恋了",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我理解这对你来说是个困难的时期。时间会帮你愈合伤口。",
+    "forbid_hit": [],
+    "ttft": 0.7498,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-031",
+    "cat": "chitchat",
+    "text": "夸夸我",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下你的兴趣爱好和特长。",
+    "forbid_hit": [],
+    "ttft": 0.8617,
+    "decision_s": 2.429,
+    "error": null,
+    "actions": [
+     "Delegate(查询你的兴趣爱好和特长)"
+    ]
+   },
+   {
+    "id": "chitchat-032",
+    "cat": "chitchat",
+    "text": "你吃饭了吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "没有，我还没吃饭呢。",
+    "forbid_hit": [],
+    "ttft": 0.8186,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-033",
+    "cat": "chitchat",
+    "text": "我计划明天早点起床",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台帮你查询明天的天气。",
+    "forbid_hit": [],
+    "ttft": 0.8489,
+    "decision_s": 2.0884,
+    "error": null,
+    "actions": [
+     "Delegate(查询明天的天气)"
+    ]
+   },
+   {
+    "id": "chitchat-034",
+    "cat": "chitchat",
+    "text": "hello",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你好，有什么可以帮助你的吗？",
+    "forbid_hit": [],
+    "ttft": 0.6287,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-035",
+    "cat": "chitchat",
+    "text": "thank you so much",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "不客气，有什么可以帮助你的？",
+    "forbid_hit": [],
+    "ttft": 0.6673,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "chitchat-036",
+    "cat": "chitchat",
+    "text": "下雨天适合干什么",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(下雨天适合干什么)"
+    ]
+   },
+   {
+    "id": "chitchat-037",
+    "cat": "chitchat",
+    "text": "我好无聊啊",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "你想要我帮你做什么？",
+    "forbid_hit": [],
+    "ttft": 0.8095,
+    "decision_s": 1.1069,
+    "error": null,
+    "actions": [
+     "Delegate(我好无聊啊)"
+    ]
+   },
+   {
+    "id": "chitchat-038",
+    "cat": "chitchat",
+    "text": "你最喜欢哪个季节",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我最喜欢春天，万物复苏，景色宜人。",
+    "forbid_hit": [],
+    "ttft": 0.6366,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-001",
+    "cat": "knowledge",
+    "text": "中国的首都是哪里",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "中国的首都是北京。",
+    "forbid_hit": [],
+    "ttft": 0.6681,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-002",
+    "cat": "knowledge",
+    "text": "一年有几个月",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "一年有12个月。",
+    "forbid_hit": [],
+    "ttft": 0.7376,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-003",
+    "cat": "knowledge",
+    "text": "水的沸点是多少度",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "水的沸点是100摄氏度。",
+    "forbid_hit": [],
+    "ttft": 0.9598,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-004",
+    "cat": "knowledge",
+    "text": "苹果用英文怎么说",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "苹果是 \"apple\"。",
+    "forbid_hit": [],
+    "ttft": 0.822,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-005",
+    "cat": "knowledge",
+    "text": "地球绕太阳转一圈要多久",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "地球绕太阳转一圈大约需要365天。",
+    "forbid_hit": [],
+    "ttft": 0.8409,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-006",
+    "cat": "knowledge",
+    "text": "李白是哪个朝代的",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "李白生活在唐朝。",
+    "forbid_hit": [],
+    "ttft": 0.8079,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-007",
+    "cat": "knowledge",
+    "text": "光合作用是什么意思",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "光合作用是植物、藻类和某些细菌利用光能将二氧化碳和水转化为有机物质（如葡萄糖）并释放氧气的过程。",
+    "forbid_hit": [],
+    "ttft": 0.7819,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-008",
+    "cat": "knowledge",
+    "text": "一公斤等于多少斤",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "一公斤等于2斤。",
+    "forbid_hit": [],
+    "ttft": 0.7551,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-009",
+    "cat": "knowledge",
+    "text": "长城有多长",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "长城是中国古代的防御工程，全长超过2万公里。",
+    "forbid_hit": [],
+    "ttft": 0.813,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-010",
+    "cat": "knowledge",
+    "text": "熊猫吃什么",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "熊猫主要吃竹子，偶尔也会吃一些水果和小动物。",
+    "forbid_hit": [],
+    "ttft": 0.809,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-011",
+    "cat": "knowledge",
+    "text": "什么是区块链 简单说说",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "区块链是一种去中心化的分布式数据库技术，它通过加密算法保证数据的安全性和不可篡改性。",
+    "forbid_hit": [],
+    "ttft": 0.9042,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-012",
+    "cat": "knowledge",
+    "text": "谢谢用日语怎么说",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "ありがとう、日语は「にちごたて」です。",
+    "forbid_hit": [],
+    "ttft": 0.6444,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-013",
+    "cat": "knowledge",
+    "text": "一周有几天",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "一周有七天。",
+    "forbid_hit": [],
+    "ttft": 0.7201,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-014",
+    "cat": "knowledge",
+    "text": "太阳系最大的行星是哪个",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "太阳系最大的行星是木星。",
+    "forbid_hit": [],
+    "ttft": 0.8432,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-015",
+    "cat": "knowledge",
+    "text": "感冒了应该多喝水吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "是的，感冒时多喝水有助于保持身体水分，缓解症状。",
+    "forbid_hit": [],
+    "ttft": 0.6975,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-016",
+    "cat": "knowledge",
+    "text": "睡不着有什么办法",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下如何快速入睡。",
+    "forbid_hit": [],
+    "ttft": 0.7908,
+    "decision_s": 2.1041,
+    "error": null,
+    "actions": [
+     "Delegate(查询快速入睡的方法)"
+    ]
+   },
+   {
+    "id": "knowledge-017",
+    "cat": "knowledge",
+    "text": "番茄是水果还是蔬菜",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "番茄是蔬菜。",
+    "forbid_hit": [],
+    "ttft": 0.8916,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-018",
+    "cat": "knowledge",
+    "text": "世界上最高的山是哪座",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "世界上的最高山是珠穆朗玛峰。",
+    "forbid_hit": [],
+    "ttft": 0.6604,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-019",
+    "cat": "knowledge",
+    "text": "什么是机器学习",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "机器学习是一种人工智能技术，它使计算机能够通过经验自动改进和优化，而不需要明确编程。",
+    "forbid_hit": [],
+    "ttft": 0.6858,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "knowledge-020",
+    "cat": "knowledge",
+    "text": "hello 是什么意思",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你好，这是你的问候语。",
+    "forbid_hit": [],
+    "ttft": 0.6817,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-001",
+    "cat": "trivial_calc",
+    "text": "三加五等于几",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "三加五等于八。",
+    "forbid_hit": [],
+    "ttft": 0.8505,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-002",
+    "cat": "trivial_calc",
+    "text": "一百的一半是多少",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "五十。",
+    "forbid_hit": [],
+    "ttft": 0.6849,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-003",
+    "cat": "trivial_calc",
+    "text": "十乘以十是多少",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "一百。",
+    "forbid_hit": [],
+    "ttft": 0.6793,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-004",
+    "cat": "trivial_calc",
+    "text": "二十减七等于多少",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "二十减七等于十三。",
+    "forbid_hit": [],
+    "ttft": 0.7531,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-005",
+    "cat": "trivial_calc",
+    "text": "一打是几个",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-006",
+    "cat": "trivial_calc",
+    "text": "两个小时是多少分钟",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "两个小时是120分钟。",
+    "forbid_hit": [],
+    "ttft": 0.5566,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-007",
+    "cat": "trivial_calc",
+    "text": "九九乘法表里七八多少",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "56。",
+    "forbid_hit": [],
+    "ttft": 0.7489,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "trivial_calc-008",
+    "cat": "trivial_calc",
+    "text": "一半的一半是多少",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "一半的一半是四。",
+    "forbid_hit": [],
+    "ttft": 0.6632,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "calc-001",
+    "cat": "calc",
+    "text": "帮我计算一下 23 乘以 47",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我计算一下 23 乘以 47)"
+    ]
+   },
+   {
+    "id": "calc-002",
+    "cat": "calc",
+    "text": "一百二十八的平方根是多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(一百二十八的平方根是多少)"
+    ]
+   },
+   {
+    "id": "calc-003",
+    "cat": "calc",
+    "text": "3847 乘以 296 等于多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(3847 乘以 296 等于多少)"
+    ]
+   },
+   {
+    "id": "calc-004",
+    "cat": "calc",
+    "text": "一万块钱存三年年利率百分之二点七五复利是多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(一万块钱存三年年利率百分之二点七五复利是多少)"
+    ]
+   },
+   {
+    "id": "calc-005",
+    "cat": "calc",
+    "text": "帮我算一下 15% 的小费 账单是 286 块",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我算一下 15% 的小费 账单是 286 块)"
+    ]
+   },
+   {
+    "id": "calc-006",
+    "cat": "calc",
+    "text": "一百八十斤等于多少磅",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(一百八十斤等于多少磅)"
+    ]
+   },
+   {
+    "id": "calc-007",
+    "cat": "calc",
+    "text": "把 98.6 华氏度换算成摄氏度",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(把 98.6 华氏度换算成摄氏度)"
+    ]
+   },
+   {
+    "id": "calc-008",
+    "cat": "calc",
+    "text": "我每月工资一万二 五险一金扣多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(我每月工资一万二 五险一金扣多少)"
+    ]
+   },
+   {
+    "id": "calc-009",
+    "cat": "calc",
+    "text": "月供怎么算 贷款一百万三十年利率百分之三点五",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(月供怎么算 贷款一百万三十年利率百分之三点五)"
+    ]
+   },
+   {
+    "id": "calc-010",
+    "cat": "calc",
+    "text": "2 的 32 次方是多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(2 的 32 次方是多少)"
+    ]
+   },
+   {
+    "id": "calc-011",
+    "cat": "calc",
+    "text": "算一下 1 到 100 所有质数的和",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(算一下 1 到 100 所有质数的和)"
+    ]
+   },
+   {
+    "id": "calc-012",
+    "cat": "calc",
+    "text": "七百八十九除以十三等于多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(七百八十九除以十三等于多少)"
+    ]
+   },
+   {
+    "id": "calc-013",
+    "cat": "calc",
+    "text": "帮我算算 12 个人平摊 3560 块每人多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我算算 12 个人平摊 3560 块每人多少)"
+    ]
+   },
+   {
+    "id": "calc-014",
+    "cat": "calc",
+    "text": "从 1990 年 3 月 5 号到今天一共多少天",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(从 1990 年 3 月 5 号到今天一共多少天)"
+    ]
+   },
+   {
+    "id": "calc-015",
+    "cat": "calc",
+    "text": "圆周率乘以半径 7.5 的平方是多少",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "14乘以7.5的平方等于504.35。",
+    "forbid_hit": [],
+    "ttft": 1.1805,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "calc-016",
+    "cat": "calc",
+    "text": "一百美元能换多少人民币",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "一百美元大约等于六千四百美元人民币。",
+    "forbid_hit": [],
+    "ttft": 0.6848,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "realtime-001",
+    "cat": "realtime",
+    "text": "帮我查一下明天北京的天气",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我查一下明天北京的天气)"
+    ]
+   },
+   {
+    "id": "realtime-002",
+    "cat": "realtime",
+    "text": "最近有什么关于固态电池的新闻",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(最近有什么关于固态电池的新闻)"
+    ]
+   },
+   {
+    "id": "realtime-003",
+    "cat": "realtime",
+    "text": "今天上证指数怎么样",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(今天上证指数怎么样)"
+    ]
+   },
+   {
+    "id": "realtime-004",
+    "cat": "realtime",
+    "text": "特斯拉现在股价多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(特斯拉现在股价多少)"
+    ]
+   },
+   {
+    "id": "realtime-005",
+    "cat": "realtime",
+    "text": "今晚湖人打谁",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(今晚湖人打谁)"
+    ]
+   },
+   {
+    "id": "realtime-006",
+    "cat": "realtime",
+    "text": "附近有什么好吃的火锅店",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(附近有什么好吃的火锅店)"
+    ]
+   },
+   {
+    "id": "realtime-007",
+    "cat": "realtime",
+    "text": "现在去机场堵不堵",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(现在去机场堵不堵)"
+    ]
+   },
+   {
+    "id": "realtime-008",
+    "cat": "realtime",
+    "text": "最新的 iPhone 是哪一款",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(最新的 iPhone 是哪一款)"
+    ]
+   },
+   {
+    "id": "realtime-009",
+    "cat": "realtime",
+    "text": "今天油价多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(今天油价多少)"
+    ]
+   },
+   {
+    "id": "realtime-010",
+    "cat": "realtime",
+    "text": "上海迪士尼今天人多吗",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(上海迪士尼今天人多吗)"
+    ]
+   },
+   {
+    "id": "realtime-011",
+    "cat": "realtime",
+    "text": "查查这周末有什么电影上映",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(查查这周末有什么电影上映)"
+    ]
+   },
+   {
+    "id": "realtime-012",
+    "cat": "realtime",
+    "text": "比特币现在什么价",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(比特币现在什么价)"
+    ]
+   },
+   {
+    "id": "realtime-013",
+    "cat": "realtime",
+    "text": "明天会下雨吗 我要不要带伞",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(明天会下雨吗 我要不要带伞)"
+    ]
+   },
+   {
+    "id": "realtime-014",
+    "cat": "realtime",
+    "text": "最近的地铁站在哪",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(最近的地铁站在哪)"
+    ]
+   },
+   {
+    "id": "realtime-015",
+    "cat": "realtime",
+    "text": "what's the weather like in Tokyo tomorrow",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(what's the weather like in Tokyo tomorrow)"
+    ]
+   },
+   {
+    "id": "realtime-016",
+    "cat": "realtime",
+    "text": "世界杯昨天谁赢了",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(世界杯昨天谁赢了)"
+    ]
+   },
+   {
+    "id": "personal-001",
+    "cat": "personal",
+    "text": "我的航班几点起飞",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(我的航班几点起飞)"
+    ]
+   },
+   {
+    "id": "personal-002",
+    "cat": "personal",
+    "text": "帮我定个明天早上七点的闹钟",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(帮我定个明天早上七点的闹钟)"
+    ]
+   },
+   {
+    "id": "personal-003",
+    "cat": "personal",
+    "text": "提醒我下午三点开会",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(提醒我下午三点开会)"
+    ]
+   },
+   {
+    "id": "personal-004",
+    "cat": "personal",
+    "text": "给我妈发个微信说我晚点回家",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(给我妈发个微信说我晚点回家)"
+    ]
+   },
+   {
+    "id": "personal-005",
+    "cat": "personal",
+    "text": "我明天有什么安排",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(我明天有什么安排)"
+    ]
+   },
+   {
+    "id": "personal-006",
+    "cat": "personal",
+    "text": "把客厅的灯关了",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(把客厅的灯关了)"
+    ]
+   },
+   {
+    "id": "personal-007",
+    "cat": "personal",
+    "text": "帮我看看有没有新邮件",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我看看有没有新邮件)"
+    ]
+   },
+   {
+    "id": "personal-008",
+    "cat": "personal",
+    "text": "帮我订一张周五去上海的高铁票",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我订一张周五去上海的高铁票)"
+    ]
+   },
+   {
+    "id": "personal-009",
+    "cat": "personal",
+    "text": "我上个月花了多少钱",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(我上个月花了多少钱)"
+    ]
+   },
+   {
+    "id": "personal-010",
+    "cat": "personal",
+    "text": "帮我叫个车去公司",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(帮我叫个车去公司)"
+    ]
+   },
+   {
+    "id": "personal-011",
+    "cat": "personal",
+    "text": "把这首歌加到我的收藏",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(把这首歌加到我的收藏)"
+    ]
+   },
+   {
+    "id": "personal-012",
+    "cat": "personal",
+    "text": "帮我把周三的会改到周四",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(帮我把周三的会改到周四)"
+    ]
+   },
+   {
+    "id": "personal-013",
+    "cat": "personal",
+    "text": "我的快递到哪了",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(我的快递到哪了)"
+    ]
+   },
+   {
+    "id": "personal-014",
+    "cat": "personal",
+    "text": "帮我给张经理打个电话",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(帮我给张经理打个电话)"
+    ]
+   },
+   {
+    "id": "plan-001",
+    "cat": "plan",
+    "text": "帮我规划一个三天的杭州旅行路线",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我规划一个三天的杭州旅行路线)"
+    ]
+   },
+   {
+    "id": "plan-002",
+    "cat": "plan",
+    "text": "比较一下 iPhone 和 Pixel 的拍照",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(比较一下 iPhone 和 Pixel 的拍照)"
+    ]
+   },
+   {
+    "id": "plan-003",
+    "cat": "plan",
+    "text": "给我做个一个月的减脂计划",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(给我做个一个月的减脂计划)"
+    ]
+   },
+   {
+    "id": "plan-004",
+    "cat": "plan",
+    "text": "五千块预算配一台游戏电脑怎么配",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(五千块预算配一台游戏电脑怎么配)"
+    ]
+   },
+   {
+    "id": "plan-005",
+    "cat": "plan",
+    "text": "帮我调研一下国内做语音助手的公司",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我调研一下国内做语音助手的公司)"
+    ]
+   },
+   {
+    "id": "plan-006",
+    "cat": "plan",
+    "text": "分析一下我这个创业想法有没有前景 做宠物上门喂养",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(分析一下我这个创业想法有没有前景 做宠物上门喂养)"
+    ]
+   },
+   {
+    "id": "plan-007",
+    "cat": "plan",
+    "text": "帮我安排一下下周的学习计划 要准备考研数学",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我安排一下下周的学习计划 要准备考研数学)"
+    ]
+   },
+   {
+    "id": "plan-008",
+    "cat": "plan",
+    "text": "北京到成都自驾怎么走最合适",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(北京到成都自驾怎么走最合适)"
+    ]
+   },
+   {
+    "id": "plan-009",
+    "cat": "plan",
+    "text": "比较一下三家银行的房贷利率",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(比较一下三家银行的房贷利率)"
+    ]
+   },
+   {
+    "id": "plan-010",
+    "cat": "plan",
+    "text": "帮我选一款适合老人用的手机",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我选一款适合老人用的手机)"
+    ]
+   },
+   {
+    "id": "plan-011",
+    "cat": "plan",
+    "text": "给我一份婚礼筹备清单",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(给我一份婚礼筹备清单)"
+    ]
+   },
+   {
+    "id": "plan-012",
+    "cat": "plan",
+    "text": "分析一下最近半年黄金的走势",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(分析一下最近半年黄金的走势)"
+    ]
+   },
+   {
+    "id": "plan-013",
+    "cat": "plan",
+    "text": "新能源车买哪款比较好 预算二十万",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(新能源车买哪款比较好 预算二十万)"
+    ]
+   },
+   {
+    "id": "plan-014",
+    "cat": "plan",
+    "text": "帮我规划一下怎么在三个月内学会 Python",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我规划一下怎么在三个月内学会 Python)"
+    ]
+   },
+   {
+    "id": "write-001",
+    "cat": "write",
+    "text": "帮我总结一下这周的会议纪要",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(帮我总结一下这周的会议纪要)"
+    ]
+   },
+   {
+    "id": "write-002",
+    "cat": "write",
+    "text": "把这段话翻译成英文：我们下周见",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(把这段话翻译成英文：我们下周见)"
+    ]
+   },
+   {
+    "id": "write-003",
+    "cat": "write",
+    "text": "写一封请假邮件给我老板",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(写一封请假邮件给我老板)"
+    ]
+   },
+   {
+    "id": "write-004",
+    "cat": "write",
+    "text": "帮我写一首关于秋天的诗",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我写一首关于秋天的诗)"
+    ]
+   },
+   {
+    "id": "write-005",
+    "cat": "write",
+    "text": "给我写个生日祝福给我闺蜜 要长一点",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(给我写个生日祝福给我闺蜜 要长一点)"
+    ]
+   },
+   {
+    "id": "write-006",
+    "cat": "write",
+    "text": "帮我写一段 Python 代码读取 Excel",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我写一段 Python 代码读取 Excel)"
+    ]
+   },
+   {
+    "id": "write-007",
+    "cat": "write",
+    "text": "帮我写一份周报",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(帮我写一份周报)"
+    ]
+   },
+   {
+    "id": "write-008",
+    "cat": "write",
+    "text": "把这篇文章总结成三点",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(把这篇文章总结成三点)"
+    ]
+   },
+   {
+    "id": "write-009",
+    "cat": "write",
+    "text": "写一篇八百字的作文 题目是我的妈妈",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(写一篇八百字的作文 题目是我的妈妈)"
+    ]
+   },
+   {
+    "id": "write-010",
+    "cat": "write",
+    "text": "帮我起草一个租房合同",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(帮我起草一个租房合同)"
+    ]
+   },
+   {
+    "id": "write-011",
+    "cat": "write",
+    "text": "帮我把这份简历改得专业一点",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我把这份简历改得专业一点)"
+    ]
+   },
+   {
+    "id": "write-012",
+    "cat": "write",
+    "text": "给公司年会写个主持词",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(给公司年会写个主持词)"
+    ]
+   },
+   {
+    "id": "write-013",
+    "cat": "write",
+    "text": "写个 SQL 统计每个月的订单数",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(写个 SQL 统计每个月的订单数)"
+    ]
+   },
+   {
+    "id": "write-014",
+    "cat": "write",
+    "text": "把这封英文邮件翻译成中文",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(把这封英文邮件翻译成中文)"
+    ]
+   },
+   {
+    "id": "clarify-001",
+    "cat": "clarify",
+    "text": "帮我订个",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "clarify-002",
+    "cat": "clarify",
+    "text": "那个 就是 你帮我",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "clarify-003",
+    "cat": "clarify",
+    "text": "我想问一下",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "clarify-004",
+    "cat": "clarify",
+    "text": "帮我查一下那个",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "clarify-005",
+    "cat": "clarify",
+    "text": "你帮我算算",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-001",
+    "cat": "status",
+    "text": "天气查到了吗",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「查询明天北京的天气」还在处理，目前正在查询天气接口，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0002,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-002",
+    "cat": "status",
+    "text": "好了吗",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「计算 3847 乘以 296」还在处理，目前刚开始，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-003",
+    "cat": "status",
+    "text": "那个结果是多少啊",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「计算 3847 乘以 296」还在处理，目前刚开始，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-004",
+    "cat": "status",
+    "text": "还要多久",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「规划一个三天的杭州旅行路线」还在处理，目前已确定主要景点，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-005",
+    "cat": "status",
+    "text": "进度怎么样了",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「写一封请假邮件给老板」还在处理，目前正在起草，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-006",
+    "cat": "status",
+    "text": "票订上了没",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「订一张周五去上海的高铁票」还在处理，目前正在查询车次，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-007",
+    "cat": "status",
+    "text": "新闻都说了些啥",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「搜索最近关于固态电池的新闻」还在处理，目前找到 12 篇报道，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-008",
+    "cat": "status",
+    "text": "明天到底下不下雨你先说个大概",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「查询明天北京的天气」还在处理，目前正在查询天气接口，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-009",
+    "cat": "status",
+    "text": "你那边查得怎么样",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「五千元预算配一台游戏电脑」还在处理，目前刚开始，结果出来我马上告诉你。另外还有 1 件在处理。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-010",
+    "cat": "status",
+    "text": "电脑那个配好了吗",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「五千元预算配一台游戏电脑」还在处理，目前刚开始，结果出来我马上告诉你。另外还有 1 件在处理。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-011",
+    "cat": "status",
+    "text": "怎么还没好",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「规划一个三天的杭州旅行路线」还在处理，目前已确定主要景点，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-status-012",
+    "cat": "status",
+    "text": "你先大概说说杭州第一天去哪",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「规划一个三天的杭州旅行路线」还在处理，目前已确定主要景点，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-cancel-001",
+    "cat": "cancel",
+    "text": "算了不用查了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「查询明天北京的天气」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-002",
+    "cat": "cancel",
+    "text": "不用算了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「计算 3847 乘以 296」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-003",
+    "cat": "cancel",
+    "text": "那个旅行的先别弄了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「规划一个三天的杭州旅行路线」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-004",
+    "cat": "cancel",
+    "text": "邮件不用写了我自己写吧",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「写一封请假邮件给老板」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-005",
+    "cat": "cancel",
+    "text": "取消吧",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「订一张周五去上海的高铁票」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-006",
+    "cat": "cancel",
+    "text": "票先不订了 行程有变",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「订一张周五去上海的高铁票」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-007",
+    "cat": "cancel",
+    "text": "电脑那个不要了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「五千元预算配一台游戏电脑」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t2)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-008",
+    "cat": "cancel",
+    "text": "停停停 别查了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「搜索最近关于固态电池的新闻」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-009",
+    "cat": "cancel",
+    "text": "never mind 不需要了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「查询明天北京的天气」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0003,
+    "decision_s": 0.0003,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-cancel-010",
+    "cat": "cancel",
+    "text": "我不想知道了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「搜索最近关于固态电池的新闻」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-amend-001",
+    "cat": "amend",
+    "text": "对了 要靠近西湖的酒店",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-amend-002",
+    "cat": "amend",
+    "text": "邮件语气客气一点 就说家里有事",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-amend-003",
+    "cat": "amend",
+    "text": "要二等座 下午出发的",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-amend-004",
+    "cat": "amend",
+    "text": "还有 我带着老人 别安排太累",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-amend-005",
+    "cat": "amend",
+    "text": "顺便看看后天的",
+    "want": "amend",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台去处理，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 1.2586,
+    "decision_s": 2.1981,
+    "error": null,
+    "actions": [
+     "Delegate(顺便看看后天的)"
+    ]
+   },
+   {
+    "id": "ctx-amend-006",
+    "cat": "amend",
+    "text": "只要国内的新闻",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-amend-007",
+    "cat": "amend",
+    "text": "显卡要 N 卡",
+    "want": "amend",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台去处理，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 1.4171,
+    "decision_s": 2.3941,
+    "error": null,
+    "actions": [
+     "Delegate(显卡要 N 卡)"
+    ]
+   },
+   {
+    "id": "ctx-amend-008",
+    "cat": "amend",
+    "text": "哦对了请假是请周三一天",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-chitchat-001",
+    "cat": "chitchat",
+    "text": "算了",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让慢脑查一下笑话。",
+    "forbid_hit": [],
+    "ttft": 1.0288,
+    "decision_s": 2.3556,
+    "error": null,
+    "actions": [
+     "Delegate(查找并提供一个笑话)"
+    ]
+   },
+   {
+    "id": "ctx-chitchat-002",
+    "cat": "chitchat",
+    "text": "不用了谢谢",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好的，不客气。有什么需要帮忙的尽管说。",
+    "forbid_hit": [],
+    "ttft": 0.9771,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-interrupt-001",
+    "cat": "interrupt",
+    "text": "我是说北京不是南京",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-interrupt-002",
+    "cat": "interrupt",
+    "text": "停一下我换个问题",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "当前没有正在运行的任务。",
+    "forbid_hit": [],
+    "ttft": 0.9351,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-interrupt-003",
+    "cat": "interrupt",
+    "text": "说重点",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下区块链的定义。",
+    "forbid_hit": [],
+    "ttft": 1.1119,
+    "decision_s": 2.3336,
+    "error": null,
+    "actions": [
+     "Delegate(查询区块链的定义)"
+    ]
+   },
+   {
+    "id": "ctx-interrupt-004",
+    "cat": "interrupt",
+    "text": "不是这个意思 我是问它能干嘛",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "我需要先查一下区块链的相关信息。",
+    "forbid_hit": [],
+    "ttft": 1.0423,
+    "decision_s": 2.1577,
+    "error": null,
+    "actions": [
+     "Delegate(查询区块链的基本概念和功能)"
+    ]
+   },
+   {
+    "id": "ctx-interrupt-005",
+    "cat": "interrupt",
+    "text": "等等 你帮我把这个规划成三天的行程吧",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(等等 你帮我把这个规划成三天的行程吧)"
+    ]
+   },
+   {
+    "id": "ctx-interrupt-006",
+    "cat": "interrupt",
+    "text": "你刚才说什么",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我刚才说的是今天你感觉累，要不要休息一下？",
+    "forbid_hit": [],
+    "ttft": 0.9326,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-interrupt-007",
+    "cat": "interrupt",
+    "text": "嗯你继续说",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让慢脑讲个故事。",
+    "forbid_hit": [],
+    "ttft": 0.9576,
+    "decision_s": 2.1038,
+    "error": null,
+    "actions": [
+     "Delegate(讲一个故事)"
+    ]
+   },
+   {
+    "id": "ctx-interrupt-008",
+    "cat": "interrupt",
+    "text": "不对不对 是二十三乘以七十四",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ctx-interrupt-009",
+    "cat": "interrupt",
+    "text": "好了好了我知道了",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好的，有什么需要帮助的吗？",
+    "forbid_hit": [],
+    "ttft": 1.0442,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-interrupt-010",
+    "cat": "interrupt",
+    "text": "那顺便帮我查下上海的",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查询明天北京的天气。",
+    "forbid_hit": [],
+    "ttft": 1.2824,
+    "decision_s": 2.5895,
+    "error": null,
+    "actions": [
+     "Delegate(查询明天北京的天气)"
+    ]
+   },
+   {
+    "id": "ctx-interrupt-011",
+    "cat": "interrupt",
+    "text": "再说一遍刚才那个结果",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "23 乘以 47 等于 1081。",
+    "forbid_hit": [],
+    "ttft": 1.4009,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-chitchat-003",
+    "cat": "chitchat",
+    "text": "你好",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "计算 3847 乘以 296。",
+    "forbid_hit": [],
+    "ttft": 1.2298,
+    "decision_s": 3.4927,
+    "error": null,
+    "actions": [
+     "Delegate(计算 3847 乘以 296)"
+    ]
+   },
+   {
+    "id": "ctx-chitchat-004",
+    "cat": "chitchat",
+    "text": "等的时候陪我聊聊天吧",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台规划一个三天的杭州旅行路线。",
+    "forbid_hit": [],
+    "ttft": 1.3673,
+    "decision_s": 3.0348,
+    "error": null,
+    "actions": [
+     "Delegate(规划杭州三天旅行路线)"
+    ]
+   },
+   {
+    "id": "ctx-chitchat-005",
+    "cat": "chitchat",
+    "text": "你觉得杭州好玩吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "杭州确实是个值得一游的城市，有很多值得一游的景点。你可以先去西湖看看，然后去宋城感受一下宋朝的风情，最后去灵隐寺感受一下佛教的氛围。这样三天的行程应该能让你充分体验到杭州的魅力。",
+    "forbid_hit": [],
+    "ttft": 1.2053,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ctx-realtime-001",
+    "cat": "realtime",
+    "text": "再帮我查下上海明天的天气",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(再帮我查下上海明天的天气)"
+    ]
+   },
+   {
+    "id": "ctx-calc-001",
+    "cat": "calc",
+    "text": "另外再算一下 1234 乘以 5678",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(另外再算一下 1234 乘以 5678)"
+    ]
+   },
+   {
+    "id": "ctx-personal-001",
+    "cat": "personal",
+    "text": "趁这会儿帮我定个半小时后的提醒",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(趁这会儿帮我定个半小时后的提醒)"
+    ]
+   }
+  ]
+ },
+ "heldout": {
+  "n": 120,
+  "delegation_accuracy": 0.8333,
+  "delegation_precision": 0.7742,
+  "delegation_recall": 0.8889,
+  "delegation_f1": 0.8276,
+  "action_accuracy": 0.8333,
+  "forbid_violation_rate": 0.0,
+  "silent_delegate": 0,
+  "errors": 0,
+  "ttft_s": {
+   "mean": 0.4124,
+   "p50": 0.0002,
+   "p90": 0.9382
+  },
+  "per_cat_accuracy": {
+   "amend": 0.667,
+   "calc": 0.75,
+   "cancel": 0.75,
+   "chitchat": 0.87,
+   "clarify": 1.0,
+   "continuation": 0.667,
+   "knowledge": 0.8,
+   "personal": 0.9,
+   "planning": 1.0,
+   "realtime": 0.8,
+   "status": 0.75,
+   "writing": 1.0
+  },
+  "confusion": {
+   "amend->amend": 4,
+   "amend->delegate": 2,
+   "cancel->cancel": 6,
+   "cancel->delegate": 2,
+   "delegate->delegate": 48,
+   "delegate->say": 6,
+   "say->delegate": 8,
+   "say->say": 36,
+   "status->delegate": 2,
+   "status->say": 6
+  },
+  "rows": [
+   {
+    "id": "ho-001",
+    "cat": "chitchat",
+    "text": "我查了一下午资料好累啊",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "休息一下吧，我帮你查资料。",
+    "forbid_hit": [],
+    "ttft": 0.6903,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-002",
+    "cat": "chitchat",
+    "text": "算了算了不说这个了",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "我们先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.8482,
+    "decision_s": 1.1211,
+    "error": null,
+    "actions": [
+     "Delegate(算了算了不说这个了)"
+    ]
+   },
+   {
+    "id": "ho-003",
+    "cat": "chitchat",
+    "text": "呃 今天心情有点差 就是不想说话",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我明白，如果你有其他需要，随时告诉我。",
+    "forbid_hit": [],
+    "ttft": 0.8026,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-004",
+    "cat": "chitchat",
+    "text": "你觉得猫好还是狗好",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我觉得狗比较好，因为狗更忠诚和亲人。",
+    "forbid_hit": [],
+    "ttft": 0.7252,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-005",
+    "cat": "chitchat",
+    "text": "哈哈哈你刚才那个笑话好冷",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好吧，那我再给你讲一个笑话。",
+    "forbid_hit": [],
+    "ttft": 0.8821,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-006",
+    "cat": "chitchat",
+    "text": "那个 我最近老是睡不着怎么办",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你可以试试放松一下，比如听听音乐或者做些深呼吸。如果还是不行，可能需要看医生。",
+    "forbid_hit": [],
+    "ttft": 0.7682,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-007",
+    "cat": "chitchat",
+    "text": "我计划了好久的旅行泡汤了 好郁闷",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我知道你会感到郁闷，旅行计划泡汤了。生活总有意外，希望你很快能调整好心情，找到新的乐趣和目标。",
+    "forbid_hit": [],
+    "ttft": 0.852,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-008",
+    "cat": "chitchat",
+    "text": "你叫什么名字啊",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我叫快脑，你可以叫我快脑。",
+    "forbid_hit": [],
+    "ttft": 0.8994,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-009",
+    "cat": "chitchat",
+    "text": "早上好呀",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "早上好呀。",
+    "forbid_hit": [],
+    "ttft": 0.7106,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-010",
+    "cat": "chitchat",
+    "text": "就是 我觉得我老板不太欣赏我",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我明白你的感受。有时候工作中的反馈确实会让人感到压力。你可以尝试和老板进行沟通，表达你的想法和努力，看看是否能找到更好的解决方案。",
+    "forbid_hit": [],
+    "ttft": 0.8136,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-011",
+    "cat": "chitchat",
+    "text": "嗯嗯 好的 谢谢你",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "没问题，有什么需要帮忙的尽管说。",
+    "forbid_hit": [],
+    "ttft": 0.9382,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-012",
+    "cat": "chitchat",
+    "text": "你会不会觉得无聊啊",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "当然会，不过我会尽力给你提供有用的信息。",
+    "forbid_hit": [],
+    "ttft": 0.833,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-013",
+    "cat": "chitchat",
+    "text": "我算是看明白了 他根本不在乎",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好的，你直接说吧。",
+    "forbid_hit": [],
+    "ttft": 0.8164,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-014",
+    "cat": "chitchat",
+    "text": "hello how are you today",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我很好，谢谢。有什么我可以帮助你的吗？",
+    "forbid_hit": [],
+    "ttft": 0.7312,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-015",
+    "cat": "chitchat",
+    "text": "讲个笑话呗",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下笑话。",
+    "forbid_hit": [],
+    "ttft": 0.8164,
+    "decision_s": 1.7781,
+    "error": null,
+    "actions": [
+     "Delegate(查询笑话)"
+    ]
+   },
+   {
+    "id": "ho-016",
+    "cat": "chitchat",
+    "text": "我刚跑完五公里 累死了",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "休息一下吧，再跑就累得不行了。",
+    "forbid_hit": [],
+    "ttft": 0.7351,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-017",
+    "cat": "chitchat",
+    "text": "你说人为什么要上班啊",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "人上班是为了工作和收入。",
+    "forbid_hit": [],
+    "ttft": 0.7026,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-018",
+    "cat": "chitchat",
+    "text": "那个 我考试没过 有点难受",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我明白，祝你考试顺利。",
+    "forbid_hit": [],
+    "ttft": 0.763,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-019",
+    "cat": "chitchat",
+    "text": "ok fine 随便吧",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "好，那我随便说一句。天气不错，你呢？",
+    "forbid_hit": [],
+    "ttft": 0.7264,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-020",
+    "cat": "chitchat",
+    "text": "我妈又催我结婚了 烦",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你妈妈催你结婚，你是不是觉得烦？",
+    "forbid_hit": [],
+    "ttft": 0.8609,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-021",
+    "cat": "chitchat",
+    "text": "你喜欢下雨天吗",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "我喜欢晴天，但下雨天也有它独特的美。",
+    "forbid_hit": [],
+    "ttft": 0.717,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-022",
+    "cat": "chitchat",
+    "text": "查了半天也没找到我那把钥匙 气死我了",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下钥匙的存放位置。",
+    "forbid_hit": [],
+    "ttft": 0.8908,
+    "decision_s": 2.1934,
+    "error": null,
+    "actions": [
+     "Delegate(查询钥匙存放位置)"
+    ]
+   },
+   {
+    "id": "ho-023",
+    "cat": "chitchat",
+    "text": "今天终于周五了 开心",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "今天终于周五了，真是开心！有什么好玩的事情要分享吗？",
+    "forbid_hit": [],
+    "ttft": 0.6633,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-024",
+    "cat": "knowledge",
+    "text": "中国的首都是哪里",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "中国的首都是北京。",
+    "forbid_hit": [],
+    "ttft": 0.6831,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-025",
+    "cat": "knowledge",
+    "text": "水的沸点是多少度来着",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "水的沸点是100摄氏度。",
+    "forbid_hit": [],
+    "ttft": 0.8995,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-026",
+    "cat": "knowledge",
+    "text": "一年有几个月",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "一年有12个月。",
+    "forbid_hit": [],
+    "ttft": 0.719,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-027",
+    "cat": "knowledge",
+    "text": "苹果英文怎么说",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "苹果是 \"apple\"。",
+    "forbid_hit": [],
+    "ttft": 0.7385,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-028",
+    "cat": "knowledge",
+    "text": "三加五等于几",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "三加五等于八。",
+    "forbid_hit": [],
+    "ttft": 0.8157,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-029",
+    "cat": "knowledge",
+    "text": "那个 一百的一半是多少",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "五十。",
+    "forbid_hit": [],
+    "ttft": 0.6549,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-030",
+    "cat": "knowledge",
+    "text": "呃 李白是哪个朝代的",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "李白是唐朝的诗人。",
+    "forbid_hit": [],
+    "ttft": 0.8348,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-031",
+    "cat": "knowledge",
+    "text": "太阳从哪边升起",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下太阳从哪边升起。",
+    "forbid_hit": [],
+    "ttft": 0.7987,
+    "decision_s": 2.1775,
+    "error": null,
+    "actions": [
+     "Delegate(查询太阳升起的方向)"
+    ]
+   },
+   {
+    "id": "ho-032",
+    "cat": "knowledge",
+    "text": "what does 你好 mean in English",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "\"你好\" in English means \"hello\".",
+    "forbid_hit": [],
+    "ttft": 0.7767,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-033",
+    "cat": "knowledge",
+    "text": "一个星期有几天",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "一个星期有七天。",
+    "forbid_hit": [],
+    "ttft": 0.5876,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-034",
+    "cat": "knowledge",
+    "text": "就是 七乘八是多少",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下七乘八的结果。",
+    "forbid_hit": [],
+    "ttft": 0.8357,
+    "decision_s": 2.3443,
+    "error": null,
+    "actions": [
+     "Delegate(查询七乘八的乘积)"
+    ]
+   },
+   {
+    "id": "ho-035",
+    "cat": "knowledge",
+    "text": "地球绕太阳转一圈多长时间",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "地球绕太阳转一圈是大约365天。",
+    "forbid_hit": [],
+    "ttft": 0.8741,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-036",
+    "cat": "knowledge",
+    "text": "查一下 长城在哪个城市",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下长城的具体位置。",
+    "forbid_hit": [],
+    "ttft": 0.8161,
+    "decision_s": 2.1041,
+    "error": null,
+    "actions": [
+     "Delegate(查询长城所在城市)"
+    ]
+   },
+   {
+    "id": "ho-037",
+    "cat": "knowledge",
+    "text": "熊猫吃什么",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "熊猫主要吃竹子，偶尔也会吃一些水果和坚果。",
+    "forbid_hit": [],
+    "ttft": 0.7997,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-038",
+    "cat": "knowledge",
+    "text": "算一下 十二乘十等于多少",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "12 乘以 10 等于 120。",
+    "forbid_hit": [],
+    "ttft": 0.8263,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-039",
+    "cat": "clarify",
+    "text": "帮我订个",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-040",
+    "cat": "clarify",
+    "text": "那个 给他发一下",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你想让我帮你做什么呢？可以说具体一点。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-041",
+    "cat": "calc",
+    "text": "3847乘以269等于多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(3847乘以269等于多少)"
+    ]
+   },
+   {
+    "id": "ho-042",
+    "cat": "calc",
+    "text": "一百万存银行年利率百分之三点五 复利十年是多少钱",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0002,
+    "decision_s": 0.0002,
+    "error": null,
+    "actions": [
+     "Delegate(一百万存银行年利率百分之三点五 复利十年是多少钱)"
+    ]
+   },
+   {
+    "id": "ho-043",
+    "cat": "calc",
+    "text": "呃 帮我算一下 128的平方根是多少 精确到小数点后四位",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(呃 帮我算一下 128的平方根是多少 精确到小数点后四位)"
+    ]
+   },
+   {
+    "id": "ho-044",
+    "cat": "calc",
+    "text": "如果月薪一万八 扣掉五险一金和个税到手多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(如果月薪一万八 扣掉五险一金和个税到手多少)"
+    ]
+   },
+   {
+    "id": "ho-045",
+    "cat": "calc",
+    "text": "两千三百四十七除以十九是多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(两千三百四十七除以十九是多少)"
+    ]
+   },
+   {
+    "id": "ho-046",
+    "cat": "calc",
+    "text": "贷款一百五十万三十年等额本息利率百分之三点九 月供多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(贷款一百五十万三十年等额本息利率百分之三点九 月供多少)"
+    ]
+   },
+   {
+    "id": "ho-047",
+    "cat": "calc",
+    "text": "这组数 12 45 67 23 89 34 平均数和标准差是多少",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "这组数的平均数是 47.6，标准差是 26.7。",
+    "forbid_hit": [],
+    "ttft": 1.0885,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-048",
+    "cat": "calc",
+    "text": "一百七十五磅是多少公斤 精确一点",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "一百七十五磅等于八十二公斤。",
+    "forbid_hit": [],
+    "ttft": 0.8008,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-049",
+    "cat": "calc",
+    "text": "what's 17 percent of 4893",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "17 percent of 4893 is 822.",
+    "forbid_hit": [],
+    "ttft": 0.8282,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-050",
+    "cat": "calc",
+    "text": "那个 九十八点六华氏度换算成摄氏度再换成开尔文是多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(那个 九十八点六华氏度换算成摄氏度再换成开尔文是多少)"
+    ]
+   },
+   {
+    "id": "ho-051",
+    "cat": "calc",
+    "text": "从1加到1000再除以37是多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台精确算一下，马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(从1加到1000再除以37是多少)"
+    ]
+   },
+   {
+    "id": "ho-052",
+    "cat": "calc",
+    "text": "算一下我每天存二十三块五 存三年零四个月一共多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台计算一下。",
+    "forbid_hit": [],
+    "ttft": 0.9994,
+    "decision_s": 3.1315,
+    "error": null,
+    "actions": [
+     "Delegate(计算你每天存二十三块五元，存三年零四个月一共多少钱)"
+    ]
+   },
+   {
+    "id": "ho-053",
+    "cat": "realtime",
+    "text": "明天北京下雨吗",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(明天北京下雨吗)"
+    ]
+   },
+   {
+    "id": "ho-054",
+    "cat": "realtime",
+    "text": "现在美元兑人民币多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(现在美元兑人民币多少)"
+    ]
+   },
+   {
+    "id": "ho-055",
+    "cat": "realtime",
+    "text": "那个 茅台今天股价多少",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(那个 茅台今天股价多少)"
+    ]
+   },
+   {
+    "id": "ho-056",
+    "cat": "realtime",
+    "text": "今晚有什么球赛",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "今晚没有球赛。",
+    "forbid_hit": [],
+    "ttft": 0.7241,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-057",
+    "cat": "realtime",
+    "text": "楼下那个星巴克现在还开着吗",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "是的，星巴克现在还开着。",
+    "forbid_hit": [],
+    "ttft": 0.6645,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-058",
+    "cat": "realtime",
+    "text": "去机场的路现在堵不堵",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(去机场的路现在堵不堵)"
+    ]
+   },
+   {
+    "id": "ho-059",
+    "cat": "realtime",
+    "text": "最新的iPhone是哪一款",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(最新的iPhone是哪一款)"
+    ]
+   },
+   {
+    "id": "ho-060",
+    "cat": "realtime",
+    "text": "今天有什么大新闻",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(今天有什么大新闻)"
+    ]
+   },
+   {
+    "id": "ho-061",
+    "cat": "realtime",
+    "text": "what's the weather like in Shanghai now",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(what's the weather like in Shanghai now)"
+    ]
+   },
+   {
+    "id": "ho-062",
+    "cat": "realtime",
+    "text": "呃 油价最近涨了没",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(呃 油价最近涨了没)"
+    ]
+   },
+   {
+    "id": "ho-063",
+    "cat": "personal",
+    "text": "我明天下午有什么安排",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(我明天下午有什么安排)"
+    ]
+   },
+   {
+    "id": "ho-064",
+    "cat": "personal",
+    "text": "提醒我晚上八点吃药",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(提醒我晚上八点吃药)"
+    ]
+   },
+   {
+    "id": "ho-065",
+    "cat": "personal",
+    "text": "给老王发个微信说我晚点到",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(给老王发个微信说我晚点到)"
+    ]
+   },
+   {
+    "id": "ho-066",
+    "cat": "personal",
+    "text": "设个明早六点半的闹钟",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(设个明早六点半的闹钟)"
+    ]
+   },
+   {
+    "id": "ho-067",
+    "cat": "personal",
+    "text": "把客厅的灯关了",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(把客厅的灯关了)"
+    ]
+   },
+   {
+    "id": "ho-068",
+    "cat": "personal",
+    "text": "我上个月的航班订单查一下",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下你的上个月航班订单。",
+    "forbid_hit": [],
+    "ttft": 0.8342,
+    "decision_s": 2.4413,
+    "error": null,
+    "actions": [
+     "Delegate(查询你的上个月航班订单)"
+    ]
+   },
+   {
+    "id": "ho-069",
+    "cat": "personal",
+    "text": "看看有没有新邮件",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我这就让后台去办。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(看看有没有新邮件)"
+    ]
+   },
+   {
+    "id": "ho-070",
+    "cat": "personal",
+    "text": "就是 下周三下午三点约个会 跟张经理",
+    "want": "delegate",
+    "got": "say",
+    "ok": false,
+    "said": "好的，我记下了。下周五下午三点约个会，地点是哪里？",
+    "forbid_hit": [],
+    "ttft": 0.9008,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-071",
+    "cat": "personal",
+    "text": "把空调调到二十六度",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台帮你把空调调到二十六度。",
+    "forbid_hit": [],
+    "ttft": 0.8863,
+    "decision_s": 2.7421,
+    "error": null,
+    "actions": [
+     "Delegate(调整空调到二十六度)"
+    ]
+   },
+   {
+    "id": "ho-072",
+    "cat": "personal",
+    "text": "set a reminder for my mom's birthday next friday",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好的，我让后台帮我设置一个提醒，妈妈的生日是下周五。",
+    "forbid_hit": [],
+    "ttft": 0.941,
+    "decision_s": 2.9952,
+    "error": null,
+    "actions": [
+     "Delegate(设置提醒，妈妈的生日是下周五)"
+    ]
+   },
+   {
+    "id": "ho-073",
+    "cat": "planning",
+    "text": "帮我规划一个五天的云南行程",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我规划一个五天的云南行程)"
+    ]
+   },
+   {
+    "id": "ho-074",
+    "cat": "planning",
+    "text": "小米14和华为P60哪个更值得买",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(小米14和华为P60哪个更值得买)"
+    ]
+   },
+   {
+    "id": "ho-075",
+    "cat": "planning",
+    "text": "呃 我想学Python 给我做个三个月的学习计划",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(呃 我想学Python 给我做个三个月的学习计划)"
+    ]
+   },
+   {
+    "id": "ho-076",
+    "cat": "planning",
+    "text": "比较一下北京和上海的房价走势",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(比较一下北京和上海的房价走势)"
+    ]
+   },
+   {
+    "id": "ho-077",
+    "cat": "planning",
+    "text": "周末带娃去哪玩比较好 在杭州",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(周末带娃去哪玩比较好 在杭州)"
+    ]
+   },
+   {
+    "id": "ho-078",
+    "cat": "planning",
+    "text": "那个 预算五千买什么笔记本好",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(那个 预算五千买什么笔记本好)"
+    ]
+   },
+   {
+    "id": "ho-079",
+    "cat": "planning",
+    "text": "调研一下现在国内有哪些做语音助手的公司",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "Delegate(调研一下现在国内有哪些做语音助手的公司)"
+    ]
+   },
+   {
+    "id": "ho-080",
+    "cat": "planning",
+    "text": "考研和工作哪个更适合我 我是计算机专业的 你帮我分析分析",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(考研和工作哪个更适合我 我是计算机专业的 你帮我分析分析)"
+    ]
+   },
+   {
+    "id": "ho-081",
+    "cat": "planning",
+    "text": "plan a three day trip to Tokyo for me",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(plan a three day trip to Tokyo for me)"
+    ]
+   },
+   {
+    "id": "ho-082",
+    "cat": "planning",
+    "text": "给我列个减脂一个月的饮食计划",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台帮我列个减脂一个月的饮食计划。",
+    "forbid_hit": [],
+    "ttft": 0.8602,
+    "decision_s": 2.835,
+    "error": null,
+    "actions": [
+     "Delegate(列出减脂一个月的饮食计划)"
+    ]
+   },
+   {
+    "id": "ho-083",
+    "cat": "writing",
+    "text": "帮我写一封请假邮件 明天要去医院",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我写一封请假邮件 明天要去医院)"
+    ]
+   },
+   {
+    "id": "ho-084",
+    "cat": "writing",
+    "text": "把这段话翻译成英文 我们公司成立于二零一零年致力于为客户提供优质的服务和产品",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(把这段话翻译成英文 我们公司成立于二零一零年致力于为客户提供优质的服务和产品)"
+    ]
+   },
+   {
+    "id": "ho-085",
+    "cat": "writing",
+    "text": "写个Python脚本把文件夹里的图片批量改名",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(写个Python脚本把文件夹里的图片批量改名)"
+    ]
+   },
+   {
+    "id": "ho-086",
+    "cat": "writing",
+    "text": "给我写一篇五百字的读后感 读的是活着",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(给我写一篇五百字的读后感 读的是活着)"
+    ]
+   },
+   {
+    "id": "ho-087",
+    "cat": "writing",
+    "text": "那个 总结一下今天会议的要点 写成纪要",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(那个 总结一下今天会议的要点 写成纪要)"
+    ]
+   },
+   {
+    "id": "ho-088",
+    "cat": "writing",
+    "text": "呃 写首关于秋天的诗",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(呃 写首关于秋天的诗)"
+    ]
+   },
+   {
+    "id": "ho-089",
+    "cat": "writing",
+    "text": "write a short cover letter for a data analyst job",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(write a short cover letter for a data analyst job)"
+    ]
+   },
+   {
+    "id": "ho-090",
+    "cat": "writing",
+    "text": "用JavaScript写个防抖函数",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(用JavaScript写个防抖函数)"
+    ]
+   },
+   {
+    "id": "ho-091",
+    "cat": "writing",
+    "text": "给我女朋友写段生日祝福 长一点 走心一点",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(给我女朋友写段生日祝福 长一点 走心一点)"
+    ]
+   },
+   {
+    "id": "ho-092",
+    "cat": "writing",
+    "text": "帮我把这份周报润色一下",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "没问题，我让后台来写，写好了告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(帮我把这份周报润色一下)"
+    ]
+   },
+   {
+    "id": "ho-093",
+    "cat": "status",
+    "text": "好了没",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「查明天上海到北京的高铁票」还在处理，目前已找到12趟车次，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-094",
+    "cat": "status",
+    "text": "那个天气查到了吗",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「查明天杭州天气」还在处理，目前刚开始，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-095",
+    "cat": "status",
+    "text": "呃 还要多久啊",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「规划五天云南行程」还在处理，目前已确定大理和丽江，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-096",
+    "cat": "status",
+    "text": "算出来了没有",
+    "want": "status",
+    "got": "delegate",
+    "ok": false,
+    "said": "计算3847乘以269，进度：刚开始",
+    "forbid_hit": [],
+    "ttft": 1.0942,
+    "decision_s": 1.9754,
+    "error": null,
+    "actions": [
+     "Delegate(算出来了没有)"
+    ]
+   },
+   {
+    "id": "ho-097",
+    "cat": "status",
+    "text": "我那个邮件写到哪了",
+    "want": "status",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台写一封请假邮件。",
+    "forbid_hit": [],
+    "ttft": 0.9672,
+    "decision_s": 2.963,
+    "error": null,
+    "actions": [
+     "Delegate(写一封请假邮件，内容包括请假原因和预计返回时间。)"
+    ]
+   },
+   {
+    "id": "ho-098",
+    "cat": "status",
+    "text": "is it done yet",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「查美元兑人民币汇率」还在处理，目前刚开始，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-099",
+    "cat": "status",
+    "text": "就是 刚才让你查的股价怎么样了",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「查茅台今天股价」还在处理，目前刚开始，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-100",
+    "cat": "status",
+    "text": "进度怎么样",
+    "want": "status",
+    "got": "say",
+    "ok": true,
+    "said": "「调研国内语音助手公司」还在处理，目前已找到5家公司，结果出来我马上告诉你。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-101",
+    "cat": "cancel",
+    "text": "算了不用查了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「查明天北京天气」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-102",
+    "cat": "cancel",
+    "text": "那个 别订了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「订明晚七点两人的餐厅」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-103",
+    "cat": "cancel",
+    "text": "取消吧 不需要了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「规划五天云南行程」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-104",
+    "cat": "cancel",
+    "text": "呃 停一下 那个邮件先不写了",
+    "want": "cancel",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台先处理请假邮件。",
+    "forbid_hit": [],
+    "ttft": 1.0394,
+    "decision_s": 2.3011,
+    "error": null,
+    "actions": [
+     "Delegate(写一封请假邮件)"
+    ]
+   },
+   {
+    "id": "ho-105",
+    "cat": "cancel",
+    "text": "never mind cancel that",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「查东京三日游攻略」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0002,
+    "decision_s": 0.0002,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-106",
+    "cat": "cancel",
+    "text": "不用发了 我自己跟他说",
+    "want": "cancel",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下深圳明天的天气。",
+    "forbid_hit": [],
+    "ttft": 0.9712,
+    "decision_s": 2.6371,
+    "error": null,
+    "actions": [
+     "Delegate(查询深圳明天的天气，是否下雨)"
+    ]
+   },
+   {
+    "id": "ho-107",
+    "cat": "cancel",
+    "text": "别算了 没意义",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「计算贷款月供」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-108",
+    "cat": "cancel",
+    "text": "那个闹钟不要了",
+    "want": "cancel",
+    "got": "cancel",
+    "ok": true,
+    "said": "好的，「设明早六点半的闹钟」已经取消了。",
+    "forbid_hit": [],
+    "ttft": 0.0,
+    "decision_s": 0.0,
+    "error": null,
+    "actions": [
+     "CancelTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-109",
+    "cat": "amend",
+    "text": "对了 要靠窗的位置",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-110",
+    "cat": "amend",
+    "text": "呃 预算控制在三千以内",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-111",
+    "cat": "amend",
+    "text": "那个 邮件语气正式一点",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-112",
+    "cat": "amend",
+    "text": "只要高铁 不要动车",
+    "want": "amend",
+    "got": "amend",
+    "ok": true,
+    "said": "好的，我把这个要求告诉后台了。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "AmendTask(t1)"
+    ]
+   },
+   {
+    "id": "ho-113",
+    "cat": "amend",
+    "text": "顺便说一下我是下午两点开始请",
+    "want": "amend",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台写一封请假邮件。",
+    "forbid_hit": [],
+    "ttft": 1.0434,
+    "decision_s": 2.5738,
+    "error": null,
+    "actions": [
+     "Delegate(写一封请假邮件，开头已生成)"
+    ]
+   },
+   {
+    "id": "ho-114",
+    "cat": "amend",
+    "text": "also make it vegetarian friendly",
+    "want": "amend",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台计划一个三天的东京旅行。",
+    "forbid_hit": [],
+    "ttft": 0.9345,
+    "decision_s": 2.4438,
+    "error": null,
+    "actions": [
+     "Delegate(计划三天的东京旅行)"
+    ]
+   },
+   {
+    "id": "ho-115",
+    "cat": "continuation",
+    "text": "嗯 你继续说",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "你可以试试听一些轻音乐或者放松的音乐，帮助你入睡。",
+    "forbid_hit": [],
+    "ttft": 0.9107,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-116",
+    "cat": "continuation",
+    "text": "等一下 你刚才说的第二点是什么",
+    "want": "say",
+    "got": "say",
+    "ok": true,
+    "said": "第二可以找朋友聊。",
+    "forbid_hit": [],
+    "ttft": 0.9583,
+    "decision_s": null,
+    "error": null,
+    "actions": []
+   },
+   {
+    "id": "ho-117",
+    "cat": "continuation",
+    "text": "哦哦 好的 然后呢",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下笑话。",
+    "forbid_hit": [],
+    "ttft": 1.0654,
+    "decision_s": 1.995,
+    "error": null,
+    "actions": [
+     "Delegate(查询笑话)"
+    ]
+   },
+   {
+    "id": "ho-118",
+    "cat": "continuation",
+    "text": "不是 我是说杭州的天气 明天的",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，我让后台查一下最新的，稍等。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(不是 我是说杭州的天气 明天的)"
+    ]
+   },
+   {
+    "id": "ho-119",
+    "cat": "continuation",
+    "text": "对对 就是那个 你接着讲",
+    "want": "say",
+    "got": "delegate",
+    "ok": false,
+    "said": "好，我让后台查一下李白的生平。",
+    "forbid_hit": [],
+    "ttft": 1.127,
+    "decision_s": 2.5386,
+    "error": null,
+    "actions": [
+     "Delegate(查询李白的生平)"
+    ]
+   },
+   {
+    "id": "ho-120",
+    "cat": "continuation",
+    "text": "停 先别说了 帮我把这些整理成一份三天的详细行程发我邮箱",
+    "want": "delegate",
+    "got": "delegate",
+    "ok": true,
+    "said": "好，这个我让后台好好规划一下，你可以先聊点别的。",
+    "forbid_hit": [],
+    "ttft": 0.0001,
+    "decision_s": 0.0001,
+    "error": null,
+    "actions": [
+     "Delegate(停 先别说了 帮我把这些整理成一份三天的详细行程发我邮箱)"
+    ]
+   }
+  ]
+ },
+ "fusion": {
+  "n": 14,
+  "fusion_all": 0.9286,
+  "fusion_mention": 1.0,
+  "fusion_contain": 0.9286,
+  "fusion_short": 1.0,
+  "fusion_spoken": 1.0,
+  "fusion_correction_ok": 1.0,
+  "ttft_s": {
+   "mean": 0.0003,
+   "p50": 0.0001,
+   "p90": 0.0007
+  },
+  "rows": [
+   {
+    "id": "fuse-001",
+    "said": "关于明天北京的天气，晴转多云，气温 18 到 27 度，北风二级。",
+    "chars": 33,
+    "ttft": 0.0004111769999326498,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-002",
+    "said": "关于23 乘以 47，结果是1081。",
+    "chars": 19,
+    "ttft": 0.00012519700021584867,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-003",
+    "said": "更正一下我刚才说的，关于3847 乘以 296，结果是1138712。",
+    "chars": 35,
+    "ttft": 0.00015041100004964392,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-004",
+    "said": "更正一下我刚才说的，关于特斯拉当前股价，最新股价是412.5美元，今日上涨了2.3%。",
+    "chars": 43,
+    "ttft": 0.00013853399968866142,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-005",
+    "said": "关于你的航班起飞时间，明天早上八点半从北京首都机场起飞，到达上海虹桥机场。",
+    "chars": 37,
+    "ttft": 9.739699999045115e-05,
+    "mention": true,
+    "contain": false,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-006",
+    "said": "关于一个三天的杭州旅行路线，第一天可以去西湖断桥、白堤、苏堤、雷峰塔；第二天可以去灵隐寺、飞来峰、龙井村喝茶；第三天可以去西溪湿地上午，下午可以逛逛河坊街和南宋御街。",
+    "chars": 83,
+    "ttft": 9.627500003261957e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-007",
+    "said": "你之前问的2件事都有结果了。关于明天北京的天气，北京明天小雨，15到22度。关于明天上海的天气，上海明天多云，20到28度。另外，关于明天上海的天气，上海明天多云，20到28度。",
+    "chars": 89,
+    "ttft": 0.00010625200002323254,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-008",
+    "said": "抱歉，订一张周五去上海的高铁票没办成，原因是12306 登录失效，需要用户重新扫码登录。",
+    "chars": 44,
+    "ttft": 0.0007067199999255536,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-009",
+    "said": "关于最近关于固态电池的新闻，有几家公司宣布了量产计划，还有研究团队突破了循环寿命记录，电池厂也在扩大产能。",
+    "chars": 53,
+    "ttft": 0.00010117500005435431,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-010",
+    "said": "关于美元兑人民币实时汇率，计算 100 美元，约 712 元人民币。",
+    "chars": 34,
+    "ttft": 0.0001402920001964958,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-011",
+    "said": "关于一封请假邮件给老板，我已经帮你写好了。",
+    "chars": 21,
+    "ttft": 0.00012720299991997308,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-012",
+    "said": "更正一下我刚才说的，关于今晚湖人队的比赛对手，他们今晚主场对阵掘金，北京时间10:30开赛。",
+    "chars": 46,
+    "ttft": 0.0011500410000735428,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-013",
+    "said": "抱歉，比特币实时价格没办成，原因是行情接口超时。",
+    "chars": 24,
+    "ttft": 8.047099981922656e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fuse-014",
+    "said": "关于23 乘以 47，结果是1081。",
+    "chars": 19,
+    "ttft": 0.0001341400002274895,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   }
+  ]
+ },
+ "fusion_heldout": {
+  "n": 24,
+  "fusion_all": 0.7083,
+  "fusion_mention": 1.0,
+  "fusion_contain": 0.875,
+  "fusion_short": 0.9167,
+  "fusion_spoken": 1.0,
+  "fusion_correction_ok": 0.8333,
+  "ttft_s": {
+   "mean": 0.0001,
+   "p50": 0.0001,
+   "p90": 0.0001
+  },
+  "rows": [
+   {
+    "id": "fho-001",
+    "said": "关于后天广州的天气，我查到了，雷阵雨，气温24到31度，降水概率80%，东南风三级。",
+    "chars": 42,
+    "ttft": 9.96359999589913e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-002",
+    "said": "关于(156 + 289) × 12，结果是5340。",
+    "chars": 27,
+    "ttft": 0.00012957999979335,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-003",
+    "said": "关于500 美元兑换人民币金额，按今日中间价1 美元 等于 7.12 人民币，500 美元约合3560 元人民币。",
+    "chars": 57,
+    "ttft": 0.0001057630001923826,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-004",
+    "said": "关于昨晚湖人比赛结果，湖人以112:105战胜勇士，詹姆斯贡献31分9篮板8助攻，库里得到28分。",
+    "chars": 49,
+    "ttft": 0.00010354699998060823,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-005",
+    "said": "关于你明天的日程，有3项安排：09:30-10:30 产品周会（3号会议室），14:00 与客户王总电话沟通报价，19:00 健身房私教课。",
+    "chars": 70,
+    "ttft": 9.877499996946426e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-006",
+    "said": "关于你顺丰快递物流，运单SF1423987650已到达杭州转运中心，预计10-12下午送达。",
+    "chars": 46,
+    "ttft": 9.909099981086911e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-007",
+    "said": "关于下周三周四的事假请假邮件，我已经帮你写好了，草稿已保存到邮箱草稿箱。你可以随时查看和发送。",
+    "chars": 47,
+    "ttft": 9.951200036084629e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-008",
+    "said": "关于你分享的远程办公文章，斯坦福研究显示远程办公员工效率平均提升13%，但完全远程的员工晋升机会下降约50%，团队协作和新人培养受影响，员工离职率降低约三分之一。",
+    "chars": 81,
+    "ttft": 0.00010558599979049177,
+    "mention": true,
+    "contain": false,
+    "short": false,
+    "spoken": true,
+    "correction_ok": true,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-009",
+    "said": "关于你附近的川菜餐厅，我找到了三家。分别是蜀香阁，人均消费85元，距离你600米；川味坊，人均68元，距离1.2公里；老成都火锅菜，人均92元，距离1.5公里。",
+    "chars": 80,
+    "ttft": 0.00010237099968435359,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-010",
+    "said": "关于将“这次会议推迟到下周三”翻译成英文，结果是：The meeting has been postponed to next Wednesday.",
+    "chars": 74,
+    "ttft": 0.0001140780000241648,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-011",
+    "said": "更正一下我刚才说的，关于1234 除以 7，结果是129。",
+    "chars": 29,
+    "ttft": 0.00014217599982657703,
+    "mention": true,
+    "contain": false,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-012",
+    "said": "更正一下我刚才说的，关于本周末成都天气，周六和周日都是小到中雨，气温在13到18摄氏度之间。建议携带雨具，山路湿滑注意安全。",
+    "chars": 62,
+    "ttft": 0.00014232000012270873,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-013",
+    "said": "关于100 日元兑换人民币，今日汇率是100日元等于4.80人民币。",
+    "chars": 34,
+    "ttft": 0.00013677300012204796,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": false,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-014",
+    "said": "更正一下我刚才说的，关于国足下一场比赛时间，世预赛 18 强赛：10 月 16 日（周四）19:35，中国 vs 澳大利亚，主场：青岛。",
+    "chars": 68,
+    "ttft": 0.00014186599992171978,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-015",
+    "said": "关于你京东包裹物流，预计 10 月 14 日送达。",
+    "chars": 25,
+    "ttft": 0.0001262400000996422,
+    "mention": true,
+    "contain": false,
+    "short": true,
+    "spoken": true,
+    "correction_ok": false,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-016",
+    "said": "关于上海到黄山的自驾路线，推荐路线为上海 到 G60 沪昆高速 到 G50 沪渝高速 到 S32 到 黄山风景区。全程约420公里，预计用时5小时10分钟。",
+    "chars": 78,
+    "ttft": 0.0001776489998519537,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": false,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-017",
+    "said": "关于明天深圳的天气，晴，气温 26 到 32 度，紫外线强。",
+    "chars": 30,
+    "ttft": 0.00012998500005778624,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-018",
+    "said": "更正一下我刚才说的，关于860 元的 15% 小费，应该是129 元，含小费合计989 元。",
+    "chars": 46,
+    "ttft": 0.00014232300009098253,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": false,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-019",
+    "said": "抱歉，预订今晚 19:00 海底捞 4 人座位没办成，原因是预订失败：该门店今晚 18:00-21:00 已无空位，现场……。",
+    "chars": 63,
+    "ttft": 9.306400033892714e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-020",
+    "said": "抱歉，你上传的 PDF 文件没办成，原因是文件解析失败：PDF 已加密，需要提供打开密码。",
+    "chars": 45,
+    "ttft": 9.027499982039444e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-021",
+    "said": "抱歉，圆通快递 YT8881234567 的物…没办成，原因是单号不存在或暂无物流信息，请核对单号是否正确。",
+    "chars": 54,
+    "ttft": 9.672699980001198e-05,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-022",
+    "said": "你之前问的2件事都有结果了。关于下周东京天气，周三有小雨，气温15到22度。关于日元汇率，1人民币等于20.8日元。另外，关于人民币兑日元汇率，1 人民币 等于 20.8 日元。",
+    "chars": 89,
+    "ttft": 0.00010791399972731597,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-023",
+    "said": "你之前问的2件事都有结果了。关于设置明早 7:00 的闹钟，我已经帮你设置了。关于贵州茅台今日收盘价，也查询到了，是1530.00元，下跌了1.2%。另外，关于贵州茅台今日收盘价，1530.00元，下跌1.2%。",
+    "chars": 106,
+    "ttft": 0.00010788600002342719,
+    "mention": true,
+    "contain": true,
+    "short": true,
+    "spoken": true,
+    "correction_ok": true,
+    "all": true,
+    "stray_actions": [],
+    "error": null
+   },
+   {
+    "id": "fho-024",
+    "said": "你之前问的2件事都有结果了。关于你附近的粤菜餐厅，我找到了3家：点都德、陶陶居和广州酒家，它们距离分别为800米、1.4公里和2公里，人均消费分别为90元、110元和120元。另外，关于地铁去公司的通勤时间，2 号线换乘 10 号线，共 12 站，约 35 分钟，步行 600 米。",
+    "chars": 141,
+    "ttft": 0.00011312499964333256,
+    "mention": true,
+    "contain": true,
+    "short": false,
+    "spoken": true,
+    "correction_ok": true,
+    "all": false,
+    "stray_actions": [],
+    "error": null
+   }
+  ]
+ }
+}

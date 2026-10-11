@@ -193,12 +193,13 @@ DEFAULT_DATA = {
     "heldout": "bench_data/fast/delegation_heldout.jsonl",
     "fusion": "bench_data/fast/fusion.jsonl",
     "fusion_heldout": "bench_data/fast/fusion_heldout.jsonl",
+    "fusion_test": "bench_data/fast/fusion_test.jsonl",
 }
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("which", choices=["delegation", "heldout", "fusion", "fusion_heldout", "all"])
+    ap.add_argument("which", choices=["delegation", "heldout", "fusion", "fusion_heldout", "fusion_test", "fusions", "all"])
     ap.add_argument("--data")
     ap.add_argument("-c", "--config", default="configs/default.toml")
     ap.add_argument("--set", action="append", default=[])
@@ -206,11 +207,13 @@ def main() -> None:
     ap.add_argument("--limit", type=int)
     ap.add_argument("--rows", action="store_true", help="print failing rows")
     ap.add_argument("--warm", action="store_true", help="prime the plugin's prompt cache with the previous turns")
+    ap.add_argument("--merge", action="store_true", help="update the sections in an existing --out file instead of overwriting it")
     a = ap.parse_args()
     global WARM
     WARM = a.warm
     cfg = load_config(a.config, a.set)
-    which = ["delegation", "heldout", "fusion", "fusion_heldout"] if a.which == "all" else [a.which]
+    fusions = [w for w in ("fusion", "fusion_heldout", "fusion_test") if os.path.exists(DEFAULT_DATA[w])]
+    which = {"all": ["delegation", "heldout", *fusions], "fusions": fusions}.get(a.which, [a.which])
 
     async def go():
         fast = await _make("fast", cfg)
@@ -235,6 +238,10 @@ def main() -> None:
                     print("  ", json.dumps(row, ensure_ascii=False))
     if a.out:
         os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
+        if a.merge and os.path.exists(a.out):
+            old = json.load(open(a.out, encoding="utf-8"))
+            old.update({w: res[w] for w in which})
+            res = old
         with open(a.out, "w", encoding="utf-8") as f:
             json.dump(res, f, ensure_ascii=False, indent=1)
 

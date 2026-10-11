@@ -103,24 +103,22 @@ def topic_of(query: str) -> str:
     return short_query(q or query, 20)
 
 
-def fusion_lead(ctx: BrainContext, idx: int = 0, total: int = 1) -> str:
+def fusion_lead(ctx: BrainContext, idx: int = 0, total: int = 1, corr: bool = False) -> str:
     """Template opening for one delivered task (ctx.deliver[0]); the model continues from it."""
     t = ctx.deliver[0]
-    corr = "更正一下我刚才说的，" if _needs_correction(ctx, t) else ""
+    c = "更正一下我刚才说的，" if corr else ""
     topic = topic_of(t.query)
     if total > 1:
         head = f"你之前问的{total}件事都有结果了。" if idx == 0 else "另外，"
-        return f"{head}{corr}关于{topic}，"
-    return f"{corr}关于{topic}，"
+        return f"{head}{c}关于{topic}，"
+    return f"{c}关于{topic}，"
 
 
 def failure_text(t) -> str:
     return f"抱歉，{topic_of(t.query)}没办成，原因是{spoken_result(t.result or '不明', 30).rstrip('。')}。"
 
 
-def _needs_correction(ctx: BrainContext, t) -> bool:
-    claim = earlier_claim(ctx.history, t)
-    return bool(claim) and t.status == TaskStatus.DONE and conflicts(claim, t.result or "")
+JUDGE_INSTRUCTION = "先判断一下：你之前说过“{claim}”，后台查到的结果是“{result}”。你之前的说法和结果在关键信息上矛盾吗？只回答“是”或“否”。"
 
 
 def build_messages(ctx: BrainContext, system_prompt: str, fusion_limit: int = 50, max_turns: int = 12, lead: str = "") -> list[dict]:
@@ -205,6 +203,31 @@ class LlamaCppBackend:
                 fut.add_done_callback(lambda f: f.exception())
 
 
+    async def tag_probs(self, msgs: list[dict], prefill: str, tags: list[str]) -> dict[str, float]:
+        """P(first token of each tag | prompt + prefill), reusing the KV cache (≈ one forward step)."""
+
+        def work():
+            import numpy as np  # comes with llama-cpp-python
+
+            llm = self.llm
+            with self.lock:
+                toks = llm.tokenize((chatml(msgs) + prefill).encode("utf-8"), add_bos=False, special=True)
+                common = 0
+                for a, b in zip(llm._input_ids, toks):
+                    if a != b:
+                        break
+                    common += 1
+                common = min(common, len(toks) - 1)  # always decode at least the last token
+                llm.n_tokens = common
+                llm.eval(toks[common:])
+                logits = np.ctypeslib.as_array(llm._ctx.get_logits(), shape=(llm.n_vocab(),)).astype(np.float64)
+            p = np.exp(logits - logits.max())
+            p /= p.sum()
+            return {t: float(p[llm.tokenize(t.encode("utf-8"), add_bos=False)[0]]) for t in tags}
+
+        return await asyncio.to_thread(work)
+
+
 class OpenAIBackend:
     """Any OpenAI-compatible chat server (llama.cpp server, vLLM, Ollama, cloud). No prefill."""
 
@@ -246,6 +269,8 @@ class LlamaCppFastBrain(FastBrain):
         rewrite_query: bool = True,
         warmup: bool = True,
         llm_decides: bool = True,  # hybrid: may the model still delegate / cancel when the router says "chat"?
+        gate: float | None = None,
+        correction: str = "llm",  # how to detect a contradicted earlier guess: "llm" (judge) | "rule"  # llama.cpp only: act on a non-[说] tag only if its first-token prob >= gate
         **backend_kw,
     ) -> None:
         if mode not in ("llm", "hybrid"):
@@ -261,6 +286,8 @@ class LlamaCppFastBrain(FastBrain):
         self.rewrite_query = rewrite_query
         self.warmup = warmup
         self.llm_decides = llm_decides
+        self.gate = gate
+        self.correction = correction
         if backend == "llamacpp":
             self.backend = LlamaCppBackend(model_path, **backend_kw)
         elif backend == "openai":
@@ -310,7 +337,7 @@ class LlamaCppFastBrain(FastBrain):
             return
         if self.mode == "hybrid":
             r = route(ctx)
-            if r.confident and r.kind != "chat":
+            if r.kind != "chat" and (r.confident or not self.llm_decides):
                 actions, speech = structured_actions(r, ctx)
                 for a in actions:
                     yield a
@@ -320,8 +347,22 @@ class LlamaCppFastBrain(FastBrain):
                 async for a in self._llm_turn(ctx, force="说"):
                     yield a
                 return
-        async for a in self._llm_turn(ctx):
+        force = await self._gated_tag(ctx) if self.gate is not None and isinstance(self.backend, LlamaCppBackend) else ""
+        async for a in self._llm_turn(ctx, force=force):
             yield a
+
+    async def _gated_tag(self, ctx: BrainContext) -> str:
+        """Pick the protocol tag from first-token probabilities; non-say tags must clear `gate`."""
+        running = running_tasks(ctx)
+        tags = ["说", "委派", "取消", "补充"] if running else ["说", "委派"]
+        probs = await self.backend.tag_probs(build_messages(ctx, self.system_prompt), self._prefill("["), tags)
+        self.stats.append({"text": ctx.user_text, "probs": probs})
+        best = max((t for t in tags if t != "说"), key=lambda t: probs[t])
+        if probs[best] < self.gate:
+            return "说"
+        if best in ("取消", "补充"):
+            return f"{best} {pick_task(ctx.user_text, running).id}"
+        return best
 
     async def _fuse(self, ctx: BrainContext) -> AsyncIterator[FastAction]:
         if self.fusion == "template":
@@ -334,7 +375,7 @@ class LlamaCppFastBrain(FastBrain):
                 yield Say(failure_text(t))
                 continue
             sub = BrainContext(trigger="task_result", history=ctx.history, tasks=ctx.tasks, deliver=[t], turn_id=ctx.turn_id)
-            lead = fusion_lead(sub, idx, total)
+            lead = fusion_lead(sub, idx, total, await self._needs_correction(sub, t))
             yield Say(lead)  # spoken at once; the model continues from it (prefill) while it plays
             msgs = build_messages(sub, self.system_prompt, self.fusion_limit, lead=lead)
             prefill = self._prefill("[说] " + lead) if isinstance(self.backend, LlamaCppBackend) else ""
@@ -348,6 +389,20 @@ class LlamaCppFastBrain(FastBrain):
                 await gen.aclose()
             if len(norm(said)) < 2:  # model produced nothing usable: fall back to the result itself
                 yield Say(spoken_result(t.result or "", self.fusion_limit))
+
+    async def _needs_correction(self, sub: BrainContext, t) -> bool:
+        """Did we earlier make a hedged guess that the result contradicts? Numbers by rule, else ask the model."""
+        claim = earlier_claim(sub.history, t)
+        if not claim:
+            return False
+        c = conflicts(claim, t.result or "", t.query)
+        if c is not None or self.correction != "llm" or not isinstance(self.backend, LlamaCppBackend):
+            return bool(c)
+        msgs = build_messages(sub, self.system_prompt, self.fusion_limit, lead="…")[:-1]  # same cached prefix
+        msgs.append({"role": "system", "content": JUDGE_INSTRUCTION.format(claim=claim, result=spoken_result(t.result or "", 80))})
+        p = await self.backend.tag_probs(msgs, self._prefill(""), ["是", "否"])
+        self.stats.append({"judge": claim, "probs": p})
+        return p["是"] > p["否"]
 
     async def _llm_turn(self, ctx: BrainContext, force: str = "") -> AsyncIterator[FastAction]:
         msgs = build_messages(ctx, self.system_prompt)
@@ -370,7 +425,7 @@ class LlamaCppFastBrain(FastBrain):
             head = ("说", None, buf.lstrip("[ "))  # short reply that never formed a tag
         tag, tid, rest = head
         if force:
-            tag = force
+            tag = force.split()[0]
         running = running_tasks(ctx)
 
         if tag in ("取消", "补充") and not running:
