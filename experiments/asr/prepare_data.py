@@ -9,6 +9,7 @@
   ascend    CAiRE/ASCEND test 中 language=mixed 的句子（CC BY-SA 4.0）           中英混说、口语
   wenet     WenetSpeech test_net（TwinkStart/WenetSpeech 转存；WenetSpeech 仅限非商业研究用途）  网络视频、口语
   noisy     从 aishell 子集派生：白噪声 / 多人 babble 噪声，SNR 10 dB 与 0 dB
+  short     ASCEND test 中 < 1.5 s 的短句：附和词（嗯/对/好的/yeah）与短实词（然后/没有/不是），带 backchannel 标记
 
 输出：bench_data/asr/<set>.jsonl（每行 {"wav", "text", "id", "dur"}），
       wav 写到 bench_data/asr/wav/<set>/（已被 bench_data/asr/.gitignore 忽略）。
@@ -156,6 +157,31 @@ def prep_ascend(n: int) -> None:
     dump("ascend", rows)
 
 
+BACKCHANNEL_WORDS = {"嗯", "嗯嗯", "嗯嗯嗯", "对", "对啊", "对对", "对对对", "嗯对", "是", "是的", "好", "好的", "哦", "啊", "没错", "嗯没错", "行", "yeah", "ok", "right", "oh", "cool"}
+
+
+def prep_short(n: int) -> None:
+    """Short utterances (< 1.5 s) from ASCEND test: backchannels (嗯/对/好的/yeah...) and short content words
+    (然后/没有/不是...). Full duplex needs both: a backchannel must be recognized *as* a backchannel
+    (or the agent stops talking), and a short real answer must not vanish."""
+    caps: dict[str, int] = {}
+
+    def keep(r):
+        t = r["transcription"].strip()
+        if r["duration"] >= 1.5 or not t or any(f in t for f in ("呃", "um", "uh")):
+            return False
+        if len(t.replace(" ", "")) > 6:
+            return False
+        caps[t] = caps.get(t, 0) + 1
+        return caps[t] <= (12 if t in BACKCHANNEL_WORDS else 3)
+
+    # n is large on purpose: keep every qualifying clip (the caps above already balance the classes)
+    rows = build("short", iter_parquet(fetch("ascend"), ["audio", "transcription", "language", "duration"]), n, "transcription", keep)
+    for r in rows:
+        r["backchannel"] = r["text"] in BACKCHANNEL_WORDS
+    dump("short", rows)
+
+
 def prep_wenet(n: int) -> None:
     def keep(r):
         return 1.5 <= r["end_time"] - r["begin_time"] <= 10.0 and len(r["text"]) >= 5
@@ -221,7 +247,19 @@ def tts_engine():
     return sherpa_onnx.OfflineTts(cfg)
 
 
-def prep_scenarios(speaker: int = 2, speed: float = 1.0) -> None:
+def synth(tts, text: str, speaker: int, speed: float):
+    import numpy as np
+
+    # one- or two-character backchannels come out clipped (~0.1 s) at normal speed; a real "嗯" lasts ~0.3-0.5 s
+    audio = tts.generate(text, sid=speaker, speed=speed * (0.5 if len(text) <= 2 else 1.0))
+    x = np.asarray(audio.samples, "float32")
+    if audio.sample_rate != SR:
+        m = int(len(x) * SR / audio.sample_rate)
+        x = np.interp(np.linspace(0, len(x) - 1, m), np.arange(len(x)), x).astype("float32")
+    return trim(x, lead=0.05, tail=0.1)
+
+
+def prep_scenarios(speaker: int = 0, speed: float = 1.0) -> None:
     """Synthesize every turn of scenarios/*.toml and write scenarios/asr/<name>.toml with `wav = ...`."""
     import tomllib
 
@@ -235,23 +273,25 @@ def prep_scenarios(speaker: int = 2, speed: float = 1.0) -> None:
             continue
         with open(os.path.join(sdir, fn), "rb") as f:
             sc = tomllib.load(f)
+        shift = 0.0
         lines = [f"# {sc.get('name', fn)}：与 scenarios/{fn} 相同，但每句话带 TTS 合成的 wav（由 experiments/asr/prepare_data.py --scenarios 生成）",
-                 f'name = "asr_{sc.get("name", fn[:-5])}"', f"duration = {sc['duration']}", ""]
+                 f'name = "asr_{sc.get("name", fn[:-5])}"', "DURATION", ""]
         for k, t in enumerate(sc["turns"]):
-            audio = tts.generate(t["text"], sid=speaker, speed=speed)
-            x = np.asarray(audio.samples, "float32")
-            if audio.sample_rate != SR:
-                m = int(len(x) * SR / audio.sample_rate)
-                x = np.interp(np.linspace(0, len(x) - 1, m), np.arange(len(x)), x).astype("float32")
-            x = trim(x, lead=0.0, tail=0.0)
+            x = synth(tts, t["text"], speaker, speed)
+            # TTS speaks slower than the 5 chars/s the mock scenario assumes: push later turns back by the
+            # extra length so every gap (and so every overlap with the agent's reply) stays as designed
+            nominal = t.get("duration") or max(0.2, len(t["text"]) / 5.0)
+            at = round(t["at"] + shift, 2)
+            shift += max(0.0, len(x) / SR - nominal)
             x *= 0.5 / max(1e-6, np.abs(x).max())
             p = os.path.join(odir, "wav", f"{fn[:-5]}_{k}.wav")
             write_wav(p, x)
-            lines += ["[[turns]]", f"at = {t['at']}", f"text = {json.dumps(t['text'], ensure_ascii=False)}", f'wav = "{rel(p)}"']
+            lines += ["[[turns]]", f"at = {at}", f"text = {json.dumps(t['text'], ensure_ascii=False)}", f'wav = "{rel(p)}"']
             if "kind" in t:
                 lines.append(f'kind = "{t["kind"]}"')
             lines.append("")
             print(f"{fn}: {t['text']} -> {rel(p)} ({len(x) / SR:.2f}s)")
+        lines[lines.index("DURATION")] = f"duration = {round(sc['duration'] + shift, 2)}"
         lines.append("[expect]")
         for k, v in sc.get("expect", {}).items():
             lines.append(f"{k} = {json.dumps(v, ensure_ascii=False)}")
@@ -261,7 +301,7 @@ def prep_scenarios(speaker: int = 2, speed: float = 1.0) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--sets", nargs="*", default=["aishell", "ascend", "wenet", "noisy"])
+    ap.add_argument("--sets", nargs="*", default=["aishell", "ascend", "wenet", "noisy", "short"])
     ap.add_argument("--n", type=int, default=200, help="utterances per set (noisy: n/4)")
     ap.add_argument("--scenarios", action="store_true", help="only synthesize scenario audio")
     a = ap.parse_args()
@@ -270,7 +310,7 @@ def main() -> None:
         return
     for s in a.sets:
         {"aishell": lambda: prep_aishell(a.n), "ascend": lambda: prep_ascend(a.n // 2), "wenet": lambda: prep_wenet(a.n // 2),
-         "noisy": lambda: prep_noisy(a.n // 4)}[s]()
+         "noisy": lambda: prep_noisy(a.n // 4), "short": lambda: prep_short(10_000)}[s]()
 
 
 if __name__ == "__main__":

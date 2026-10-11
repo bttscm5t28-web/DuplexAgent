@@ -22,7 +22,8 @@ impl = "sim"
 [asr]
 impl = "sherpa_online"
 model = "paraformer-bilingual"
-endpoint_ms = 400
+endpoint = "vad"
+endpoint_ms = 300
 num_threads = 2
 itn = true  # 二十三 -> 23；CER 评测时 experiments/asr/matrix.py 会关掉
 

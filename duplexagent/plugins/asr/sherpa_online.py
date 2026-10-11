@@ -3,14 +3,17 @@
     [asr]
     impl = "sherpa_online"
     model = "zipformer-zh-2025"      # a preset below, or set `repo` + `type` + file names yourself
-    endpoint_ms = 400                # trailing silence (after decoded speech) that ends an utterance
+    endpoint = "vad"                 # "vad" (default) or "model", see below
+    endpoint_ms = 300                # trailing silence that ends an utterance
     num_threads = 2
 
 Models download from Hugging Face into models/asr/ on first use. Needs `pip install sherpa-onnx numpy huggingface_hub`.
 Partials come out every decode chunk. Finals come from one of two endpointers:
+  endpoint = "vad"    Silero VAD closes the utterance, then the stream is flushed with tail padding (default).
   endpoint = "model"  sherpa's own rule (trailing blank frames after decoded speech); transducer/CTC only.
-  endpoint = "vad"    Silero VAD closes the utterance, then the stream is flushed with tail padding.
-                      Required for streaming Paraformer, which has no blank symbol (its "model" endpoint fires mid-word).
+                      Streaming transducers emit tokens late, so blank runs inside words trip it: in our
+                      tests it split utterances ("你|好") and its final came ~0.5 s later than with the VAD.
+                      Streaming Paraformer has no blank symbol at all, its "model" endpoint fires mid-word.
 """
 
 from __future__ import annotations
@@ -42,7 +45,6 @@ PRESETS: dict[str, dict] = {
     # FunASR paraformer-zh-streaming（中英），导出为 onnx
     "paraformer-bilingual": dict(
         repo="csukuangfj/sherpa-onnx-streaming-paraformer-bilingual-zh-en", type="paraformer", encoder="encoder.int8.onnx", decoder="decoder.int8.onnx",
-        endpoint="vad",
     ),
 }
 
@@ -52,8 +54,8 @@ class SherpaOnlineASR(ASR):
     def __init__(
         self,
         model: str = "zipformer-zh-2025",
-        endpoint_ms: int = 400,
-        endpoint: str | None = None,  # "model" | "vad"; default per preset ("model" unless the preset says otherwise)
+        endpoint_ms: int = 300,
+        endpoint: str = "vad",  # "vad" | "model"
         num_threads: int = 2,
         batch_ms: int = 60,  # feed the recognizer this much audio per worker call
         itn: bool = False,  # 二十三 -> 23 (set true for the engine; false for CER against Chinese-numeral references)
@@ -64,8 +66,7 @@ class SherpaOnlineASR(ASR):
         if model not in PRESETS and "repo" not in files:
             raise ValueError(f"unknown sherpa_online model {model!r}; presets: {sorted(PRESETS)}")
         self.spec = {**PRESETS.get(model, {}), **files}
-        self.endpoint = endpoint or self.spec.pop("endpoint", "model")
-        self.spec.pop("endpoint", None)
+        self.endpoint = endpoint
         if self.endpoint not in ("model", "vad"):
             raise ValueError("endpoint must be 'model' or 'vad'")
         self.model = model

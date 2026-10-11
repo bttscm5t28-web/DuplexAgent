@@ -12,6 +12,8 @@
   finals_per_utt              一句话被切成几个 final（>1 说明句中停顿被当成断句）
   cpu_cores                   评测期间进程平均占用的核数（CPU 时间 / 墙钟）
   peak_rss_mb                 进程峰值内存
+  bc_kept / short_lost        仅 short 数据集：附和词被识别成附和词的比例（引擎才不会误打断）；
+                              短实词被识别为空或附和词的比例（用户的短回答被吞掉）
 """
 
 from __future__ import annotations
@@ -64,6 +66,10 @@ async def run(cfg: dict, data: list[dict], realtime: bool) -> dict:
     errs = chars = merr = mtok = 0
     audio_s = 0.0
     fp_onset, fin_end, fin_wav, finals_n, rows = [], [], [], [], []
+    from duplexagent.plugins.turn.rule import RuleTurnDetector
+
+    is_bc = RuleTurnDetector().is_backchannel
+    bc_kept, short_lost = [], []
     try:
         for item in data:
             frames = _utterance_frames(item)
@@ -99,6 +105,8 @@ async def run(cfg: dict, data: list[dict], realtime: bool) -> dict:
             me = edit_distance(rt, ht)
             merr, mtok = merr + me, mtok + len(rt)
             finals_n.append(nfin)
+            if "backchannel" in item:
+                (bc_kept if item["backchannel"] else short_lost).append(is_bc(hyp) if item["backchannel"] else (not h or is_bc(hyp)))
             row = {"id": item.get("id"), "ref": item["text"], "hyp": hyp, "cer": round(e / max(1, len(ref)), 4), "finals": nfin, "partials": partials}
             if realtime:
                 if first_partial is not None:
@@ -126,6 +134,9 @@ async def run(cfg: dict, data: list[dict], realtime: bool) -> dict:
         "cpu_cores": round(cpu / wall, 3),
         "peak_rss_mb": round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024, 1),
     }
+    if bc_kept or short_lost:
+        out["bc_kept"] = round(sum(bc_kept) / max(1, len(bc_kept)), 4)
+        out["short_lost"] = round(sum(short_lost) / max(1, len(short_lost)), 4)
     if realtime:
         out["first_partial_after_onset_s"] = _stats(fp_onset)
         out["final_after_speech_end_s"] = _stats(fin_end)

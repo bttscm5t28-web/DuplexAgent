@@ -1,0 +1,19 @@
+# backchannel：与 scenarios/backchannel.toml 相同，但每句话带 TTS 合成的 wav（由 experiments/asr/prepare_data.py --scenarios 生成）
+name = "asr_backchannel"
+duration = 12.16
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+wav = "scenarios/asr/wav/backchannel_0.wav"
+
+[[turns]]
+at = 5.89
+text = "嗯"
+wav = "scenarios/asr/wav/backchannel_1.wav"
+kind = "backchannel"
+
+[expect]
+false_barge_in = 0
+turns_detected = 1
+said_contains = ["我明白了"]

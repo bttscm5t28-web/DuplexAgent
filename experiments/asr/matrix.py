@@ -20,7 +20,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RES = os.path.join(ROOT, "experiments", "asr", "results")
 CFG = os.path.join(ROOT, "configs", "exp", "asr")
-SETS = ["aishell", "wenet", "ascend", "noisy_white10", "noisy_white0", "noisy_babble10", "noisy_babble0"]
+SETS = ["aishell", "wenet", "ascend", "short", "noisy_white10", "noisy_white0", "noisy_babble10", "noisy_babble0"]
 RT_SET = "aishell_rt"
 NOISY = [s for s in SETS if s.startswith("noisy")]
 
@@ -76,6 +76,8 @@ def summary() -> None:
         for s in SETS:
             d = load(cand, s)
             r[s] = d and (d["mer"] if s == "ascend" else d["cer"])
+            if s == "short" and d:
+                r["bc_kept"], r["short_lost"] = d.get("bc_kept"), d.get("short_lost")
             if s == "aishell" and d:
                 r["rtf"], r["rss"], r["load_s"] = d["rtf"], d["peak_rss_mb"], d["load_s"]
         nz = [r[s] for s in NOISY if r.get(s) is not None]
@@ -88,14 +90,14 @@ def summary() -> None:
             r["rt_rss"] = d["peak_rss_mb"]
         rows.append(r)
     rows.sort(key=lambda r: (r.get("aishell") is None, r.get("aishell") or 9))
-    head = ("| 候选 | AISHELL CER% | Wenet CER% | ASCEND MER% | 噪声均值 CER% | 白噪10/0 | babble10/0 | RTF | 首 partial p50 (s) | final 延迟 p50/p90 (s) | CPU 核 | finals/句 | 内存 MB |\n"
-            "|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    head = ("| 候选 | AISHELL CER% | Wenet CER% | ASCEND MER% | 噪声均值 CER% | 白噪10/0 | babble10/0 | 附和保留% / 短句丢失% | RTF | 首 partial p50 (s) | final 延迟 p50/p90 (s) | CPU 核 | finals/句 | 内存 MB |\n"
+            "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     lines = [head]
     for r in rows:
         lines.append(
             f"| {r['cand']} | {fmt(r.get('aishell'), 1)} | {fmt(r.get('wenet'), 1)} | {fmt(r.get('ascend'), 1)} | {fmt(r.get('noisy'), 1)} | "
             f"{fmt(r.get('noisy_white10'), 1)}/{fmt(r.get('noisy_white0'), 1)} | {fmt(r.get('noisy_babble10'), 1)}/{fmt(r.get('noisy_babble0'), 1)} | "
-            f"{fmt(r.get('rtf'), nd=3)} | {fmt(r.get('fp50'))} | {fmt(r.get('fin50'))}/{fmt(r.get('fin90'))} | {fmt(r.get('cpu'))} | {fmt(r.get('fpu'))} | "
+            f"{fmt(r.get('bc_kept'), 1)}/{fmt(r.get('short_lost'), 1)} | {fmt(r.get('rtf'), nd=3)} | {fmt(r.get('fp50'))} | {fmt(r.get('fin50'))}/{fmt(r.get('fin90'))} | {fmt(r.get('cpu'))} | {fmt(r.get('fpu'))} | "
             f"{fmt(r.get('rt_rss') or r.get('rss'), nd=0)} |"
         )
     md = "\n".join(lines)
