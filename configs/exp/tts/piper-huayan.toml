@@ -1,0 +1,43 @@
+# TTS candidate: sherpa-onnx Piper zh_CN huayan medium (VITS, espeak phonemes), Chinese only.
+# Only [tts] differs from configs/default.toml. Model: python experiments/tts/download.py piper-huayan
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 15.0
+cancel_on_resume = true
+
+[plugins]
+modules = []
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+endpoint_ms = 160
+
+[turn]
+impl = "rule"
+eot_silence_ms = 500
+barge_in_ms = 300
+
+[fast]
+impl = "rule"
+think_ms = 150
+
+[slow]
+impl = "mock"
+delay_s = 3.0
+
+[fusion]
+impl = "idle"
+idle_ms = 800
+
+[tts]
+impl = "sherpa"
+preset = "piper-huayan"
+model_root = "models/tts"
+num_threads = 2
