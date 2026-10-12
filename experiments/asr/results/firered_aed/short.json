@@ -1,0 +1,431 @@
+{
+ "config": "configs/exp/asr/firered_aed.toml",
+ "overrides": [
+  "asr.itn=false",
+  "asr.partial_ms=0"
+ ],
+ "data": "bench_data/asr/short.jsonl",
+ "impl": "sherpa_offline",
+ "asr": {
+  "impl": "sherpa_offline",
+  "model": "firered-aed",
+  "endpoint_ms": 300,
+  "partial_ms": 0,
+  "num_threads": 2,
+  "itn": false
+ },
+ "n": 50,
+ "realtime": false,
+ "cer": 0.2958,
+ "mer": 0.2667,
+ "finals_per_utt": 0.98,
+ "empty_hyp": 1,
+ "load_s": 3.88,
+ "cpu_cores": 1.883,
+ "peak_rss_mb": 2882.1,
+ "bc_kept": 0.7727,
+ "short_lost": 0.0357,
+ "rtf": 0.7775,
+ "rows": [
+  {
+   "id": "ses1_spk17_L3818_9.3200_0.6400",
+   "ref": "好的",
+   "hyp": "好的",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3832_24.0000_0.9000",
+   "ref": "e c e",
+   "hyp": "easy",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3839_31.0600_0.8400",
+   "ref": "ok I see",
+   "hyp": "ok i see",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3877_71.8940_0.7900",
+   "ref": "嗯嗯嗯",
+   "hyp": "嗯嗯嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3895_86.6600_0.8300",
+   "ref": "南方人",
+   "hyp": "南方人",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3902_91.5600_0.5600",
+   "ref": "深圳",
+   "hyp": "深圳",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3907_94.6200_0.7000",
+   "ref": "不是",
+   "hyp": "不是",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3920_108.9600_0.6800",
+   "ref": "不是",
+   "hyp": "不是",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3926_119.1000_0.5200",
+   "ref": "不是",
+   "hyp": "不是",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3930_122.1400_0.7600",
+   "ref": "可是",
+   "hyp": "不是",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3934_126.4300_1.0200",
+   "ref": "ok福建",
+   "hyp": "ok复健",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3938_128.9500_0.2800",
+   "ref": "yeah",
+   "hyp": "yeah",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3946_136.2180_0.5500",
+   "ref": "嗯",
+   "hyp": "嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3954_145.4980_0.1700",
+   "ref": "对",
+   "hyp": "",
+   "cer": 1.0,
+   "finals": 0,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3958_147.2200_1.1200",
+   "ref": "来不了",
+   "hyp": "买不了",
+   "cer": 0.3333,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3964_151.7800_0.6300",
+   "ref": "那是什么啊",
+   "hyp": "那是什么",
+   "cer": 0.2,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3970_157.9880_0.4600",
+   "ref": "ok",
+   "hyp": "ok",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L3974_161.5140_0.5060",
+   "ref": "哦",
+   "hyp": "哦",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4006_202.8180_0.3600",
+   "ref": "ok",
+   "hyp": "ok",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4022_235.4800_0.6600",
+   "ref": "so",
+   "hyp": "so",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4026_237.3600_0.4400",
+   "ref": "yeah",
+   "hyp": "哎呀",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4052_273.9910_0.5700",
+   "ref": "tennis",
+   "hyp": "真的是",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4066_294.0000_0.8100",
+   "ref": "嗯嗯嗯",
+   "hyp": "嗯嗯嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4069_296.7600_0.3900",
+   "ref": "嗯",
+   "hyp": "嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4077_304.2400_1.0300",
+   "ref": "没有",
+   "hyp": "没有",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4083_313.2400_0.6400",
+   "ref": "嗯",
+   "hyp": "嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4085_314.5900_0.9000",
+   "ref": "学术",
+   "hyp": "学术",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4091_321.7000_0.5600",
+   "ref": "嗯",
+   "hyp": "嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4113_356.2200_0.6700",
+   "ref": "嗯",
+   "hyp": "嗯我",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4115_358.4800_0.3400",
+   "ref": "yeah",
+   "hyp": "yeah",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4138_388.4200_1.0300",
+   "ref": "嗯yeah",
+   "hyp": "嗯对了",
+   "cer": 0.8,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4142_391.5400_1.4500",
+   "ref": "这门课但是",
+   "hyp": "这门课但是",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4158_408.7200_0.5800",
+   "ref": "yeah",
+   "hyp": "yeah",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4166_419.2800_0.9000",
+   "ref": "在深圳的",
+   "hyp": "在深圳的",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4168_420.4600_0.3000",
+   "ref": "嗯",
+   "hyp": "嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4173_424.4200_0.5200",
+   "ref": "没有",
+   "hyp": "没有没有",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4187_439.0300_1.3800",
+   "ref": "大陆可能会",
+   "hyp": "大陆可能会",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4189_440.7800_0.5800",
+   "ref": "更",
+   "hyp": "更",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4199_453.9600_0.5500",
+   "ref": "嗯",
+   "hyp": "嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4205_458.8200_0.6100",
+   "ref": "no",
+   "hyp": "no",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4217_469.1600_0.4200",
+   "ref": "so",
+   "hyp": "so",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4226_482.4600_0.8600",
+   "ref": "shop",
+   "hyp": "shop",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4241_498.5600_0.7400",
+   "ref": "ok",
+   "hyp": "ok",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4243_499.9500_0.5700",
+   "ref": "Louis",
+   "hyp": "so it's",
+   "cer": 0.6,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4250_506.7000_1.0400",
+   "ref": "oh ok",
+   "hyp": "ok",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4258_519.2510_0.4790",
+   "ref": "both",
+   "hyp": "folks",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4260_521.2300_0.4810",
+   "ref": "嗯",
+   "hyp": "嗯",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4270_541.9000_0.2800",
+   "ref": "right",
+   "hyp": "是吧",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4273_546.9400_0.4300",
+   "ref": "oh",
+   "hyp": "然后",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "ses1_spk17_L4297_580.0800_1.0300",
+   "ref": "我比较喜欢吃",
+   "hyp": "我比较喜欢吃",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  }
+ ]
+}

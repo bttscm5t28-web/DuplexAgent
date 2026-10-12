@@ -1,0 +1,429 @@
+{
+ "config": "configs/exp/asr/faster_whisper_medium.toml",
+ "overrides": [
+  "asr.itn=false",
+  "asr.partial_ms=0"
+ ],
+ "data": "bench_data/asr/wenet.jsonl",
+ "impl": "faster_whisper",
+ "asr": {
+  "impl": "faster_whisper",
+  "model": "medium",
+  "endpoint_ms": 300,
+  "partial_ms": 0,
+  "num_threads": 2,
+  "itn": false
+ },
+ "n": 50,
+ "realtime": false,
+ "cer": 0.2123,
+ "mer": 0.206,
+ "finals_per_utt": 1.38,
+ "empty_hyp": 2,
+ "load_s": 3.63,
+ "cpu_cores": 1.979,
+ "peak_rss_mb": 2096.5,
+ "rtf": 1.1805,
+ "rows": [
+  {
+   "id": "TEST_NET_Y0000000000_-KTKHdZ2fb8_S00314",
+   "ref": "整个房间的人都可以给我作证",
+   "hyp": "整个房间的人都可以给我作证。",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000000_-KTKHdZ2fb8_S00422",
+   "ref": "是来还礼的",
+   "hyp": "",
+   "cer": 1.0,
+   "finals": 0,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000001_0Qdqwe1Eh0M_S00016",
+   "ref": "在这冰冷的海水里他们渐渐的失去了理智互相埋怨狗剩儿也因为长时间泡在水里脚抽筋儿了",
+   "hyp": "在这冰冷的海水里,他们渐渐的失去了理智,互相埋怨。狗船也因为长时间泡在水里,脚抽筋了。",
+   "cer": 0.075,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000002_0UpehIF506s_S00046",
+   "ref": "就我刚才化妆的差不多也就是十几分钟的时间",
+   "hyp": "我刚才化妆的差不多也就是十几分钟的时间。",
+   "cer": 0.05,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000003_0l7Ov1lh8pk_S00140",
+   "ref": "她能安心劳动还不养汉",
+   "hyp": "他能安心劳动,还不咬汗。",
+   "cer": 0.3,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000003_0l7Ov1lh8pk_S00194",
+   "ref": "你一年到头不回家整出这档事怪谁啊",
+   "hyp": "你一年到头不回家。整出这当初,怪谁啊?",
+   "cer": 0.125,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000005_0y0GDUzsbus_S00050",
+   "ref": "所以同学我跟你说我要是你咱就怎么办咱们要主动出击知道吧你别等他找你你找他去挑事儿明白吧过去问他",
+   "hyp": "我说我要是你才能的。我们要主动出击。",
+   "cer": 0.7447,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000007_1gG6BLgSdqw_S00047",
+   "ref": "越过张飞拍两个二技能刷新大招",
+   "hyp": "越过张飞,拍两个,二技能刷新大招。",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000009_26OUqTzrzv0_S00081",
+   "ref": "后面还有很多旅客要经过安检可以吗",
+   "hyp": "后面还有很多旅客要经过安检,可以吗?",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000009_26OUqTzrzv0_S00508",
+   "ref": "你是老天派下来惩罚我的吗",
+   "hyp": "你是老天派下来惩罚我的吗?",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000009_26OUqTzrzv0_S00639",
+   "ref": "现在我兜里只剩四块钱了",
+   "hyp": "现在我头里只剩四块钱了。",
+   "cer": 0.0909,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000009_26OUqTzrzv0_S00706",
+   "ref": "你别摸我你压我手了",
+   "hyp": "你别摸我,你压我手了!",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000009_26OUqTzrzv0_S00823",
+   "ref": "老板我祝你和二嫂早日",
+   "hyp": "拜拜,我祝你和二嫂早日。",
+   "cer": 0.2,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000012_38miTB0gDQs_S00043",
+   "ref": "如果你要真相的话我带他去自首如果你要我们的性命的话我替你动手",
+   "hyp": "如果你要真相的话,我带他去自首。如果你要我们的性命的话,我替你动手。",
+   "cer": 0.0,
+   "finals": 3,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000012_38miTB0gDQs_S00092",
+   "ref": "不可能是你杀死小小是你害死项明利的父亲",
+   "hyp": "不可能。是你杀死小小。是你。孩子像名利的父亲。",
+   "cer": 0.2105,
+   "finals": 4,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000012_38miTB0gDQs_S00115",
+   "ref": "如果你和明利真的想杀我的话这四年间有太多的机会了",
+   "hyp": "如果你和明利真的想杀我的话。这四年间,有太多的机会了。",
+   "cer": 0.0,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000012_38miTB0gDQs_S00254",
+   "ref": "他会成为真正的清道夫专门儿产出吴广明那样的败类",
+   "hyp": "他会成为真正的青岛富。专门铲出无果明那样的败类。",
+   "cer": 0.3043,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000016_3wULEOIuU_s_S00042",
+   "ref": "我静静等待毒圈儿的刷新希望下一个安全区能将我包进去根据枪声儿传来方向",
+   "hyp": "我静静等待独角的刷新。希望下一个安全区能将我包进去。根据枪声传来方向。",
+   "cer": 0.1176,
+   "finals": 3,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000016_3wULEOIuU_s_S00043",
+   "ref": "我发现远处山坡有人与此同时正前方又发现一个",
+   "hyp": "我发现,远处山坡有人。预似同时,正前方又发现一个。",
+   "cer": 0.0952,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000016_3wULEOIuU_s_S00047",
+   "ref": "我换上弹夹大步奔向安全区中的这间房屋不好左侧有人",
+   "hyp": "我换上蛋夹,大部分想安全区中的这间房屋。不好,左侧有人。",
+   "cer": 0.1667,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000016_3wULEOIuU_s_S00049",
+   "ref": "该死被人给抢占了先机我蹲伏于墙角儿他过来啦",
+   "hyp": "该死,被人给抢帐了先机。我端服一墙角,他给我来了。",
+   "cer": 0.381,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000017_42rrCB6ReDc_S00203",
+   "ref": "REITS的一个嗯规模啊所以呢我会觉得像开发商应该更加地投入到这个领域里边",
+   "hyp": "所以我会觉得像卡尔桑应该更加地投入到这个领域领域。",
+   "cer": 0.4865,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000019_5KnkUBBVqis_S00174",
+   "ref": "这时候无袖男也过来索命要密码结果被小马小宇宙爆发抹了脖子马修斯这边被竖锯也带到了地下密室",
+   "hyp": "这时候吴秀男也过来索命要命吧,结果被小马小宇宙爆发抹了脖子,马修斯这边被数据也带到了地下密室。",
+   "cer": 0.1364,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000019_5KnkUBBVqis_S00285",
+   "ref": "这位叫皮特的FBI探员一上来就一顿物理分析认为阿曼达不可能吊起比她还重的女警官",
+   "hyp": "这位叫peter的fbi探员一上来就一顿物理分析,认为阿曼达不可能吊起比他还重的女警官。",
+   "cer": 0.1538,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000020_5XD21BihDd8_S00134",
+   "ref": "什么土豆啊明明叫五毒兽",
+   "hyp": "我说你怎么不说话呢?",
+   "cer": 1.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000020_5XD21BihDd8_S00248",
+   "ref": "没事我休息一下就好了",
+   "hyp": "没事,我休息一下就好了。",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000020_5XD21BihDd8_S00333",
+   "ref": "咬手指甲剔牙吃西",
+   "hyp": "右手指甲地牙直系",
+   "cer": 0.5,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000020_5XD21BihDd8_S00419",
+   "ref": "绿豆糕今天有吃绿豆糕啊",
+   "hyp": "驴道狗,你一定要吃驴道狗啊!",
+   "cer": 0.9091,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000020_5XD21BihDd8_S00489",
+   "ref": "要先从内到外",
+   "hyp": "要先从内到外。",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000020_5XD21BihDd8_S00495",
+   "ref": "你只要往上看就能够得到提示了",
+   "hyp": "你只要往上看,就能够得到提问。",
+   "cer": 0.1429,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000022_5syYMcAt9i4_S00011",
+   "ref": "训练的越来越狠以与美国最优秀的飞行员队伍相抗衡",
+   "hyp": "训练得越来越狠,以与美国最优秀的飞行员队伍相抗衡。",
+   "cer": 0.0435,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000023_6bDGVHqtuFk_S00074",
+   "ref": "很荣幸很荣幸以舞蹈演员的身份转换成为了主持人做金星秀做了这么多年啊得到了大家的认可",
+   "hyp": "很荣幸很荣幸以舞蹈演员的身份转换成为了主持人。做金星秀做了这么多年,得到了大家的认可。",
+   "cer": 0.0244,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000023_6bDGVHqtuFk_S00134",
+   "ref": "对不起误会了薇娅小姐",
+   "hyp": "",
+   "cer": 1.0,
+   "finals": 0,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000024_6kiCnGm7v2g_S00159",
+   "ref": "你觉得你自己是一个老天爷赏饭吃的艺人吗",
+   "hyp": "你觉得你自己是一个老天爷吗?",
+   "cer": 0.3158,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000024_6kiCnGm7v2g_S00403",
+   "ref": "只留下潇洒的背影",
+   "hyp": "只留下潇洒的背影。",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000025_7QtwoPiL_Cg_S00001",
+   "ref": "当然万里挑一有个别能做成事儿的",
+   "hyp": "当然万里飘一有个别能做成事的。",
+   "cer": 0.1333,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000025_7QtwoPiL_Cg_S00068",
+   "ref": "所以如果保证性租赁租赁房",
+   "hyp": "所以如果保证租赁房",
+   "cer": 0.25,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000025_7QtwoPiL_Cg_S00074",
+   "ref": "啊就是特事特办加快加快审批",
+   "hyp": "特吃特办,加快成批。",
+   "cer": 0.5385,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000027_86six1NWeK8_S00023",
+   "ref": "美国有一位著名的政治学者",
+   "hyp": "美国有一位著名的政治学者",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000027_86six1NWeK8_S00064",
+   "ref": "中国古人的政治智慧是一座无穷的宝库",
+   "hyp": "中国古人的政治智慧是一座无穷的宝库。",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000028_8DRJotb5-KI_S00073",
+   "ref": "因为说实话我当时不是这么着急",
+   "hyp": "你明白吗?说实话,我当时不是这么着急。",
+   "cer": 0.2857,
+   "finals": 3,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000028_8DRJotb5-KI_S00133",
+   "ref": "我是什么场子我都会去演",
+   "hyp": "我是……什么场子?我都会去演。",
+   "cer": 0.0,
+   "finals": 3,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000029_8Dib4Nr5hTU_S00028",
+   "ref": "与其叫祈福新村倒不如我们叫它祈福新城这配套简直了本期视频的重点咱们从这里开始",
+   "hyp": "与其叫起不新春,倒不如我们叫它起不新城,这配套简直辣。本期视频的重点咱们从这里开始。",
+   "cer": 0.1579,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000031_ANuqinnbvP4_S00044",
+   "ref": "就想把龙龙带回老家走一走",
+   "hyp": "就像把龙龙带回老家走一走。",
+   "cer": 0.0833,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000031_ANuqinnbvP4_S00057",
+   "ref": "好好好就这么定了",
+   "hyp": "哈哈哈哈就这么定了。",
+   "cer": 0.5,
+   "finals": 2,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000031_ANuqinnbvP4_S00110",
+   "ref": "我给你说咱们食堂呢有一个传统素菜",
+   "hyp": "我跟你说,咱们食堂有一个传统素菜。",
+   "cer": 0.125,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000031_ANuqinnbvP4_S00222",
+   "ref": "学校电话都打到家里头来了",
+   "hyp": "学校电话都打到家里头来了。",
+   "cer": 0.0,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000031_ANuqinnbvP4_S00363",
+   "ref": "诶我龙龙开心爷爷奶奶才开心随便",
+   "hyp": "我隆隆开心,爷爷奶奶才开心。随便!",
+   "cer": 0.2,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000031_ANuqinnbvP4_S00462",
+   "ref": "我就不能开心吗",
+   "hyp": "你开心吗?",
+   "cer": 0.5714,
+   "finals": 1,
+   "partials": 0
+  },
+  {
+   "id": "TEST_NET_Y0000000031_ANuqinnbvP4_S00536",
+   "ref": "外婆出去吃饭啦",
+   "hyp": "外婆,出去吃饭了。",
+   "cer": 0.1429,
+   "finals": 1,
+   "partials": 0
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+# barge_in：与 scenarios/barge_in.toml 相同，但每句话带 TTS 合成的 wav（由 experiments/asr/prepare_data.py --scenarios 生成）
+name = "asr_barge_in"
+duration = 15.24
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+wav = "scenarios/asr/wav/barge_in_0.wav"
+
+[[turns]]
+at = 5.71
+text = "停一下我换个问题"
+wav = "scenarios/asr/wav/barge_in_1.wav"
+kind = "barge_in"
+
+[expect]
+barge_in_detected = 1
+max_barge_in_stop_latency = 0.6
+turns_detected = 2

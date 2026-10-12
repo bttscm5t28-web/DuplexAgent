@@ -1,0 +1,18 @@
+# basic：与 scenarios/basic.toml 相同，但每句话带 TTS 合成的 wav（由 experiments/asr/prepare_data.py --scenarios 生成）
+name = "asr_basic"
+duration = 10.2
+
+[[turns]]
+at = 0.5
+text = "你好"
+wav = "scenarios/asr/wav/basic_0.wav"
+
+[[turns]]
+at = 5.81
+text = "你是谁"
+wav = "scenarios/asr/wav/basic_1.wav"
+
+[expect]
+turns_detected = 2
+said_contains = ["有什么可以帮你", "语音助手"]
+max_latency_p50 = 1.2
