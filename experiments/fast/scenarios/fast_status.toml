@@ -1,0 +1,17 @@
+# 委派后用户追问进度：快脑只报进度、不猜答案；结果回来后再融合。
+name = "fast_status"
+duration = 16.0
+
+[[turns]]
+at = 0.5
+text = "帮我查一下明天北京的天气"
+
+[[turns]]
+at = 4.0
+text = "查到了吗"
+kind = "barge_in"
+
+[expect]
+tasks_spawned = 1
+min_tasks_delivered = 1
+said_contains = ["还在处理", "北京"]

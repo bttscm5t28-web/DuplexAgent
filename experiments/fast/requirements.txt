@@ -1,0 +1,5 @@
+# 快脑实验的可选依赖（核心仍然只依赖标准库）
+llama-cpp-python>=0.3.8   # 本地 GGUF 小模型（llamacpp / hybrid 插件）。CPU 预编译轮子：
+                          #   pip install llama-cpp-python --prefer-binary --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
+huggingface_hub>=0.24     # 下载模型权重到 models/（不入库）
+httpx>=0.27               # backend="openai"：任意 OpenAI 兼容服务（llama.cpp server / vLLM / Ollama / 云端）

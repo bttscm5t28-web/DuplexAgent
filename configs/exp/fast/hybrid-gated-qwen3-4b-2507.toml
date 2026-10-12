@@ -1,0 +1,43 @@
+# 快脑候选：hybrid-gated-qwen3-4b-2507（只改 [fast]）。模型下载见 experiments/fast/REPORT.md。
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 15.0
+cancel_on_resume = true
+
+[plugins]
+modules = []
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+endpoint_ms = 160
+
+[turn]
+impl = "rule"
+eot_silence_ms = 500
+barge_in_ms = 300
+
+[fast]
+impl = "llamacpp"
+mode = "hybrid"
+gate = 0.2
+model_path = "models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
+
+[slow]
+impl = "mock"
+delay_s = 3.0
+
+[tts]
+impl = "mock"
+chars_per_sec = 6.0
+first_chunk_ms = 80
+
+[fusion]
+impl = "idle"
+idle_ms = 800
