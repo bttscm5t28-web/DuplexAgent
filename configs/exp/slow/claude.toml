@@ -1,0 +1,48 @@
+# Claude over the Messages API with our sandboxed tools (needs ANTHROPIC_API_KEY; pip install anthropic).
+# Swap any module by changing `impl` (see `python -m duplexagent list`), or on the CLI:
+#   --set asr.impl=funasr --set asr.model=paraformer-zh-streaming
+
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 120.0
+cancel_on_resume = true
+
+[plugins]
+modules = []  # extra modules that register plugins, e.g. ["experiments.asr.funasr_plugin"]
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+endpoint_ms = 160
+
+[turn]
+impl = "rule"
+eot_silence_ms = 500
+barge_in_ms = 300
+
+[fast]
+impl = "rule"
+think_ms = 150
+
+[slow]
+impl = "claude"
+model = "claude-opus-5-5"
+effort = "medium"
+fallbacks = true
+progress_notes = true
+max_steps = 6
+
+[tts]
+impl = "mock"
+chars_per_sec = 6.0
+first_chunk_ms = 80
+
+[fusion]
+impl = "idle"
+idle_ms = 800

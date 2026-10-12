@@ -1,0 +1,51 @@
+# Tool agent on a local OpenAI-compatible server (llama-cpp-python / llama.cpp / vLLM) running Qwen3-4B-Instruct-2507.
+# Swap any module by changing `impl` (see `python -m duplexagent list`), or on the CLI:
+#   --set asr.impl=funasr --set asr.model=paraformer-zh-streaming
+
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 120.0
+cancel_on_resume = true
+
+[plugins]
+modules = []  # extra modules that register plugins, e.g. ["experiments.asr.funasr_plugin"]
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+endpoint_ms = 160
+
+[turn]
+impl = "rule"
+eot_silence_ms = 500
+barge_in_ms = 300
+
+[fast]
+impl = "rule"
+think_ms = 150
+
+[slow]
+impl = "agent"
+base_url = "http://localhost:8082/v1"
+model = "qwen3-4b"
+tool_mode = "native"
+prewarm = true
+temperature = 0.2
+max_tokens = 768
+max_steps = 4
+time_budget_s = 90.0
+
+[tts]
+impl = "mock"
+chars_per_sec = 6.0
+first_chunk_ms = 80
+
+[fusion]
+impl = "idle"
+idle_ms = 800

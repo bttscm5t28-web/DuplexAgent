@@ -1,0 +1,18 @@
+# Slow-brain scenario: a task the rule router cannot do goes to the LLM agent; mid-way the user
+# asks "算好了吗" and the fast brain relays the latest progress; the result is fused later.
+# Needs an LLM slow brain (e.g. -c configs/exp/slow/hybrid_qwen3_4b.toml); mock answers differ.
+name = "progress_status"
+duration = 70.0
+
+[[turns]]
+at = 0.5
+text = "帮我计算一下 1 到 1000 之间有多少个质数"
+
+[[turns]]
+at = 14.0
+text = "算好了吗"
+
+[expect]
+min_tasks_spawned = 1
+min_tasks_delivered = 1
+said_contains = ["还在处理", "168"]

@@ -1,0 +1,8 @@
+{"id": "amend-01", "query": "3 个人平分 360 元，每人多少钱", "amend_after_s": 1.0, "amendment": "把 3 个人改成 4 个人", "answer_contains": ["90"], "stale": ["120"]}
+{"id": "amend-02", "query": "计算 25 乘以 16", "amend_after_s": 1.0, "amendment": "把 16 改成 17", "answer_contains": ["425"], "stale": ["400"]}
+{"id": "amend-03", "query": "5 公里等于多少米", "amend_after_s": 1.0, "amendment": "把 5 公里改成 8 公里", "answer_contains": ["8000"], "stale": ["5000"]}
+{"id": "amend-04", "query": "一件衣服原价 400 元打八折要付多少", "amend_after_s": 1.0, "amendment": "不是八折，是七折", "answer_contains": ["280"], "stale": ["320"]}
+{"id": "amend-05", "query": "2026年10月1日之后30天是几月几号", "amend_after_s": 1.0, "amendment": "把 30 天改成 60 天", "answer_contains": ["11月30"], "stale": ["10月31"]}
+{"id": "amend-06", "query": "1 到 100 之间所有质数的和是多少", "amend_after_s": 1.0, "amendment": "范围改成 1 到 50", "answer_contains": ["328"], "stale": ["1060"]}
+{"id": "amend-07", "query": "10000 元存银行年利率 3% 复利，3 年后本息多少？保留两位小数", "amend_after_s": 1.0, "amendment": "年限改成 5 年", "answer_contains": ["11592.74"], "stale": ["10927.27"]}
+{"id": "amend-08", "query": "开车 350 公里，百公里油耗 8 升，油价每升 7.5 元，油费多少", "amend_after_s": 1.0, "amendment": "油价改成每升 8 元", "answer_contains": ["224"], "stale": ["210"]}

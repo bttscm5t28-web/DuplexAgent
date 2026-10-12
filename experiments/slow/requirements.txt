@@ -1,0 +1,7 @@
+# Optional dependencies of the slow-brain experiment (core stays stdlib-only).
+httpx>=0.27                 # agent / openai_compat backends, web tools
+anthropic>=1.0              # slow.impl = "claude"
+claude-agent-sdk>=0.2       # slow.impl = "claude_agent" (bundles the Claude Code CLI)
+mcp>=2.0                    # mcp_servers = [...] tool bridge, and serving our tools over MCP
+llama-cpp-python[server]>=0.3.16   # local OpenAI-compatible server for CPU benchmarks (build: CMAKE_ARGS="-DGGML_NATIVE=ON")
+pytest>=8
