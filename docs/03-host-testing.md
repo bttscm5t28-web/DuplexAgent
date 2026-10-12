@@ -44,7 +44,7 @@ python -m duplexagent eval --serial -c configs/combo/mac_m5.toml scenarios/turn/
 
 评测时有 `--scenario` 就会自动改用模拟输入输出，所以同一份 `mac_m5.toml` 既能跑评测，也能真人对话。
 
-**云端 4 核 CPU 的参照数字**（`configs/combo/cpu.toml`，五个模块同时争抢 CPU，结果在 `experiments/combo/results/`）：见第 7 节。
+**云端 4 核 CPU 的参照数字**：见第 7 节。主机上的结果应当明显更好，特别是响应延迟。
 
 ## 4. 第二步：真人对话
 
@@ -92,4 +92,7 @@ python scripts/live_summary.py results/live/s1.jsonl
 
 ## 7. 云端 4 核 CPU 组合实测（参照）
 
-见 `experiments/combo/results/`，由 `configs/combo/cpu.toml` 跑出。
+详见 `experiments/combo/REPORT.md`。要点：
+- 38 个真实音频场景通过 28 个，打断检出 13/13。
+- 响应延迟约 1.5 s（目标 0.8 s），主要耗在快脑首字和 CPU 争抢上。
+- 剩下的失败大多来自 ASR 误识别合成的短附和，以及 CPU 上短命令的停止延迟。
