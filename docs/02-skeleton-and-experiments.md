@@ -36,7 +36,8 @@ bench_data/*.jsonl    单模块基准数据（种子集，各实验应扩充）
 ### 引擎关键行为（与模块无关，模块不用重复实现）
 
 - 状态：LISTENING / THINKING / SPEAKING（由是否有响应任务、是否在放音推导）。
-- `TURN_END` → 写入用户消息 → 启动快脑响应；THINKING 期间用户又开口（`SPEECH_START`）→ 丢弃响应（用户还没说完）。
+- `TURN_END` → 写入用户消息 → 启动快脑响应。
+- 从开始响应起，助手就算“占着话轮”（`TurnContext.agent_speaking` 为真），不只是放音期间。THINKING 期间用户又开口 → **暂停出声**（`hold`），快脑继续想，再看轮次判别的结论：`BACKCHANNEL` → 恢复出声；`BARGE_IN` / `TURN_END` → 丢弃这次响应；如果用户是在上一轮结束后 `merge_window_ms`（默认 1 s）内接着说的，把新话**合并进上一轮**（`turn_merged`）一起回答，否则作为新的一轮；`hold_release_ms`（默认 2.5 s）内没有结论 → 恢复出声。旧行为是直接丢弃响应，可用 `engine.resume_policy = "cancel"` 恢复。助手还没出声时 `TurnContext.agent_audible` 为假，轮次插件此时不应根据 partial 提前判打断（反正已经暂停出声），而应等到这句话说完、用完整识别结果判断。
 - `BARGE_IN` → 取消响应、`output.stop()`；**只把实际播出的文字写入历史**，并标记 `interrupted`。
 - 快脑 `Delegate` → 任务总线异步执行；`FusionPolicy` 认为合适时以 `trigger="task_result"` 再触发快脑，把结果融合进对话；若融合回复一个字都没播出就被打断，结果会重新排队。
 

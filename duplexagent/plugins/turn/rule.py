@@ -57,7 +57,7 @@ class RuleTurnDetector(TurnDetector):
         return rest == ""
 
     def _maybe_barge(self, ts: float, ctx: TurnContext) -> list[TurnEvent]:
-        if self.barged or not ctx.agent_speaking or not self.in_speech:
+        if self.barged or not ctx.agent_speaking or not ctx.agent_audible or not self.in_speech:
             return []
         if self.voiced_during_agent_ms < self.barge_in_ms:
             return []

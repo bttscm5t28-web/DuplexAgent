@@ -43,7 +43,8 @@ def score(tl: Timeline, sc: Scenario) -> dict[str, Any]:
         "latency_p90": _pct(lat, 0.9),
         "latency_mean": round(statistics.mean(lat), 3) if lat else None,
         "turns_expected": sum(1 for u in sc.utterances if u.kind in ("turn", "barge_in")),
-        "turns_detected": len(tl.of("turn_end")),
+        # user turns as the conversation saw them: detector turn ends minus those merged into the previous one
+        "turns_detected": len(tl.of("turn_end")) - len(tl.of("turn_merged")),
         "barge_in_expected": len(barge),
         "barge_in_detected": sum(1 for _, hits in barge_hits if hits),
         "barge_in_stop_latency": _pct([hits[0].t - u.at for u, hits in barge_hits if hits], 0.5),

@@ -59,7 +59,12 @@ class Components:
 class EngineConfig:
     fusion_tick_ms: int = 50
     drain_timeout: float = 15.0  # after input ends, wait this long for tasks/responses
-    cancel_on_resume: bool = True  # user resumes talking while agent is still thinking -> drop response
+    cancel_on_resume: bool = True  # react when the user speaks again while the agent is still thinking
+    # "hold": keep thinking but don't start audio until the turn detector decides (backchannel ->
+    # release, barge-in / new turn -> drop and merge); "cancel": drop the response right away.
+    resume_policy: str = "hold"
+    hold_release_ms: int = 2500  # release a hold if the detector never decides (noise, cough)
+    merge_window_ms: int = 1000  # user resumed this soon after their turn ended: same turn, merge
     max_tasks: int = 4
     max_history: int = 40
 
@@ -78,6 +83,12 @@ class DuplexEngine:
         self.user_speaking = False
         self._last_activity = 0.0
         self._last_user_speech_end: float | None = None
+        self._may_speak: asyncio.Event | None = None  # cleared while a response is on hold
+        self._held_since: float | None = None
+        self._merge_next = False  # last user turn got no answer out: append the next turn to it
+        self._last_turn_end = 0.0
+        self._hold_gap: float | None = None  # turn end -> user resumed, for the hold in progress
+        self._response_trigger = ""
         self.orch: TaskOrchestrator | None = None
 
     # ---- clock ------------------------------------------------------------------------
@@ -95,6 +106,8 @@ class DuplexEngine:
         self.c.input.bind_clock(self.now)
         self.c.output.bind_clock(self.now)
         self.orch = TaskOrchestrator(self.c.slow, self.now, self.timeline, self.cfg.max_tasks)
+        self._may_speak = asyncio.Event()
+        self._may_speak.set()
         for p in self.c.all():
             await p.start()
         # Restart the session clock once every plugin is loaded: model loading can take seconds,
@@ -130,7 +143,11 @@ class DuplexEngine:
     # ---- input side -------------------------------------------------------------------
 
     def _turn_ctx(self) -> TurnContext:
-        return TurnContext(now=self.now(), agent_speaking=self._playing, agent_text=self._agent_text)
+        # The agent holds the floor from the moment it starts a response, not only once audio plays:
+        # user speech while it is thinking is then classified like speech over it (backchannel vs
+        # barge-in) instead of always opening a new turn.
+        return TurnContext(now=self.now(), agent_speaking=self._playing or self._response_active(),
+                           agent_text=self._agent_text, agent_audible=self._playing)
 
     async def _pump(self, asr_in: Channel[AudioFrame]) -> None:
         async for frame in self.c.input.frames():
@@ -153,22 +170,55 @@ class DuplexEngine:
         if ev.type == TurnEventType.SPEECH_START:
             self.user_speaking = True
             if self.cfg.cancel_on_resume and self._response_active() and not self._playing:
-                self._interrupt("user_resumed")
+                if self.cfg.resume_policy == "cancel":
+                    self._interrupt("user_resumed")
+                elif self._held_since is None:
+                    self._hold()
         elif ev.type == TurnEventType.SPEECH_END:
             self.user_speaking = False
             self._last_activity = ev.ts
             self._last_user_speech_end = ev.ts
+        elif ev.type == TurnEventType.BACKCHANNEL:
+            self._release("backchannel")
         elif ev.type == TurnEventType.BARGE_IN:
             if self._response_active():
-                self._interrupt("barge_in")
+                self._interrupt("barge_in" if self._playing else "user_resumed")
         elif ev.type == TurnEventType.TURN_END:
             if self._response_active():
                 self._interrupt("new_turn")
-            self.history.append(Message("user", ev.text))
-            self._start_response("user_turn", user_text=ev.text)
+            self._release(None)
+            last = self.history[-1] if self.history else None
+            if self._merge_next and last is not None and last.role == "user":
+                # The previous response never got a word out (user kept talking): one turn, not two.
+                last.content += ev.text
+                self.log("turn_merged", text=last.content)
+            else:
+                self.history.append(Message("user", ev.text))
+            self._merge_next = False
+            self._last_turn_end = ev.ts
+            self._hold_gap = None
+            self._start_response("user_turn", user_text=self.history[-1].content)
+
+    def _hold(self) -> None:
+        self._held_since = self.now()
+        self._hold_gap = self._held_since - self._last_turn_end
+        self._may_speak.clear()
+        self.log("hold")
+
+    def _release(self, reason: str | None) -> None:
+        if self._held_since is None:
+            return
+        self._held_since = None
+        self._may_speak.set()
+        if reason:
+            self.log("release", reason=reason)
 
     def _interrupt(self, reason: str) -> None:
         self.log("interrupt", reason=reason)
+        # Decided here, synchronously: the TURN_END that follows may arrive before the task unwinds.
+        gap = self._hold_gap
+        if not self._playing and self._response_trigger == "user_turn" and gap is not None and gap * 1000 <= self.cfg.merge_window_ms:
+            self._merge_next = True
         self._response.cancel()
         asyncio.create_task(self.c.output.stop())
 
@@ -190,6 +240,7 @@ class DuplexEngine:
             turn_id=self._turn_id,
         )
         self.log("respond", turn=self._turn_id, trigger=trigger, deliver=[t.id for t in deliver])
+        self._response_trigger = trigger
         self._response = asyncio.create_task(self._respond(ctx), name=f"respond-{self._turn_id}")
 
     async def _respond(self, ctx: BrainContext) -> None:
@@ -219,6 +270,7 @@ class DuplexEngine:
         async def speak() -> None:
             async for chunk in self.c.tts.synthesize(text_ch):
                 if not self._playing:
+                    await self._may_speak.wait()  # on hold while the user is talking
                     self._playing = True
                     ref = self._last_user_speech_end if ctx.trigger == "user_turn" else None
                     latency = round(self.now() - ref, 3) if ref is not None else None
@@ -251,6 +303,9 @@ class DuplexEngine:
     async def _fusion_loop(self) -> None:
         while True:
             await asyncio.sleep(self.cfg.fusion_tick_ms / 1000)
+            if self._held_since is not None and not self.user_speaking:
+                if (self.now() - max(self._held_since, self._last_user_speech_end or 0)) * 1000 >= self.cfg.hold_release_ms:
+                    self._release("timeout")
             ready = self.orch.ready()
             if not ready or self._response_active():
                 continue

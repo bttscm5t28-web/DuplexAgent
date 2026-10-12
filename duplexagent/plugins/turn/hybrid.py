@@ -228,9 +228,10 @@ class HybridTurnDetector(TurnDetector):
     # ---- barge-in -----------------------------------------------------------------------------
 
     def _maybe_barge(self, ts: float, ctx: TurnContext) -> list[TurnEvent]:
-        if self.barged or not ctx.agent_speaking or not self.utt_active:
+        if self.barged or not ctx.agent_speaking or not ctx.agent_audible or not self.utt_active:
             return []
-        text = self.utt_text
+        # Punctuation-only partials ("？" from a punctuating ASR) carry no words: treat as no text yet.
+        text = self.utt_text if lexicon.norm(self.utt_text) else ""
         o = self.o
         if text and o["echo_guard"] and lexicon.is_echo(text, ctx.agent_text):
             return []

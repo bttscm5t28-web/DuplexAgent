@@ -73,8 +73,11 @@ class ASR(Plugin, abc.ABC):
 @dataclass
 class TurnContext:
     now: float
-    agent_speaking: bool  # agent audio is playing or about to play
+    agent_speaking: bool  # agent holds the floor: responding (thinking or playing audio)
     agent_text: str = ""  # what the agent is currently saying (for context-aware models)
+    # Agent audio is actually playing. While it is not (agent still thinking, audio on hold), an
+    # early barge-in buys nothing: detectors should decide at the end of the utterance, on the final text.
+    agent_audible: bool = True
 
 
 class TurnDetector(Plugin, abc.ABC):
