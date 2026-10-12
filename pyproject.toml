@@ -17,4 +17,4 @@ dev = ["pytest>=8"]
 include = ["duplexagent*"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "experiments"]
