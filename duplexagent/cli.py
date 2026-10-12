@@ -24,7 +24,9 @@ async def run_one(cfg: dict, scenario: str | None, echo: bool, timeline_out: str
     from duplexagent.plugins.io.sim import Scenario
 
     if scenario:
-        cfg.setdefault("input", {}).update(impl="sim", scenario=scenario)
+        cfg["input"] = {"impl": "sim", "scenario": scenario, **{k: v for k, v in cfg.get("input", {}).items() if k == "user_cps"}}
+        if cfg.get("output", {}).get("impl") not in ("sim", "wav"):
+            cfg["output"] = {"impl": "sim"}  # scenarios are scored on the simulated timeline
     tl = Timeline(echo=echo)
     engine = build_engine(cfg, tl)
     await engine.run()

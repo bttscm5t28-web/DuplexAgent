@@ -1,0 +1,30 @@
+# 组合：快脑和慢脑都走 OpenRouter（OpenAI 兼容接口），ASR / 轮次 / TTS 仍在本地。
+# 需要环境变量 OPENROUTER_API_KEY。两个 model 请从 https://openrouter.ai/models 选：
+#   快脑：首 token 快的小模型（hybrid 模式下它只负责闲聊和转述，委派由规则路由决定）
+#   慢脑：支持 tools 的强模型
+# 可以和 mac_m5.toml 叠加：把下面的 extends 改成 "mac_m5.toml"。
+extends = "cpu.toml"
+
+[fast]
+impl = "llamacpp"
+mode = "hybrid"
+backend = "openai"
+llm_decides = false   # 换成 ≥4B 级的强模型后可改为 true（见 experiments/fast/REPORT.md §7）
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "REPLACE-WITH-FAST-MODEL-ID"
+
+[slow]
+impl = "hybrid"
+
+[slow.inner]
+impl = "agent"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "REPLACE-WITH-SLOW-MODEL-ID"
+tool_mode = "native"
+stream = true
+temperature = 0.2
+max_tokens = 1024
+max_steps = 6
+time_budget_s = 60.0

@@ -1,0 +1,21 @@
+# 组合：Mac（Apple M5，Metal）。在 cpu.toml 基础上：快脑换成 4B 门控方案并全部放到 GPU，
+# 输入输出走浏览器（浏览器负责回声消除，可以直接外放）。
+#
+# 先起慢脑内层服务（Metal 全层 offload）：
+#   python -m llama_cpp.server --model models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf --n_ctx 8192 \
+#       --n_gpu_layers -1 --port 8082 --model_alias qwen3-4b
+# 再运行：python -m duplexagent run -c configs/combo/mac_m5.toml   然后打开 http://localhost:8765
+extends = "cpu.toml"
+
+[input]
+impl = "browser"
+
+[output]
+impl = "browser"
+
+[fast]  # experiments/fast：有 GPU 时的首选（留出集委派 100%）
+impl = "llamacpp"
+mode = "hybrid"
+gate = 0.2
+model_path = "models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
+n_gpu_layers = -1

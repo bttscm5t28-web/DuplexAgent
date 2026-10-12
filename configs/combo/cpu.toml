@@ -1,0 +1,69 @@
+# 组合：五个方向在纯 CPU 上的推荐方案（各方向 REPORT.md 的首选）。
+# 慢脑内层需要先起一个本地 OpenAI 兼容服务（Qwen3-4B，见 docs/03-host-testing.md）：
+#   python -m llama_cpp.server --model models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf --n_ctx 8192 --n_threads 4 --port 8082 --model_alias qwen3-4b
+# 输入默认是模拟用户；真人对话用 --set input.impl=mic --set output.impl=speaker（或 browser）。
+
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 120.0
+cancel_on_resume = true
+
+[input]
+impl = "sim"
+scenario = "scenarios/asr/delegate.toml"
+
+[output]
+impl = "sim"
+
+[asr]  # experiments/asr: SenseVoice-Small + Silero VAD 伪流式
+impl = "sherpa_offline"
+model = "sensevoice"
+endpoint_ms = 300
+partial_ms = 300
+num_threads = 2
+itn = true
+
+[turn]  # experiments/turn: Silero VAD + 文本规则 + Qwen2.5-0.5B EOT 融合
+impl = "fusion"
+vad = "silero"
+eot = ["text", "lm"]
+eot_weights = { text = 1.0, lm = 1.0 }
+min_silence_ms = 200
+max_silence_ms = 2000
+base_silence_ms = 500
+p_low = 0.15
+p_high = 0.75
+hangover_ms = 60
+barge_in_ms = 300
+barge_in_max_ms = 700
+
+[fast]  # experiments/fast: 规则路由 + Qwen2.5-1.5B 说话
+impl = "llamacpp"
+mode = "hybrid"
+llm_decides = false
+model_path = "models/qwen2.5-1.5b-instruct-q4_k_m.gguf"
+
+[slow]  # experiments/slow: 规则路由 + Qwen3-4B 工具 agent
+impl = "hybrid"
+
+[slow.inner]
+impl = "agent"
+base_url = "http://localhost:8082/v1"
+model = "qwen3-4b"
+tool_mode = "native"
+prewarm = true
+stream = true
+temperature = 0.2
+max_tokens = 768
+max_steps = 4
+time_budget_s = 90.0
+
+[tts]  # experiments/tts: sherpa-onnx Matcha zh+en
+impl = "sherpa"
+preset = "matcha-zh-en"
+model_root = "models/tts"
+num_threads = 2
+
+[fusion]
+impl = "idle"
+idle_ms = 800

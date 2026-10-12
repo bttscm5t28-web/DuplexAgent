@@ -158,8 +158,9 @@ _MODELS_LOCK = threading.Lock()
 class LlamaCppBackend:
     """In-process llama.cpp. Generation runs in a worker thread; tokens are bridged to asyncio."""
 
-    def __init__(self, model_path: str, n_ctx: int = 4096, n_threads: int = 4, n_batch: int = 512, **_):
-        self.key = (model_path, n_ctx, n_threads, n_batch)
+    def __init__(self, model_path: str, n_ctx: int = 4096, n_threads: int = 4, n_batch: int = 512, n_gpu_layers: int = 0, **_):
+        # n_gpu_layers: 0 = CPU only; -1 = offload every layer (Metal on Apple silicon, CUDA on NVIDIA).
+        self.key = (model_path, n_ctx, n_threads, n_batch, n_gpu_layers)
         self.lock = threading.Lock()  # one generation at a time per model
 
     async def start(self) -> None:
@@ -168,8 +169,9 @@ class LlamaCppBackend:
                 if self.key not in _MODELS:
                     from llama_cpp import Llama  # optional dependency
 
-                    path, n_ctx, n_threads, n_batch = self.key
-                    _MODELS[self.key] = (Llama(model_path=path, n_ctx=n_ctx, n_threads=n_threads, n_batch=n_batch, verbose=False), threading.Lock())
+                    path, n_ctx, n_threads, n_batch, n_gpu_layers = self.key
+                    llm = Llama(model_path=path, n_ctx=n_ctx, n_threads=n_threads, n_batch=n_batch, n_gpu_layers=n_gpu_layers, verbose=False)
+                    _MODELS[self.key] = (llm, threading.Lock())
                 return _MODELS[self.key]
 
         self.llm, self.lock = await asyncio.to_thread(load)

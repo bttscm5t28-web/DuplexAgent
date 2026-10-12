@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DuplexAgent</title>
+<style>
+  :root { --bg: #fafafa; --fg: #1d1d1f; --muted: #6e6e73; --accent: #0a66ff; --line: #e5e5ea; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --fg: #f5f5f7; --muted: #a1a1a6; --accent: #4c8dff; --line: #2c2c2e; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 -apple-system, "PingFang SC", system-ui, sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 32px 16px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p { color: var(--muted); margin: 0 0 20px; }
+  button { font: inherit; padding: 10px 22px; border-radius: 999px; border: 0; background: var(--accent); color: #fff; cursor: pointer; }
+  button[disabled] { opacity: .5; cursor: default; }
+  #status { margin-left: 12px; color: var(--muted); }
+  #meter { height: 6px; background: var(--line); border-radius: 3px; margin: 20px 0; overflow: hidden; }
+  #level { height: 100%; width: 0; background: var(--accent); transition: width 60ms linear; }
+  #log { border-top: 1px solid var(--line); padding-top: 12px; white-space: pre-wrap; min-height: 120px; }
+  .cut { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>DuplexAgent</h1>
+  <p>浏览器负责回声消除、降噪和自动增益，可以直接用扬声器全双工对话。建议用 Chrome。</p>
+  <button id="go">开始</button><span id="status">未连接</span>
+  <div id="meter"><div id="level"></div></div>
+  <div id="log"></div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const worklet = `
+class Mic extends AudioWorkletProcessor {
+  constructor() { super(); this.buf = new Int16Array(320); this.n = 0; }
+  process(inputs) {
+    const ch = inputs[0][0];
+    if (ch) for (let i = 0; i < ch.length; i++) {
+      const s = Math.max(-1, Math.min(1, ch[i]));
+      this.buf[this.n++] = s * 32767;
+      if (this.n === 320) { this.port.postMessage(this.buf.buffer.slice(0)); this.n = 0; }
+    }
+    return true;
+  }
+}
+registerProcessor("mic", Mic);`;
+
+let ctx, ws, nextT = 0, sources = [], line = null;
+
+function say(text) {
+  if (!line) { line = document.createElement("div"); $("log").prepend(line); }
+  line.textContent += text;
+}
+
+$("go").onclick = async () => {
+  $("go").disabled = true;
+  ctx = new AudioContext({ sampleRate: 16000 });
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+  });
+  await ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([worklet], { type: "text/javascript" })));
+  const mic = new AudioWorkletNode(ctx, "mic");
+  ctx.createMediaStreamSource(stream).connect(mic);
+
+  ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.binaryType = "arraybuffer";
+  ws.onopen = () => { $("status").textContent = "已连接，可以说话了"; };
+  ws.onclose = () => { $("status").textContent = "会话已结束"; $("go").disabled = false; };
+  mic.port.onmessage = (e) => {
+    const pcm = new Int16Array(e.data);
+    let peak = 0; for (const v of pcm) peak = Math.max(peak, Math.abs(v));
+    $("level").style.width = Math.min(100, peak / 100) + "%";
+    if (ws.readyState === 1) ws.send(e.data);
+  };
+  ws.onmessage = (e) => {
+    if (typeof e.data === "string") {
+      const m = JSON.parse(e.data);
+      if (m.type === "text") say(m.text);
+      if (m.type === "stop") {
+        sources.forEach((s) => s.stop()); sources = []; nextT = 0;
+        if (line) line.classList.add("cut");
+        line = null;
+      }
+      return;
+    }
+    const sr = new DataView(e.data).getUint32(0, true);
+    const pcm = new Int16Array(e.data, 4);
+    if (!pcm.length) return;
+    const buf = ctx.createBuffer(1, pcm.length, sr);
+    const ch = buf.getChannelData(0);
+    for (let i = 0; i < pcm.length; i++) ch[i] = pcm[i] / 32768;
+    const src = ctx.createBufferSource();
+    src.buffer = buf; src.connect(ctx.destination);
+    const t = Math.max(ctx.currentTime + 0.02, nextT);
+    if (t > nextT + 0.3) line = null; // a pause in agent speech starts a new line
+    src.start(t); nextT = t + buf.duration;
+    sources.push(src); src.onended = () => { sources = sources.filter((s) => s !== src); };
+  };
+};
+</script>
+</body>
+</html>

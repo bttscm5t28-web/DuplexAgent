@@ -84,3 +84,13 @@ def test_orchestrator_cancel():
         assert rec.status.value == "cancelled" and not rec.awaiting_delivery
 
     asyncio.run(go())
+
+
+def test_config_extends(tmp_path):
+    base = tmp_path / "base.toml"
+    base.write_text('[asr]\nimpl = "mock"\nendpoint_ms = 160\n[turn]\nimpl = "rule"\neot_silence_ms = 500\n')
+    child = tmp_path / "child.toml"
+    child.write_text('extends = "base.toml"\n[asr]\nimpl = "sherpa_offline"\nmodel = "sensevoice"\n[turn]\neot_silence_ms = 300\n')
+    cfg = load_config(str(child))
+    assert cfg["asr"] == {"impl": "sherpa_offline", "model": "sensevoice"}  # impl given: table replaced
+    assert cfg["turn"] == {"impl": "rule", "eot_silence_ms": 300}  # no impl: merged

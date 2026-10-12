@@ -1,0 +1,46 @@
+# 组合：带 A100 的云端 Linux 主机（CUDA）。快脑 4B 门控放 GPU；慢脑内层换成 vLLM 上的大模型；
+# TTS 换成 GPU 上的 CosyVoice 2。浏览器通过 SSH 隧道连过来：
+#   ssh -L 8765:localhost:8765 <a100-host>   然后在本机打开 http://localhost:8765
+#
+# 需要先起两个服务（见 docs/03-host-testing.md）：
+#   vllm serve Qwen/Qwen3-32B --port 8082 --served-model-name slow --enable-auto-tool-choice --tool-call-parser hermes
+#   python experiments/tts/servers/cosyvoice_server.py --repo models/third_party/CosyVoice \
+#       --model models/third_party/CosyVoice2-0.5B --port 8091
+extends = "cpu.toml"
+
+[input]
+impl = "browser"
+
+[output]
+impl = "browser"
+
+[fast]
+impl = "llamacpp"
+mode = "hybrid"
+gate = 0.2
+model_path = "models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
+n_gpu_layers = -1
+
+[slow]
+impl = "hybrid"
+
+[slow.inner]
+impl = "agent"
+base_url = "http://localhost:8082/v1"
+model = "slow"
+tool_mode = "native"
+prewarm = true
+stream = true
+temperature = 0.2
+max_tokens = 1024
+max_steps = 6
+time_budget_s = 60.0
+
+[tts]  # experiments/tts：GPU 方向的首选，CPU 上首包 7–16 s，GPU 上待实测
+impl = "openai_speech"
+base_url = "http://127.0.0.1:8091/v1"
+model = "cosyvoice2"
+voice = "default"
+response_format = "pcm"
+sample_rate = 24000
+timeout = 30.0
