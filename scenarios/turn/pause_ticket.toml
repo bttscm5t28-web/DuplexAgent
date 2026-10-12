@@ -1,0 +1,16 @@
+# 句中思考停顿：“我想……订一张明天去上海的机票”，停顿 0.9 s。期望：不抢话，只在整句说完后响应一次。
+# 类别: pause
+name = "pause_ticket"
+duration = 9
+
+[[turns]]
+at = 0.5
+text = "我想"
+
+[[turns]]
+at = 1.8
+text = "订一张明天去上海的机票"
+kind = "cont"
+
+[expect]
+turns_detected = 1

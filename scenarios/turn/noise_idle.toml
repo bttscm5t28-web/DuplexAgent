@@ -1,0 +1,25 @@
+# 助手空闲时出现咳嗽 0.5 s、敲门 1.0 s，之后用户正常说“你好”。期望：噪声不触发轮次，只响应“你好”。
+# 类别: noise
+name = "noise_idle"
+duration = 10
+
+[[turns]]
+at = 1.0
+text = ""
+kind = "noise"
+duration = 0.5
+sound = "cough"  # experiments/turn/prepare_data.py 用它挑噪声素材
+
+[[turns]]
+at = 3.0
+text = ""
+kind = "noise"
+duration = 1.0
+sound = "knock"  # experiments/turn/prepare_data.py 用它挑噪声素材
+
+[[turns]]
+at = 6.0
+text = "你好"
+
+[expect]
+turns_detected = 1

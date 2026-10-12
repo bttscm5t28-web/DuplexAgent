@@ -1,0 +1,45 @@
+# 候选：silero —— Silero VAD（MIT）替换能量 VAD，其余同基线：固定 500 ms 静音，无文本 EOT。
+# 由 experiments/turn/make_configs.py 基于 configs/default.toml 生成，只改 [turn]。
+
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 15.0
+cancel_on_resume = true
+
+[plugins]
+modules = []  # extra modules that register plugins, e.g. ["experiments.asr.funasr_plugin"]
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+endpoint_ms = 160
+
+[turn]
+impl = "silero"
+vad_threshold = 0.5
+base_silence_ms = 500
+barge_in_ms = 300
+barge_in_max_ms = 700
+
+[fast]
+impl = "rule"
+think_ms = 150
+
+[slow]
+impl = "mock"
+delay_s = 3.0
+
+[tts]
+impl = "mock"
+chars_per_sec = 6.0
+first_chunk_ms = 80
+
+[fusion]
+impl = "idle"
+idle_ms = 800

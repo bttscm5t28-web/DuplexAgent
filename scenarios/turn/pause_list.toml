@@ -1,0 +1,16 @@
+# 列举中停顿 1.0 s：“我要买苹果香蕉还有……一盒牛奶”。期望：不抢话。
+# 类别: pause
+name = "pause_list"
+duration = 10
+
+[[turns]]
+at = 0.5
+text = "我要买苹果香蕉还有"
+
+[[turns]]
+at = 3.3
+text = "一盒牛奶"
+kind = "cont"
+
+[expect]
+turns_detected = 1

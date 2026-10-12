@@ -1,0 +1,52 @@
+# 候选：fusion —— Silero VAD + 文本规则 + Qwen2.5-0.5B LM EOT 融合（加权平均），adaptive 的打断判别。
+# 由 experiments/turn/make_configs.py 基于 configs/default.toml 生成，只改 [turn]。
+
+[engine]
+fusion_tick_ms = 50
+drain_timeout = 15.0
+cancel_on_resume = true
+
+[plugins]
+modules = []  # extra modules that register plugins, e.g. ["experiments.asr.funasr_plugin"]
+
+[input]
+impl = "sim"
+scenario = "scenarios/basic.toml"
+
+[output]
+impl = "sim"
+
+[asr]
+impl = "mock"
+endpoint_ms = 160
+
+[turn]
+impl = "fusion"
+vad = "silero"
+eot = ["text", "lm"]
+eot_weights = { text = 1.0, lm = 1.0 }
+min_silence_ms = 200
+max_silence_ms = 2000
+base_silence_ms = 500
+p_low = 0.15
+p_high = 0.75
+hangover_ms = 60
+barge_in_ms = 300
+barge_in_max_ms = 700
+
+[fast]
+impl = "rule"
+think_ms = 150
+
+[slow]
+impl = "mock"
+delay_s = 3.0
+
+[tts]
+impl = "mock"
+chars_per_sec = 6.0
+first_chunk_ms = 80
+
+[fusion]
+impl = "idle"
+idle_ms = 800

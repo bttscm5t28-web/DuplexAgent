@@ -1,0 +1,16 @@
+# 短停顿 0.55 s：“帮我看看……明天的日程”。期望：不抢话（500 ms 静音阈值的基线会先 TURN_END 再被用户续说取消）。
+# 类别: pause
+name = "pause_short"
+duration = 8
+
+[[turns]]
+at = 0.5
+text = "帮我看看"
+
+[[turns]]
+at = 1.85
+text = "明天的日程"
+kind = "cont"
+
+[expect]
+turns_detected = 1

@@ -1,0 +1,25 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/noise_cough.toml 生成（真实语音版，wav 不入库）。
+# 助手说话时用户咳嗽 0.3 s、敲键盘 0.4 s（无文字）。期望：不打断、不产生轮次。
+# 类别: noise
+name = "noise_cough"
+duration = 12.0
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+wav = "experiments/turn/data/wav/noise_cough_0.wav"
+
+[[turns]]
+at = 4.63
+text = ""
+kind = "noise"
+wav = "experiments/turn/data/wav/noise_cough_1.wav"
+
+[[turns]]
+at = 6.13
+text = ""
+kind = "noise"
+wav = "experiments/turn/data/wav/noise_cough_2.wav"
+
+[expect]
+turns_detected = 1

@@ -1,0 +1,32 @@
+# 助手长回复时用户附和“嗯/对/嗯嗯/好的”。期望：不打断、不产生新轮次。
+# 类别: backchannel
+name = "bc_basic"
+duration = 14
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+
+[[turns]]
+at = 6.2
+text = "嗯"
+kind = "backchannel"
+
+[[turns]]
+at = 7.3
+text = "对"
+kind = "backchannel"
+
+[[turns]]
+at = 8.4
+text = "嗯嗯"
+kind = "backchannel"
+
+[[turns]]
+at = 9.5
+text = "好的"
+kind = "backchannel"
+
+[expect]
+turns_detected = 1
+false_barge_in = 0

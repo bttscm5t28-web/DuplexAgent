@@ -1,0 +1,17 @@
+# 以附和词开头的反驳“嗯不是这个意思”。期望：判为打断，不能当附和。
+# 类别: barge
+name = "barge_preface"
+duration = 12
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+
+[[turns]]
+at = 5.3
+text = "嗯不是这个意思"
+kind = "barge_in"
+
+[expect]
+barge_in_detected = 1
+turns_detected = 2

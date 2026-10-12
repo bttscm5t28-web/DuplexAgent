@@ -1,0 +1,18 @@
+# 助手说话时 1.2 s 持续噪声（键盘/敲门，无文字）。期望：不打断（能量 VAD 会误打断）。
+# 类别: noise
+name = "noise_long"
+duration = 12
+
+[[turns]]
+at = 0.5
+text = "给我讲讲你今天都做了什么事情"
+
+[[turns]]
+at = 5.0
+text = ""
+kind = "noise"
+duration = 1.2
+sound = "knock"  # experiments/turn/prepare_data.py 用它挑噪声素材
+
+[expect]
+turns_detected = 1

@@ -1,0 +1,23 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/quick_turns.toml 生成（真实语音版，wav 不入库）。
+# 三个完整短句，考察说完到响应延迟。期望：每句都响应，延迟尽量低。
+# 类别: latency
+name = "quick_turns"
+duration = 15.44
+
+[[turns]]
+at = 0.5
+text = "今天星期几"
+wav = "experiments/turn/data/wav/quick_turns_0.wav"
+
+[[turns]]
+at = 6.01
+text = "谢谢"
+wav = "experiments/turn/data/wav/quick_turns_1.wav"
+
+[[turns]]
+at = 10.11
+text = "明天会下雨吗"
+wav = "experiments/turn/data/wav/quick_turns_2.wav"
+
+[expect]
+turns_detected = 3

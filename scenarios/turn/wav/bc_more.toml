@@ -1,0 +1,38 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/bc_more.toml 生成（真实语音版，wav 不入库）。
+# 更多附和“嗯哼/原来如此/可以/我知道了”。期望：不打断。
+# 类别: backchannel
+name = "bc_more"
+duration = 14.22
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+wav = "experiments/turn/data/wav/bc_more_0.wav"
+
+[[turns]]
+at = 6.36
+text = "嗯哼"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_more_1.wav"
+
+[[turns]]
+at = 7.36
+text = "原来如此"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_more_2.wav"
+
+[[turns]]
+at = 8.61
+text = "可以"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_more_3.wav"
+
+[[turns]]
+at = 9.44
+text = "我知道了"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_more_4.wav"
+
+[expect]
+turns_detected = 1
+false_barge_in = 0

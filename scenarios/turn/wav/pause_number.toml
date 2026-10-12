@@ -1,0 +1,19 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/pause_number.toml 生成（真实语音版，wav 不入库）。
+# 报号码中停顿 0.8 s：“我的手机号是一三八……零零一二三四五六七”。期望：不抢话。
+# 类别: pause
+name = "pause_number"
+duration = 10.0
+
+[[turns]]
+at = 0.5
+text = "我的手机号是一三八"
+wav = "experiments/turn/data/wav/pause_number_0.wav"
+
+[[turns]]
+at = 2.81
+text = "零零一二三四五六七"
+kind = "cont"
+wav = "experiments/turn/data/wav/pause_number_1.wav"
+
+[expect]
+turns_detected = 1

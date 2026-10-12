@@ -1,0 +1,38 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/bc_reactions.toml 生成（真实语音版，wav 不入库）。
+# 情绪/反应类附和“哦/这样啊/哈哈/真的啊”。期望：不打断。
+# 类别: backchannel
+name = "bc_reactions"
+duration = 14.0
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+wav = "experiments/turn/data/wav/bc_reactions_0.wav"
+
+[[turns]]
+at = 5.86
+text = "哦"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_reactions_1.wav"
+
+[[turns]]
+at = 6.7
+text = "这样啊"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_reactions_2.wav"
+
+[[turns]]
+at = 7.68
+text = "哈哈"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_reactions_3.wav"
+
+[[turns]]
+at = 8.66
+text = "真的啊"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_reactions_4.wav"
+
+[expect]
+turns_detected = 1
+false_barge_in = 0

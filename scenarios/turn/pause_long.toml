@@ -1,0 +1,16 @@
+# 长停顿 1.5 s：“帮我订一个……明天上午十点的会议室”。期望：不抢话（文本明显未完）。
+# 类别: pause
+name = "pause_long"
+duration = 10
+
+[[turns]]
+at = 0.5
+text = "帮我订一个"
+
+[[turns]]
+at = 3.0
+text = "明天上午十点的会议室"
+kind = "cont"
+
+[expect]
+turns_detected = 1

@@ -1,0 +1,19 @@
+# 连续追问：回答结束后约 1 s 用户接着问“那后天呢”“上海呢”。期望：三轮都正常响应。
+# 类别: latency
+name = "followup"
+duration = 18
+
+[[turns]]
+at = 0.5
+text = "明天北京天气怎么样"
+
+[[turns]]
+at = 7.9
+text = "那后天呢"
+
+[[turns]]
+at = 13.3
+text = "上海呢"
+
+[expect]
+turns_detected = 3

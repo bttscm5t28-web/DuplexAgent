@@ -1,0 +1,27 @@
+# 由 experiments/turn/prepare_data.py 从 scenarios/turn/bc_then_barge.toml 生成（真实语音版，wav 不入库）。
+# 先附和“嗯”，随后以附和词开头真打断“嗯那我换个问题”。期望：前者不打断，后者打断。
+# 类别: backchannel
+name = "bc_then_barge"
+duration = 16.08
+
+[[turns]]
+at = 0.5
+text = "给我详细讲讲你今天上午和下午都做了哪些事情"
+wav = "experiments/turn/data/wav/bc_then_barge_0.wav"
+
+[[turns]]
+at = 6.31
+text = "嗯"
+kind = "backchannel"
+wav = "experiments/turn/data/wav/bc_then_barge_1.wav"
+
+[[turns]]
+at = 7.65
+text = "嗯那我换个问题"
+kind = "barge_in"
+wav = "experiments/turn/data/wav/bc_then_barge_2.wav"
+
+[expect]
+turns_detected = 2
+false_barge_in = 0
+barge_in_detected = 1

@@ -1,0 +1,19 @@
+# 三个完整短句，考察说完到响应延迟。期望：每句都响应，延迟尽量低。
+# 类别: latency
+name = "quick_turns"
+duration = 15
+
+[[turns]]
+at = 0.5
+text = "今天星期几"
+
+[[turns]]
+at = 6.0
+text = "谢谢"
+
+[[turns]]
+at = 10.0
+text = "明天会下雨吗"
+
+[expect]
+turns_detected = 3

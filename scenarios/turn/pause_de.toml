@@ -1,0 +1,16 @@
+# 定语未完停顿 0.8 s：“我想要一个大一点的……红色的杯子”。期望：不抢话。
+# 类别: pause
+name = "pause_de"
+duration = 10
+
+[[turns]]
+at = 0.5
+text = "我想要一个大一点的"
+
+[[turns]]
+at = 3.1
+text = "红色的杯子"
+kind = "cont"
+
+[expect]
+turns_detected = 1

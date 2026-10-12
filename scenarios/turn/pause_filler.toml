@@ -1,0 +1,16 @@
+# 填充词后停顿：“那个……帮我看看今天的日程”，停顿 1.0 s。期望：不抢话。
+# 类别: pause
+name = "pause_filler"
+duration = 9
+
+[[turns]]
+at = 0.5
+text = "那个"
+
+[[turns]]
+at = 1.9
+text = "帮我看看今天的日程"
+kind = "cont"
+
+[expect]
+turns_detected = 1
