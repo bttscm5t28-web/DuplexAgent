@@ -1,0 +1,8 @@
+# Optional dependencies of the TTS plugins (core stays stdlib-only).
+numpy>=1.24
+sherpa-onnx>=1.12        # tts.impl = "sherpa" (Matcha / VITS / MeloTTS / Piper / Kokoro / ZipVoice, CPU)
+soundfile>=0.12          # zipvoice reference prompt, scripts
+soxr>=0.3                # high-quality resampling to 16 kHz (falls back to scipy / numpy)
+# evaluation (experiments/tts/eval_tts.py)
+onnxruntime>=1.17        # UTMOS22 ONNX
+pytest>=8
