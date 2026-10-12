@@ -64,6 +64,7 @@ class EngineConfig:
     # release, barge-in / new turn -> drop and merge); "cancel": drop the response right away.
     resume_policy: str = "hold"
     hold_release_ms: int = 2500  # release a hold if the detector never decides (noise, cough)
+    max_redeliver: int = 2  # a fused task result cut off by the user is re-queued at most this often
     merge_window_ms: int = 1000  # user resumed this soon after their turn ended: same turn, merge
     max_tasks: int = 4
     max_history: int = 40
@@ -89,6 +90,7 @@ class DuplexEngine:
         self._last_turn_end = 0.0
         self._hold_gap: float | None = None  # turn end -> user resumed, for the hold in progress
         self._response_trigger = ""
+        self._redelivered: dict[str, int] = {}
         self.orch: TaskOrchestrator | None = None
 
     # ---- clock ------------------------------------------------------------------------
@@ -290,9 +292,14 @@ class DuplexEngine:
             self._agent_text = ""
             self._last_activity = self.now()
             played = "".join(spoken)
-            if interrupted and not played:
-                for t in ctx.deliver:  # nothing got out; deliver again later
-                    t.delivered = False
+            if interrupted:
+                # A result cut off mid-sentence is not delivered: queue it again (the brain sees what
+                # was already said in the history), at most `max_redeliver` times per task.
+                for t in ctx.deliver:
+                    n = self._redelivered.get(t.id, 0)
+                    if not played or n < self.cfg.max_redeliver:
+                        t.delivered = False
+                        self._redelivered[t.id] = n + (1 if played else 0)
             if played:
                 # Only what was actually played goes into history, so the brain knows where it was cut.
                 self.history.append(Message("assistant", played, {"interrupted": interrupted, "turn": ctx.turn_id}))

@@ -1,0 +1,15 @@
+# 组合：在 cpu.toml 基础上，TTS 换成 ElevenLabs（可选：ASR 也换成 ElevenLabs Scribe）。需要 $ELEVENLABS_API_KEY。
+# 在 Mac 上真人对话：把 extends 改成 "mac_m5.toml"。
+# 只想换 TTS、保留本地 SenseVoice：删掉下面的 [asr] 段。
+extends = "cpu.toml"
+
+[tts]
+impl = "elevenlabs"
+voice_id = "REPLACE-WITH-VOICE-ID"
+model_id = "eleven_flash_v2_5"
+
+[asr]
+impl = "elevenlabs"
+model_id = "scribe_v2_realtime"
+commit_strategy = "vad"
+vad_silence_threshold_secs = 0.3

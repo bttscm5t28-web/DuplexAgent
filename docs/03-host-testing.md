@@ -9,6 +9,7 @@
 | `cpu.toml` | 任意机器（基准） | 模拟用户 | SenseVoice + VAD 伪流式 | fusion（Silero + 文本规则 + Qwen2.5-0.5B） | 规则路由 + Qwen2.5-1.5B | Qwen3-4B 工具 agent（llama.cpp server） | Matcha zh+en |
 | `mac_m5.toml` | Mac M5（Metal） | 浏览器 | 同上 | 同上 | **Qwen3-4B 门控**，全部层放 GPU | 同上，server 加 `--n_gpu_layers -1` | 同上 |
 | `a100.toml` | Linux + A100 | 浏览器（SSH 隧道） | 同上 | 同上 | Qwen3-4B 门控，CUDA | **vLLM 上的 Qwen3-32B** | **CosyVoice 2**（GPU） |
+| `elevenlabs.toml` | 有 ElevenLabs Key | 模拟用户（可改成浏览器） | **ElevenLabs Scribe v2 Realtime** | 同上 | 同 cpu | 同 cpu | **ElevenLabs Flash v2.5**（逐字对齐） |
 | `openrouter.toml` | 有 OpenRouter Key | 模拟用户（可改成浏览器） | 本地 | 本地 | OpenRouter 小模型 | OpenRouter 强模型 | 本地 |
 
 配置支持 `extends`：组合配置只写与 `cpu.toml` 不同的部分。任何键都可以在命令行用 `--set` 覆盖，例如 `--set input.impl=browser --set output.impl=browser`。
@@ -44,7 +45,7 @@ python -m duplexagent eval --serial -c configs/combo/mac_m5.toml scenarios/turn/
 
 评测时有 `--scenario` 就会自动改用模拟输入输出，所以同一份 `mac_m5.toml` 既能跑评测，也能真人对话。
 
-**云端 4 核 CPU 的参照数字**：见第 7 节。主机上的结果应当明显更好，特别是响应延迟。
+**云端 4 核 CPU 的参照数字**：见第 8 节。主机上的结果应当明显更好，特别是响应延迟。
 
 ## 4. 第二步：真人对话
 
@@ -79,7 +80,23 @@ python scripts/live_summary.py results/live/s1.jsonl
 
 **真人数据回收**：第 2–5、9 项各录 10–20 段（保存 `record_path` 的 wav），按 `scenarios/turn/*.toml` 的格式写成带 `wav = ...` 的场景，放进 `scenarios/real/`。之后每次改动都用这些真人场景回归。各方向报告都指出，目前的结论建立在合成语音上，真人数据是最需要补的。
 
-## 6. GPU / API 待补测项（按优先级）
+## 6. ElevenLabs
+
+插件 `tts.impl = "elevenlabs"` 和 `asr.impl = "elevenlabs"` 都是按 API 文档写的，只在本地模拟服务端上测过（`tests/test_elevenlabs.py`），**需要用真 Key 验证**。Key 从环境变量 `ELEVENLABS_API_KEY` 读取，`voice_id` 要在配置里填（Voice Library 里选一个中文表现好的音色）。
+
+- **TTS**：用 `stream-input` WebSocket，快脑边生成文本边送进去，返回 16 kHz PCM 和逐字时间戳，打断时只记录实际播出的字。插件会提前建好下一条连接，省掉握手时间。重点看首包延迟和中文自然度，和本地 Matcha 对比：
+  ```bash
+  python -m duplexagent bench tts -c configs/exp/tts/elevenlabs.toml --data bench_data/tts/sentences.jsonl --wav-dir results/el_tts
+  python -m duplexagent eval --serial -c configs/combo/elevenlabs.toml --set asr.impl=sherpa_offline --set asr.model=sensevoice scenarios/asr/*.toml
+  ```
+- **ASR**：Scribe v2 Realtime，官方宣称延迟约 150 ms，但没有找到中文的公开数据。真实 ASR 只能用带 `wav` 的场景（`scenarios/asr/`、`scenarios/turn/wav/`）或 `bench asr` 的 wav 数据集评测：
+  ```bash
+  python experiments/asr/bench.py --help      # ASR 方向的完整基准（CER / 首个中间结果 / 完整句延迟）
+  python -m duplexagent eval --serial -c configs/combo/elevenlabs.toml scenarios/asr/*.toml scenarios/turn/wav/*.toml
+  ```
+  重点看两件事：一是附和语（“嗯”“对”）的识别，这是组合测试里本地 SenseVoice 的主要失分点；二是首个中间结果的延迟，打断判别依赖它。`commit_strategy = "turn_prediction"` 是服务端自带的说完判断，可以和我们的轮次插件对比，但我们的引擎仍以轮次插件的结论为准。
+
+## 7. GPU / API 待补测项（按优先级）
 
 1. **快脑**：Qwen3-4B 门控在 Metal / CUDA 上的首 token 延迟。CPU 上约 1.9 s；GPU 上 prefill 只需几十毫秒，预期能进 800 ms 预算。
 2. **慢脑**：A100 上 vLLM 跑 Qwen3-32B 的正确率和耗时：`python experiments/slow/bench.py -c configs/combo/a100.toml --name a100_qwen3_32b`。
@@ -90,7 +107,7 @@ python scripts/live_summary.py results/live/s1.jsonl
 
 结果 JSON 放 `experiments/combo/results/` 或各方向的 `experiments/<kind>/results/`，然后 commit 推回仓库，我可以接着分析。
 
-## 7. 云端 4 核 CPU 组合实测（参照）
+## 8. 云端 4 核 CPU 组合实测（参照）
 
 详见 `experiments/combo/REPORT.md`。要点：
 - 38 个真实音频场景通过 28 个，打断检出 13/13。

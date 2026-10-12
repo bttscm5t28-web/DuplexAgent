@@ -30,3 +30,15 @@ def test_continuation_while_thinking_is_merged():
     users = [m.content for m in eng.history if m.role == "user"]
     assert users == ["我想问你是谁"]
     assert any("语音助手" in e.data["played"] for e in tl.of("agent_end"))
+
+
+def test_fused_result_cut_off_is_redelivered():
+    # Faster TTS: the result starts just before the user's "你好" at 7.8 s and gets cut off.
+    cfg = load_config("configs/default.toml")
+    cfg["tts"]["chars_per_sec"] = 10.0
+    cfg["input"]["scenario"] = "scenarios/delegate.toml"
+    tl = Timeline()
+    asyncio.run(build_engine(cfg, tl).run())
+    played = "".join(e.data["played"] for e in tl.of("agent_end"))
+    assert any(e.data["interrupted"] and e.data["played"].startswith("关于") for e in tl.of("agent_end"))
+    assert "1081" in played

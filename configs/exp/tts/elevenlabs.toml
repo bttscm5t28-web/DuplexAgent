@@ -1,0 +1,8 @@
+# TTS candidate: ElevenLabs stream-input WebSocket（Flash v2.5，逐字对齐）。只改 [tts]。需要 $ELEVENLABS_API_KEY。
+extends = "../../default.toml"
+
+[tts]
+impl = "elevenlabs"
+voice_id = "REPLACE-WITH-VOICE-ID"   # 在 ElevenLabs Voice Library 里选一个中文表现好的音色
+model_id = "eleven_flash_v2_5"
+# language_code = "zh"

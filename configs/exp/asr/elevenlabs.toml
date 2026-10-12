@@ -1,0 +1,9 @@
+# ASR candidate: ElevenLabs Scribe v2 Realtime（服务端 VAD 断句）。只改 [asr]。需要 $ELEVENLABS_API_KEY。
+extends = "../../default.toml"
+
+[asr]
+impl = "elevenlabs"
+model_id = "scribe_v2_realtime"
+commit_strategy = "vad"
+vad_silence_threshold_secs = 0.3
+# language_code = "zh"   # 不填则自动识别语种；中英混说建议先不填
